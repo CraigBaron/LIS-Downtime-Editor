@@ -1,9 +1,18 @@
 import React from 'react';
 import {Form, Button} from 'react-bootstrap'
 
-
 function PageTitle()
 {
+  const app_name = "eventree-calendar";
+  function buildPath(route) {
+      if (process.env.NODE_ENV === "production") {
+          return "https://" + app_name + ".herokuapp.com/" + route;
+      } else {
+          return "http://localhost:5000/" + route;
+      }
+  }
+
+  
    return(
     <div>
     <h3>LIS-Downtime-Editor</h3>
