@@ -7,12 +7,14 @@ import './styles.css';
 
 function PageTitle()
 {
+
    return(
 
 
 
     <div>
-    <h3>LIS-Downtime-Editor</h3>
+      <br></br>
+    <h3><b>LIS-Downtime-Edit</b></h3>
     <div>
     
     <div>

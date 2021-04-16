@@ -1,22 +1,15 @@
 import React from 'react';
-import {Form, Button} from 'react-bootstrap'
+import ReactDOM from 'react-dom'
+import {Form, Col, Button, Container,Navbar} from 'react-bootstrap'
 
-function PageTitle()
-{
-  const app_name = "eventree-calendar";
-  function buildPath(route) {
-      if (process.env.NODE_ENV === "production") {
-          return "https://" + app_name + ".herokuapp.com/" + route;
-      } else {
-          return "http://localhost:5000/" + route;
-      }
-  }
+function PageTitle(){
 
-  
-   return(
-    <div>
-    <h3>LIS-Downtime-Editor</h3>
-    <Form>
+
+  return(
+<div>
+  <h3>LIS Downtime Editor</h3>
+<Col>
+<Form>
   <Form.Group controlId="formBasicEmail">
     <Form.Label>Email address</Form.Label>
     <Form.Control type="email" placeholder="Enter email" />
@@ -36,9 +29,8 @@ function PageTitle()
     Submit
   </Button>
 </Form>
-  </div>
-        
-   );
+</Col>
+</div>
+  );
 };
-
 export default PageTitle;
