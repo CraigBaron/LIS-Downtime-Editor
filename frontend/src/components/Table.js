@@ -72,6 +72,11 @@ const columns = [
   },
 ];
 
+const handleChange = (state) => {
+  // You can use setState or dispatch with something like Redux so we can use the retrieved data
+  console.log('Selected Rows: ', state.selectedRows);
+};
+
 
 
 function Table() {
@@ -87,6 +92,9 @@ function Table() {
         title="Records"
         columns={columns}
         data={data}
+        selectableRows // add for checkbox selection
+        Clicked
+        selected={handleChange}
         
       />
       </Row>
