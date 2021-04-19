@@ -1,12 +1,12 @@
 import React from 'react';
-import Table from '../components/Table';
-
+import DataTable from '../components/HomePageTable';
+import ButtonAppBar from '../components/HomePageNav';
 const HomePage = () =>
 {
     return(
       <div>
-        
-        <Table></Table>
+        <ButtonAppBar></ButtonAppBar>
+        <DataTable></DataTable>
       </div>
     );
 };
