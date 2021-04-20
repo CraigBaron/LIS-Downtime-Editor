@@ -20,7 +20,7 @@ app.use((req, res, next) =>
   );
   next();
 });
-
+/*
 var config = {
     user: 'sa',
     password: 'Feb501998!',
@@ -35,7 +35,7 @@ sql.connect(config, function (err) {
     }
     console.log('Connected to SQL server')
 });
-
+*/
 app.get('/API/Test', function (req, res) {
     // create Request object
     var request = new sql.Request();
