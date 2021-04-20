@@ -231,10 +231,6 @@ app.post('/API/DeleteUser', async (req, res, next) =>
   //res.status(200).json(ret);
 });
 
-/*var server = app.listen(5000, function () {
-    console.log('Server is running..');
-});
-*/
 app.listen(PORT, () => {
   console.log(`Server listening on port ${PORT}.`);
 }); // start Node + Express server on port
