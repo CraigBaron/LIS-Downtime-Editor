@@ -3,7 +3,7 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const app = express();
 const sql = require('mssql');
-
+const PORT = process.env.PORT || 5000;
 app.use(cors());
 app.use(bodyParser.json());
 
@@ -231,6 +231,10 @@ app.post('/API/DeleteUser', async (req, res, next) =>
   //res.status(200).json(ret);
 });
 
-var server = app.listen(5000, function () {
+/*var server = app.listen(5000, function () {
     console.log('Server is running..');
 });
+*/
+app.listen(PORT, () => {
+  console.log(`Server listening on port ${PORT}.`);
+}); // start Node + Express server on port
