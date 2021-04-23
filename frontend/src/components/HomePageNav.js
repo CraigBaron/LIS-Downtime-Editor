@@ -29,7 +29,10 @@ export default function ButtonAppBar() {
           <Typography variant="h6" className={classes.title}>
             LIS-Downtime-Editor
           </Typography>
-          <Button color="inherit">Button</Button>
+           <Button  color="inherit">New Records</Button>
+          <Button  color="inherit">Edited Records</Button>
+          <Button  color="inherit">Help</Button>
+          <Button color="inherit">Log Out</Button>
         </Toolbar>
       </AppBar>
     </div>
