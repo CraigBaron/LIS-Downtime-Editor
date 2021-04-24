@@ -4,7 +4,11 @@ import {Form, Col, Button, Container,Navbar} from 'react-bootstrap'
 
 function PageTitle(){
 
+const reLocate = async event =>
+{
+  window.location.href = '/HomePage';
 
+}
   return(
 <div>
   <h3>LIS Downtime Editor</h3>
@@ -25,7 +29,7 @@ function PageTitle(){
   <Form.Group controlId="formBasicCheckbox">
     <Form.Check type="checkbox" label="Check me out" />
   </Form.Group>
-  <Button variant="primary" type="submit">
+  <Button variant="primary" onClick={reLocate}>
     Submit
   </Button>
 </Form>

@@ -20,7 +20,7 @@ app.use((req, res, next) =>
   );
   next();
 });
-/*
+
 var config = {
     user: 'sa',
     password: 'Feb501998!',
@@ -35,7 +35,7 @@ sql.connect(config, function (err) {
     }
     console.log('Connected to SQL server')
 });
-*/
+
 app.get('/API/Test', function (req, res) {
     // create Request object
     var request = new sql.Request();
@@ -94,17 +94,15 @@ app.post('/API/EditMachine', async (req, res, next) =>
 app.post('/API/SearchMachine', async (req, res, next) =>
 {
     var err = '';
-    
-    const { lineID, machine, secondarypk } = req.body;
-    
+
     var request = new sql.Request();
     // query to the database and get the records
-    request.query("SELECT * FROM Machines WHERE LineID = '"+ lineID +"' OR Secondarypk = '"+ secondarypk +"'  OR machine = '"+ machine +"'", function (err, recordset) {
+    request.query("SELECT * FROM Machines", function (err, recordset) {
         if (err) console.log(err)
 
         // send records as a response
         res.json(recordset);
-            
+
     });
 
   //var ret = { error: err };

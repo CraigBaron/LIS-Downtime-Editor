@@ -1,25 +1,17 @@
 import * as React from 'react';
 import { DataGrid } from '@material-ui/data-grid';
+import {Button} from '@material-ui/core'
 //test
 const columns = [
   { field: 'id', headerName: 'ID', width: 70 },
-  { field: 'firstName', headerName: 'First name', width: 130 },
-  { field: 'lastName', headerName: 'Last name', width: 130 },
-  {
-    field: 'age',
-    headerName: 'Age',
-    type: 'number',
-    width: 90,
-  },
-  {
-    field: 'fullName',
-    headerName: 'Full name',
-    description: 'This column has a value getter and is not sortable.',
-    sortable: false,
-    width: 160,
-    valueGetter: (params) =>
-      `${params.getValue('firstName') || ''} ${params.getValue('lastName') || ''}`,
-  },
+  { field: 'lineid', headerName: 'LineID', width: 130 },
+  { field: 'machineid', headerName: 'MachineID', width: 130 },
+  { field: 'componentid', headerName: 'ComponentID', width: 130 },
+  { field: 'startTime', headerName: 'StartTime', width: 130 },
+  { field: 'endTime', headerName: 'EndTime', width: 130 },
+  { field: 'reason', headerName: 'Reason', width: 130 },
+  { field: 'duration', headerName: 'Duration', width: 130 },
+  { field: 'shift', headerName: 'Shift', width: 130 },
 ];
 
 const rows = [
@@ -35,9 +27,37 @@ const rows = [
 ];
 
 export default function DataTable() {
+
+  const DisplayRecords = async event => 
+      {
+          event.preventDefault();
+  
+          try
+          {    
+              const response = await fetch('http://localhost:5000/API/SearchMachine',
+                  {method:'POST',headers:{'Content-Type': 'application/json'}});
+  
+              var res = JSON.parse(await response.text());
+              console.log(res);
+          }
+          catch(e)
+          {
+              alert(e.toString());
+              return;
+          }    
+      };
+
+
+
+
+
+
+
+
   return (
     <div>
     <div><br></br><h3>Machine Data</h3></div>
+    <Button color="primary" onClick={DisplayRecords}>Display Records</Button>
     <div style={{ height: 800, width: '100%' }}>
       <DataGrid rows={rows} columns={columns} pageSize={20} checkboxSelection />
     </div>
