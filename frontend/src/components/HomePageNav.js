@@ -21,7 +21,10 @@ const useStyles = makeStyles((theme) => ({
 
 export default function ButtonAppBar() {
   const classes = useStyles();
-
+  const doLogout = async event =>
+  {
+    window.location.href = '/LoginPage';
+  }
   return (
     <div className={classes.root}>
       <AppBar  position="static">
@@ -32,7 +35,7 @@ export default function ButtonAppBar() {
            <Button  color="inherit">New Records</Button>
           <Button  color="inherit">Edited Records</Button>
           <Button  color="inherit">Help</Button>
-          <Button color="inherit">Log Out</Button>
+          <Button color="inherit" onClick={doLogout}>Log Out</Button>
         </Toolbar>
       </AppBar>
     </div>

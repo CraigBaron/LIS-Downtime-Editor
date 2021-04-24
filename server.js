@@ -91,7 +91,7 @@ app.post('/API/EditMachine', async (req, res, next) =>
   //res.status(200).json(ret);
 });
 
-app.post('/API/SearchMachine', async (req, res, next) =>
+app.get('/API/SearchMachine', async (req, res, next) =>
 {
     var err = '';
 

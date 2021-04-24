@@ -7,7 +7,6 @@ function PageTitle(){
 const reLocate = async event =>
 {
   window.location.href = '/HomePage';
-
 }
   return(
 <div>
