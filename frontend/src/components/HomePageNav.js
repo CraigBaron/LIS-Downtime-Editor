@@ -25,6 +25,14 @@ export default function ButtonAppBar() {
   {
     window.location.href = '/LoginPage';
   }
+  const doEditPage = async event =>
+  {
+    window.location.href = '/EditedPage';
+  }
+  const doMachinePage = async event =>
+  {
+    window.location.href = '/HomePage';
+  }
   return (
     <div className={classes.root}>
       <AppBar  position="static">
@@ -32,8 +40,8 @@ export default function ButtonAppBar() {
           <Typography variant="h6" className={classes.title}>
             LIS-Downtime-Editor
           </Typography>
-           <Button  color="inherit">New Records</Button>
-          <Button  color="inherit">Edited Records</Button>
+           <Button  color="inherit" onClick={doMachinePage}>Machine Records</Button>
+          <Button  color="inherit" onClick={doEditPage}>Edited Records</Button>
           <Button  color="inherit">Help</Button>
           <Button color="inherit" onClick={doLogout}>Log Out</Button>
         </Toolbar>

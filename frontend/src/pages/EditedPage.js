@@ -1,14 +1,15 @@
 import React from 'react';
-import DataTable from '../components/HomePageTable';
 import ButtonAppBar from '../components/HomePageNav';
-const HomePage = () =>
+import EditedPageTable from '../components/EditedPageTable'
+
+const EditedPage = () =>
 {
     return(
       <div>
         <ButtonAppBar></ButtonAppBar>
-        <DataTable></DataTable>
+        <EditedPageTable></EditedPageTable>
       </div>
     );
 };
 
-export default HomePage;
+export default EditedPage;
