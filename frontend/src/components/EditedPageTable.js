@@ -26,12 +26,11 @@ const columns = [
     var DisplayRecords;
     window.onload = DisplayRecords = async event => 
         {
-            /*
             event.preventDefault();
             try
             {    
             
-                const response = await fetch('http://localhost:5000/API/SearchMachine',
+                const response = await fetch('http://localhost:5000/API/SearchEditedRecord',
                     {method:'GET',headers:{'Content-Type': 'application/json'}});
                 const record=[];
                 var res = JSON.parse(await response.text());
@@ -61,7 +60,7 @@ const columns = [
             {
                 alert(e.toString());
                 return;
-            }  */  
+            }   
         };
     
     return (

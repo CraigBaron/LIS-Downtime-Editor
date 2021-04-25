@@ -2,8 +2,18 @@ import * as React from 'react';
 import { DataGrid } from '@material-ui/data-grid';
 import {Button} from '@material-ui/core'
 import {useState} from 'react'
+import {Modal} from 'react-bootstrap'
+import TextField from '@material-ui/core/TextField';
+import { makeStyles } from '@material-ui/core/styles';
 
-
+const useStyles = makeStyles((theme) => ({
+  root: {
+    '& .MuiTextField-root': {
+      margin: theme.spacing(1),
+      width: '25ch',
+    },
+  },
+}));
 const columns = [
   { field: 'id', headerName: 'ID', width: 70 },
   { field: 'lineid', headerName: 'LineID', width: 130 },
@@ -16,17 +26,32 @@ const columns = [
   { field: 'shift', headerName: 'Shift', width: 130 },
 ];
 
-
 const rows = [];
 var temp;
 var i;
- function DataTable() {
-  const [rows, setrows] = useState([])
-var DisplayRecords;
+function DataTable() {
+
+  const classes = useStyles();
+  const [show, setShow] = useState(false);
+  const [rows, setrows] = useState([]);
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+
+  const [selID, setselID] = useState();
+  const [selLineID, setselLineID] = useState();
+  const [selMachineID, setselMachineID] = useState();
+  const [selComponentID, setselComponentID] = useState();
+  const [selStartTime, setselStartTime] = useState();
+  const [selEndTime, setselEndTime] = useState();
+  const [selReason, setselReason] = useState();
+  const [selDuration, setselDuration] = useState();
+  const [selShift, setselShift] = useState();
+
+  
+  var DisplayRecords;
   window.onload = DisplayRecords = async event => 
       {
           event.preventDefault();
-  
           try
           {    
               const response = await fetch('http://localhost:5000/API/SearchMachine',
@@ -50,7 +75,6 @@ var DisplayRecords;
                       "shift" : res.recordset[i].Secondarypk,
                     }
                     record.push(temp);
-
                   }
                   setrows(record)
               }
@@ -62,21 +86,145 @@ var DisplayRecords;
               return;
           }    
       };
-
-
-
-
-
-
-
-
+  const EditRecord = (item) =>
+  {
+      handleShow()
+      setselID(item.id)
+      setselLineID(item.lineid)
+      setselMachineID(item.machineid)
+      setselComponentID(item.componentid)
+      setselStartTime(item.startTime)
+      setselEndTime(item.endTime)
+      setselReason(item.reason)
+      setselDuration(item.duration)
+      setselShift(item.shift)
+  }
+  const doEditRecord = async event =>
+  {
+     event.preventDefault();
+      var newid = document.getElementById("idEdit").value
+      var newlineid = document.getElementById("lineidEdit").value
+      var newmachineid = document.getElementById("machineidEdit").value
+      var newcomponentid = document.getElementById("componentidEdit").value
+      var newstarttime = document.getElementById("startTimeEdit").value
+      var newendtime = document.getElementById("endTimeEdit").value
+      var newreason = document.getElementById("reasonEdit").value
+      var newduration = document.getElementById("durationEdit").value
+      var newshift = document.getElementById("shiftEdit").value
+      console.log(newid)
+      var obj = {startDate : newstarttime, endDate : newendtime, durationTotalMinutes : newduration, lineID : newlineid, machine : newmachineid, componentID : newcomponentid, comments : newreason, secondarypk : newshift}
+      
+       var js = JSON.stringify(obj);  
+      
+        try
+            {    
+                const response = await fetch('http://localhost:5000/API/AddEditedRecord',
+                    {method:'POST',body:js, headers:{'Content-Type': 'application/json'}});
+                var res = JSON.parse(await response.text());      
+            }
+            catch(e)
+            {
+                alert(e.toString());
+                return;
+            }      
+  };
+    
   return (
     <div>
     <div><br></br><h3>Machine Data</h3></div>
     
     <div style={{ height: 800, width: '100%' }}>
-      <DataGrid rows={rows} columns={columns} pageSize={20} checkboxSelection />
+      <DataGrid rows={rows} columns={columns} pageSize={20} onRowClick = {item => {EditRecord(item.row)}}/>
     </div>
+
+    <Modal show={show} onHide={handleClose}>
+        <Modal.Header closeButton>
+          <Modal.Title>Edit Record</Modal.Title>
+        </Modal.Header>
+        <form className={classes.root} noValidate autoComplete="off">
+          <div>
+              <TextField
+              id="idEdit"
+              label="ID"
+              defaultValue={selID}
+              variant="outlined"
+              
+              />
+          </div>
+          <div>
+          <TextField
+              id="lineidEdit"
+              label="LineID"
+              defaultValue={selLineID}
+              variant="outlined"
+              />
+          </div>
+          <div>
+          <TextField
+              id="machineidEdit"
+              label="MachineID"
+              defaultValue={selMachineID}
+              variant="outlined"
+              />
+          </div>
+          <div>
+          <TextField
+              id="componentidEdit"
+              label="ComponentID"
+              defaultValue={selComponentID}
+              variant="outlined"
+              />
+          </div>
+          <div>
+          <TextField
+              id="startTimeEdit"
+              label="StartTime"
+              defaultValue={selStartTime}
+              variant="outlined"
+              />
+          </div>
+          <div>
+          <TextField
+              id="endTimeEdit"
+              label="EndTime"
+              defaultValue={selEndTime}
+              variant="outlined"
+              />
+          </div>
+          <div>
+          <TextField
+              id="reasonEdit"
+              label="Reason"
+              defaultValue={selReason}
+              variant="outlined"
+              />
+          </div>
+          <div>
+          <TextField
+              id="durationEdit"
+              label="Duration"
+              defaultValue={selDuration}
+              variant="outlined"
+              />
+          </div>
+          <div>
+          <TextField
+              id="shiftEdit"
+              label="Shift"
+              defaultValue={selShift}
+              variant="outlined"
+              />
+          </div>
+        </form>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleClose}>
+            Cancel
+          </Button>
+          <Button color="primary" onClick={doEditRecord}>
+            Submit Edit
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </div>
   );
 }export default DataTable;

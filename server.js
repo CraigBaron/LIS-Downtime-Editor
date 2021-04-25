@@ -71,6 +71,26 @@ app.post('/API/AddMachine', async (req, res, next) =>
   //res.status(200).json(ret);
 });
 
+app.post('/API/AddEditedRecord', async (req, res, next) =>
+{
+    var err = '';
+    
+    const { startDate, endDate, durationTotalMinutes, lineID, machine, componentID, comments, secondarypk } = req.body;
+    
+    var request = new sql.Request();
+    // query to the database and get the records
+    request.query("INSERT INTO EditedRecords (StartDateTime, EndDateTime, DurationTotalMinutes, LineID, Machine, ComponentID, Comments, Secondarypk) VALUES ('" + startDate + "','" + endDate + "','" + durationTotalMinutes + "','" + lineID + "','" + machine + "','" + componentID + "', '" + comments + "', '" + secondarypk + "')", function (err, recordset) {
+        if (err) console.log(err)
+
+        // send records as a response
+        res.json(recordset);
+            
+    });
+
+  //var ret = { error: err };
+  //res.status(200).json(ret);
+});
+
 app.post('/API/EditMachine', async (req, res, next) =>
 {
     var err = '';
@@ -98,6 +118,24 @@ app.get('/API/SearchMachine', async (req, res, next) =>
     var request = new sql.Request();
     // query to the database and get the records
     request.query("SELECT * FROM Machines", function (err, recordset) {
+        if (err) console.log(err)
+
+        // send records as a response
+        res.json(recordset);
+
+    });
+
+  //var ret = { error: err };
+  //res.status(200).json(ret);
+});
+
+app.get('/API/SearchEditedRecord', async (req, res, next) =>
+{
+    var err = '';
+
+    var request = new sql.Request();
+    // query to the database and get the records
+    request.query("SELECT * FROM EditedRecords", function (err, recordset) {
         if (err) console.log(err)
 
         // send records as a response
@@ -229,16 +267,6 @@ app.post('/API/DeleteUser', async (req, res, next) =>
   //res.status(200).json(ret);
 });
 
-if (process.env.NODE_ENV === "production") {
-  // Set static folder
-  app.use(express.static("frontend/build"));
-
-  app.get("*", (req, res) => {
-      res.sendFile(
-          path.resolve(__dirname, "frontend", "build", "index.html")
-      );
-  });
-}
 
 app.listen(PORT, () => {
   console.log(`Server listening on port ${PORT}.`);
