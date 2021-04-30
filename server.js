@@ -36,6 +36,15 @@ sql.connect(config, function (err) {
     console.log('Connected to SQL server')
 });
 
+app.use(express.json())
+
+const editedRecordsRouter = require('./backend/routes/editedRecords')
+app.use('/editedRecords', editedRecordsRouter)
+
+const userRouter = require('./backend/routes/users')
+app.use('/users', userRouter)
+
+
 app.get('/API/Test', function (req, res) {
     // create Request object
     var request = new sql.Request();
@@ -129,23 +138,6 @@ app.get('/API/SearchMachine', async (req, res, next) =>
   //res.status(200).json(ret);
 });
 
-app.get('/API/SearchEditedRecord', async (req, res, next) =>
-{
-    var err = '';
-
-    var request = new sql.Request();
-    // query to the database and get the records
-    request.query("SELECT * FROM EditedRecords", function (err, recordset) {
-        if (err) console.log(err)
-
-        // send records as a response
-        res.json(recordset);
-
-    });
-
-  //var ret = { error: err };
-  //res.status(200).json(ret);
-});
 
 app.post('/API/DeleteMachine', async (req, res, next) =>
 {
