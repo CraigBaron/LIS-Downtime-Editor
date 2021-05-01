@@ -5,31 +5,31 @@ const bcrypt = require('bcrypt')
 require('dotenv').config()
 const jwt = require('jsonwebtoken')
 
+const createToken = require("../createToken");
+
 router.post('/login', async (req, res) => {
 
   const email = req.body.email
   var request = new sql.Request();
     request.query("SELECT * FROM Employees WHERE Email = '" + email + "'", async function (err, recordset) {
         if(err) console.log(err)
-
-        if(recordset.recordsets == null){
+        
+        if(recordset == null){
           return res.status(400).send('No User')
         }
         
           if(await bcrypt.compare(req.body.password, recordset.recordsets[0][0].Password)){
                 const user = {email : email}
-                const acessToken = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET)
+                const acessToken = createToken(user);
                 res.json({acessToken: acessToken})
           }else{
             res.send('Not ALlowed')
           }
-       
     })
 })
 
 router.post('/signUp', async (req,res) => {
     
-
     try{
         const salt = await bcrypt.genSalt()
         const hashedPassword = await bcrypt.hash(req.body.password, salt)

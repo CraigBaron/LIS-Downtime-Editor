@@ -2,8 +2,10 @@ const express = require('express')
 const router = express.Router()
 const sql = require('mssql');
 
+const verifyAuthToken = require("../middleware/authenticate");
+
 //get all records
-router.get('/', async (req, res) => {
+router.get('/', verifyAuthToken, async (req, res) => {
     try{
         var request = new sql.Request();
     
@@ -18,7 +20,21 @@ router.get('/', async (req, res) => {
 })
 
 //add new record
-router.post('/add', (req, res) => {
+router.post('/add', verifyAuthToken, async (req, res) => {
+    
+    const { uniqueID, pkDowntimeEventID, startDate, endDate, durationTotalMinutes, lineID, machine, componentID, comments, secondarypk } = req.body;
+
+    try{
+        var request = new sql.Request();
+    
+        request.query("INSERT INTO EditedRecords (StartDateTime, EndDateTime, DurationTotalMinutes, LineID, Machine, ComponentID, Comments, Secondarypk) VALUES ('" + startDate + "','" + endDate + "','" + durationTotalMinutes + "','" + lineID + "','" + machine + "','" + componentID + "', '" + comments + "', '" + secondarypk + "')", function (err, recordset) {
+            if (err) console.log(err)
+
+            res.send("Succsess");
+        });
+    }catch (err){
+        res.status(500).json({message: err.message})
+    }
   
 })
 //delete record
