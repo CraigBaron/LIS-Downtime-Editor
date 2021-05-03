@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -6,6 +6,9 @@ import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
+import { render } from '@testing-library/react';
+import {Modal} from 'react-bootstrap';
+import './styles.css';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -20,7 +23,13 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function ButtonAppBar() {
+
   const classes = useStyles();
+  const [show, setShow] = useState(false);
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+
+
   const doLogout = async event =>
   {
     window.location.href = '/LoginPage';
@@ -34,6 +43,7 @@ export default function ButtonAppBar() {
     window.location.href = '/HomePage';
   }
   return (
+    
     <div className={classes.root}>
       <AppBar  position="static">
         <Toolbar>
@@ -42,10 +52,27 @@ export default function ButtonAppBar() {
           </Typography>
            <Button  color="inherit" onClick={doMachinePage}>Machine Records</Button>
           <Button  color="inherit" onClick={doEditPage}>Edited Records</Button>
-          <Button  color="inherit">Help</Button>
+          <Button  color="inherit"  onClick={handleShow}>Help</Button>
           <Button color="inherit" onClick={doLogout}>Log Out</Button>
         </Toolbar>
       </AppBar>
+
+      <Modal show={show} onHide={handleClose}>
+        <Modal.Header closeButton>
+          <Modal.Title>Read Instructions</Modal.Title>
+        </Modal.Header>
+        <Modal.Body><p>To select and edit a record click on the row that contains the record.</p>
+        <p>Click on a column header to sort records by the column's attribute. Click on the arrow to sort the records in order (click down arrow) or in reverse order (click up arrow). </p>  
+          
+        <p>    Hover over a column header and click on the three vertical dots to go to the Filter option where you can filter records based on the value of the attribute you are looking for.</p>   </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleClose}>
+            Close
+          </Button>
+         
+        </Modal.Footer>
+      </Modal>
+
     </div>
   );
 }
