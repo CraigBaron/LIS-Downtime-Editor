@@ -4,6 +4,7 @@
   "description": "SD Project for UCF CS students",
   "main": "server.js",
   "dependencies": {
+    "@sendgrid/mail": "^7.4.2",
     "bcrypt": "^5.0.1",
     "body-parser": "^1.19.0",
     "cors": "^2.8.5",

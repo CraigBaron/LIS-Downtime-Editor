@@ -6,15 +6,17 @@ import {useState} from 'react'
 
 
 const columns = [
-    { field: 'id', headerName: 'ID', width: 70 },
+    { field: 'id', headerName: 'ID', width: 150 },
     { field: 'lineid', headerName: 'LineID', width: 130 },
     { field: 'machineid', headerName: 'MachineID', width: 130 },
     { field: 'componentid', headerName: 'ComponentID', width: 130 },
     { field: 'startTime', headerName: 'StartTime', width: 250 },
     { field: 'endTime', headerName: 'EndTime', width: 250 },
-    { field: 'reason', headerName: 'Reason', width: 130 },
+    { field: 'comments', headerName: 'Comments', width: 130 },
     { field: 'duration', headerName: 'Duration', width: 130 },
     { field: 'shift', headerName: 'Shift', width: 130 },
+    { field: 'reason', headerName: 'Reason', width: 130 },
+    { field: 'status', headerName: 'Status', width: 130 },
   ];
   
   
@@ -29,8 +31,7 @@ const columns = [
             event.preventDefault();
             try
             {    
-            
-                const response = await fetch('http://localhost:5000/API/SearchEditedRecord',
+                const response = await fetch('http://localhost:5000/editedRecords',
                     {method:'GET',headers:{'Content-Type': 'application/json'}});
                 const record=[];
                 var res = JSON.parse(await response.text());
@@ -40,7 +41,7 @@ const columns = [
                     for(i=0;i<res.recordset.length;i++)
                     {
                       temp = {
-                        "id" : res.recordset[i].ID,
+                        "id" : res.recordset[i].uniqueID,
                         "lineid" : res.recordset[i].LineID,
                         "machineid" : res.recordset[i].Machine,
                         "componentid" : res.recordset[i].ComponentID,
@@ -49,6 +50,9 @@ const columns = [
                         "reason" : res.recordset[i].Comments,
                         "duration" : res.recordset[i].DurationTotalMinutes,
                         "shift" : res.recordset[i].Secondarypk,
+                        "reason" : res.recordset[i].Reason,
+                        "status" : res.recordset[i].Status,
+                        
                       }
                       record.push(temp);
                     }

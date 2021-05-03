@@ -20,15 +20,37 @@ app.use((req, res, next) =>
   );
   next();
 });
+//Local
 
 var config = {
     user: 'sa',
     password: 'Feb501998!',
     server: 'localhost', 
-    database: 'downtime' 
+    database: 'downtime',
+    options: {
+      enableArithAbort : true
+    }
 };
 
-sql.connect(config, function (err) {
+//Azure
+/*
+const config = {
+  authentication: {
+    options: {
+      userName: "azureuser", // update me
+      password: "DTeditor!" // update me
+    },
+    type: "default"
+  },
+  server: "mysqlservercoke.database.windows.net", // update me
+  options: {
+    database: "mySampleDatabase", //update me
+    encrypt: true,
+    enableArithAbort: true
+  }
+};
+*/
+var conn = sql.connect(config, function (err) {
     if (err) {
         console.log(err);
         return;
@@ -36,8 +58,9 @@ sql.connect(config, function (err) {
     console.log('Connected to SQL server')
 });
 
-app.use(express.json())
+module.exports.conn = conn
 
+app.use(express.json())
 const editedRecordsRouter = require('./backend/routes/editedRecords')
 app.use('/editedRecords', editedRecordsRouter)
 
