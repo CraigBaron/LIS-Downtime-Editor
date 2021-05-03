@@ -3,9 +3,9 @@ const router = express.Router()
 const sql = require('mssql');
 
 const verifyAuthToken = require("../middleware/authenticate");
-const SendEmail = require("../emailNotifications");
+const SendEmail = require("../emailNotifications").FindRecipients;
 //get all records
-router.get('/' ,verifyAuthToken, async (req, res) => {
+router.get('/' /*,verifyAuthToken*/, async (req, res) => {
     try{
         var request = new sql.Request();
     
@@ -36,7 +36,7 @@ router.post('/add'/*,verifyAuthToken*/, async (req, res) => {
                 return;
             }
             res.json({status : "Successful"});
-            
+            SendEmail();
         });
     }catch (err){
         res.status(500).json({message: err.message})

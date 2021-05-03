@@ -37,12 +37,10 @@ router.post('/login', async (req, res) => {
 
 router.post('/signUp', async (req,res) => {
    
-        var error = 0
         var request = new sql.Request();
         request.query("SELECT * FROM Employees WHERE Email = '" + req.body.email + "'", async function(err, recordset){
           try{
             if(recordset.recordsets[0].length > 0){
-              error = 1;
              return res.send('There Already exists an account with this email');
             }
           }catch(err){
