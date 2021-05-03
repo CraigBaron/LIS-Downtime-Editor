@@ -1,12 +1,12 @@
 import React from 'react';
-import PageTitle from '../components/PageTitle';
+import SignIn from '../components/Signin';
 
 
 const LoginPage = () =>
 {
     return(
       <div>
-        <PageTitle />
+        <SignIn />
       </div>
     );
 };

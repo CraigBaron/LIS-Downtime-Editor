@@ -22,4 +22,3 @@ const Sendemail = async() => {
     })
 }
 
-module.export = Sendemail;
