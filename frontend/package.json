@@ -12,6 +12,7 @@
     "@testing-library/user-event": "^12.8.3",
     "bootstrap": "^4.6.0",
     "material-ui-icons": "^1.0.0-beta.36",
+    "material-ui-search-bar": "^1.0.0",
     "react": "^17.0.2",
     "react-bootstrap": "^1.5.2",
     "react-data-table-component": "^6.11.7",

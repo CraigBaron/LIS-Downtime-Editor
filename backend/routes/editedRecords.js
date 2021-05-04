@@ -63,5 +63,24 @@ router.post('/delete', async (req, res) => {
     }
 
 })
+//search record
+router.post('/search', async (req, res) => {
+    const { filter } = req.body;
+    try{
+        var request = new sql.Request();
+    
+        request.query("SELECT * FROM NewRecords", function (err, recordset) {
+            if (err){
+                console.log(err);
+                return;
+            } 
 
+            res.json({status : "Successful"})
+            
+    })
+    }catch(err) {
+        res.status(500).json({message : err.message})
+    }
+
+})
 module.exports = router

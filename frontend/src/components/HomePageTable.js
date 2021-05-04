@@ -5,6 +5,8 @@ import {useState} from 'react'
 import {Modal} from 'react-bootstrap'
 import TextField from '@material-ui/core/TextField';
 import { makeStyles } from '@material-ui/core/styles';
+import SearchBar from "material-ui-search-bar";
+
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -128,10 +130,19 @@ function DataTable() {
                 return;
             }      
   };
-    
+
+  function searchRecords() {
+    var filter = document.getElementById("searchBar").value
+    return true;
+  }
+
   return (
     <div>
     <div><br></br><h3>Machine Data</h3></div>
+
+    <div>
+      <SearchBar id = "searchBar" onRequestSearch={searchRecords} placeholder="Search Records..." autoFocus />
+    </div>
     
     <div style={{ height: 800, width: '100%' }}>
       <DataGrid rows={rows} columns={columns} pageSize={20} onRowClick = {item => {EditRecord(item.row)}}/>
