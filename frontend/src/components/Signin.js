@@ -12,6 +12,12 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
+import AppBar from '@material-ui/core/AppBar';
+import Toolbar from '@material-ui/core/Toolbar';
+import AccountCircle from '@material-ui/icons/AccountCircle';
+import LockIcon from '@material-ui/icons/Lock';
+import InputAdornment from '@material-ui/core/InputAdornment';
+
 
 function Copyright() {
   return (
@@ -44,12 +50,33 @@ const useStyles = makeStyles((theme) => ({
   submit: {
     margin: theme.spacing(3, 0, 2),
   },
+  root: {
+    flexGrow: 1,
+  },
+  title: {
+    flexGrow: 1,
+  },
+  margin: {
+    margin: theme.spacing(1),
+  },
 }));
 
 export default function SignIn() {
   const classes = useStyles();
 
   return (
+    <div className={classes.root}>
+    <AppBar top="0px" position="relative">
+      <Toolbar>
+        <Typography variant="h6" align="center" className={classes.title}>
+          LIS-Downtime-Editor
+        </Typography>
+
+      </Toolbar>
+    </AppBar>
+
+
+
     <Container component="main" maxWidth="xs">
       <CssBaseline />
       <div className={classes.paper}>
@@ -70,6 +97,13 @@ export default function SignIn() {
             name="email"
             autoComplete="email"
             autoFocus
+            InputProps={{
+              startAdornment: (
+                <InputAdornment position="start">
+                  <AccountCircle />
+                </InputAdornment>
+              ),
+            }}
           />
           <TextField
             variant="outlined"
@@ -81,6 +115,13 @@ export default function SignIn() {
             type="password"
             id="password"
             autoComplete="current-password"
+            InputProps={{
+              startAdornment: (
+                <InputAdornment position="start">
+                  <LockIcon />
+                </InputAdornment>
+              ),
+            }}
           />
          
           <Button
@@ -107,5 +148,6 @@ export default function SignIn() {
         <Copyright />
       </Box>
     </Container>
+    </div>
   );
 }
