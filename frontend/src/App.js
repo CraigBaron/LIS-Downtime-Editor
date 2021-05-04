@@ -6,11 +6,11 @@ import EditedPage from './pages/EditedPage';
 import { BrowserRouter as Router, Route, Redirect, Switch } from 'react-router-dom'
 function App() 
 {
-  return (
+  return (
     <Router>
         <Switch>
             <Route path="/" exact>
-                <LoginPage />
+                <LoginPage />
             </Route>
             <Route path="/HomePage" exact>
                 <HomePage />
@@ -21,7 +21,7 @@ function App()
             <Redirect to="/" />
         </Switch>
     </Router>
-  );
+  );
 }
 
 export default App;
