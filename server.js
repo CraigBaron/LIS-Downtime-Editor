@@ -20,6 +20,7 @@ app.use((req, res, next) =>
   );
   next();
 });
+
 //Local
 
 var config = {
@@ -58,7 +59,6 @@ var conn = sql.connect(config, function (err) {
     console.log('Connected to SQL server')
 });
 
-module.exports.conn = conn
 
 app.use(express.json())
 const editedRecordsRouter = require('./backend/routes/editedRecords')

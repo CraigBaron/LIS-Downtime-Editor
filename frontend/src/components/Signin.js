@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -18,6 +18,11 @@ import AccountCircle from '@material-ui/icons/AccountCircle';
 import LockIcon from '@material-ui/icons/Lock';
 import InputAdornment from '@material-ui/core/InputAdornment';
 
+import axios from 'axios';
+import Alert from '@material-ui/lab/Alert';
+import IconButton from '@material-ui/core/IconButton';
+import Collapse from '@material-ui/core/Collapse';
+import CloseIcon from '@material-ui/icons/Close';
 
 function Copyright() {
   return (
@@ -62,21 +67,55 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function SignIn() {
-  const classes = useStyles();
 
+  const classes = useStyles();
+  const [email, setEmail] = useState("email")
+  const [password, setPassword] = useState("password")
+  const [open, setOpen] = React.useState(false);
+
+  function handleEmailChange(e) {
+    setEmail(e.target.value)
+    
+  }
+  function handlePasswordChange(e) {
+    setPassword(e.target.value)
+    
+  }
+
+  const Login = async(event) => {
+    await axios.post('http://localhost:5000/users/login',{
+      email : email,
+      password : password
+    })
+    .then((response) => {
+      if(response.data.acessToken)
+      {
+          window.location.href = "http://localhost:3000/HomePage";
+      }
+      else{
+        setOpen(true);
+      }
+    }, (error) => {
+      console.log(error.request)
+    });
+  }
+  
   return (
     <div className={classes.root}>
+
+    <div>
     <AppBar top="0px" position="relative">
       <Toolbar>
         <Typography variant="h6" align="center" className={classes.title}>
           LIS-Downtime-Editor
         </Typography>
-
       </Toolbar>
     </AppBar>
+    </div>
 
-
-
+    
+    
+    <div>
     <Container component="main" maxWidth="xs">
       <CssBaseline />
       <div className={classes.paper}>
@@ -93,6 +132,7 @@ export default function SignIn() {
             required
             fullWidth
             id="email"
+            onChange={handleEmailChange}
             label="Email Address"
             name="email"
             autoComplete="email"
@@ -114,6 +154,7 @@ export default function SignIn() {
             label="Password"
             type="password"
             id="password"
+            onChange={handlePasswordChange}
             autoComplete="current-password"
             InputProps={{
               startAdornment: (
@@ -123,13 +164,30 @@ export default function SignIn() {
               ),
             }}
           />
-         
+          <Collapse in={open}>
+        <Alert variant="outlined" severity="error"
+          action={
+            <IconButton
+              aria-label="close"
+              color="inherit"
+              size="small"
+              onClick={() => {
+                setOpen(false);
+              }}
+            >
+              <CloseIcon fontSize="inherit" />
+            </IconButton>
+          }
+        >
+          Error: Email or password is incorect
+        </Alert>
+      </Collapse>
           <Button
-            type="submit"
             fullWidth
             variant="contained"
             color="primary"
             className={classes.submit}
+            onClick={Login}
           >
             Sign In
           </Button>
@@ -149,5 +207,7 @@ export default function SignIn() {
       </Box>
     </Container>
     </div>
+  </div>
+    
   );
 }

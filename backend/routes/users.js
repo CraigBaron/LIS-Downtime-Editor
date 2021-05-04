@@ -9,7 +9,8 @@ const createToken = require("../createToken");
 
 router.post('/login', async (req, res) => {
 
-  const email = req.body.email
+  const {email, password}  = req.body;
+  
   try{
       var request = new sql.Request();
         request.query("SELECT * FROM Employees WHERE Email = '" + email + "'", async function (err, recordset) {
@@ -18,17 +19,16 @@ router.post('/login', async (req, res) => {
               return;
             }
             if(recordset.recordsets[0].length == 0){
-              return res.status(400).send('No User')
+              return res.send('No User')
             }
-            
-              if(await bcrypt.compare(req.body.password, recordset.recordsets[0][0].Password)){
+              if(await bcrypt.compare(password, recordset.recordsets[0][0].Password)){
+                    const level = recordset.recordsets[0][0].privledge
                     const user = {email : email}
                     const acessToken = createToken(user);
-                    res.json({acessToken: acessToken})
+                    res.json({acessToken: acessToken, Email: email, privledge: level})
               }else{
                 res.send('Not ALlowed')
               }
-              
         })
       }catch(err){
         res.status(500).send()

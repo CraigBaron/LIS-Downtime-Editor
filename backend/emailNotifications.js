@@ -18,13 +18,12 @@ const FindRecipients = async() => {
         Sendemail();
         })   
     }catch(err){
-    
+        
     }     
 }
 
 const Sendemail = async() => {
-    console.log(emailAddr)
-
+    
     const msg = {
         to: emailAddr,
         from: 'lis.downtime.editor.test@gmail.com',
@@ -32,13 +31,14 @@ const Sendemail = async() => {
         text: 'A record has been Edited and its status is pending approval.'
     }
 
-        sgMail.sendMultiple(msg, function(err, info) {
-            if(err){
-                console.log("Email Not Sent");
-            }
-            else {
-                console.log("Email Sent Success");
-            }
-        })
+    sgMail.sendMultiple(msg, function(err, info) {
+        if(err){
+            console.log("Email Not Sent");
+        }
+        else {
+            console.log("Email Sent Success");
+        }
+    })
 }
+
 module.exports.FindRecipients = FindRecipients;
