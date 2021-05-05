@@ -99,10 +99,12 @@ export default function SignIn() {
 
   function handleEmailChange(e) {
     setEmail(e.target.value)
+    console.log(email)
 
   }
   function handlePasswordChange(e) {
     setPassword(e.target.value)
+    console.log(password)
 
   }
 
@@ -112,6 +114,7 @@ export default function SignIn() {
       password: password
     })
       .then((response) => {
+        console.log(response)
         if (response.data.acessToken) {
           window.location.href = "http://localhost:3000/HomePage";
         }
@@ -135,7 +138,6 @@ export default function SignIn() {
           </Toolbar>
         </AppBar>
       </div>
-
 
 
       <div>
@@ -175,11 +177,10 @@ export default function SignIn() {
                 fullWidth
                 name="password"
                 label="Password"
-
                 id="password"
                 onChange={handlePasswordChange}
                 autoComplete="current-password"
-                type={values.showPassword ? 'text' : 'password'}
+              /*  type={values.showPassword ? 'text' : 'password'}
                 value={values.password}
                 onChange={handleChange('password')}
                 InputProps={{
@@ -199,7 +200,7 @@ export default function SignIn() {
                       </IconButton>
                     </InputAdornment>
                   ),
-                }}
+                }}*/
                 
               />
               <Collapse in={open}>

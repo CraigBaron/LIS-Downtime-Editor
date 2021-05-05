@@ -2,67 +2,55 @@ import * as React from 'react';
 import { DataGrid } from '@material-ui/data-grid';
 import {Button} from '@material-ui/core'
 import {useState} from 'react'
+import axios from 'axios';
 
 const columns = [
     { field: 'id', headerName: 'ID', width: 150 },
-    { field: 'lineid', headerName: 'LineID', width: 130 },
-    { field: 'machineid', headerName: 'MachineID', width: 130 },
-    { field: 'componentid', headerName: 'ComponentID', width: 130 },
-    { field: 'startTime', headerName: 'StartTime', width: 250 },
-    { field: 'endTime', headerName: 'EndTime', width: 250 },
-    { field: 'comments', headerName: 'Comments', width: 130 },
-    { field: 'duration', headerName: 'Duration', width: 130 },
-    { field: 'shift', headerName: 'Shift', width: 130 },
-    { field: 'reason', headerName: 'Reason', width: 130 },
-    { field: 'status', headerName: 'Status', width: 130 },
+    { field: 'LineID', headerName: 'LineID', width: 130 },
+    { field: 'Machine', headerName: 'MachineID', width: 130 },
+    { field: 'ComponentID', headerName: 'ComponentID', width: 130 },
+    { field: 'StartDateTime', headerName: 'StartTime', width: 250 },
+    { field: 'EndDateTime', headerName: 'EndTime', width: 250 },
+    { field: 'Comments', headerName: 'Comments', width: 130 },
+    { field: 'DurationTotalMinutes', headerName: 'Duration', width: 130 },
+    { field: 'Secondarypk', headerName: 'Shift', width: 130 },
+    { field: 'Reason', headerName: 'Reason', width: 130 },
+    { field: 'Status', headerName: 'Status', width: 130 },
   ];
   
   
-  const rows = [];
-  var temp;
-  var i;
   function EditedTable() {
     const [rows, setrows] = useState([])
     var DisplayRecords;
     window.onload = DisplayRecords = async event => 
         {
-            event.preventDefault();
-            try
-            {    
-                const response = await fetch('http://localhost:5000/editedRecords',
-                    {method:'GET',headers:{'Content-Type': 'application/json'}});
-                const record=[];
-                var res = JSON.parse(await response.text());
-                console.log(res.recordset)
-                if(res.recordset)
-                {
-                    for(i=0;i<res.recordset.length;i++)
+            const record = [];
+            let temp
+            await axios.get('http://localhost:5000/editedRecords')
+            .then((response) => {
+              console.log(response.data[0]);
+              for(var i=0;i<response.data[0].length;i++)
                     {
                       temp = {
-                        "id" : res.recordset[i].uniqueID,
-                        "lineid" : res.recordset[i].LineID,
-                        "machineid" : res.recordset[i].Machine,
-                        "componentid" : res.recordset[i].ComponentID,
-                        "startTime" : res.recordset[i].StartDateTime,
-                        "endTime" : res.recordset[i].EndDateTime,
-                        "reason" : res.recordset[i].Comments,
-                        "duration" : res.recordset[i].DurationTotalMinutes,
-                        "shift" : res.recordset[i].Secondarypk,
-                        "reason" : res.recordset[i].Reason,
-                        "status" : res.recordset[i].Status,
-                        
+                        "id" : response.data[0][i].UniqueID,
+                        "LineID" : response.data[0][i].LineID,
+                        "Machine" : response.data[0][i].Machine,
+                        "ComponentID" : response.data[0][i].ComponentID,
+                        "StartDateTime" : response.data[0][i].StartDateTime,
+                        "EndDateTime" : response.data[0][i].EndDateTime,
+                        "Comments" : response.data[0][i].Comments,
+                        "DurationTotalMinutes" : response.data[0][i].DurationTotalMinutes,
+                        "Secondarypk" : response.data[0][i].Secondarypk,
+                        "Reason" : response.data[0][i].Reason,
+                        "Status" : response.data[0][i].Status,
                       }
                       record.push(temp);
+                      setrows(record)
                     }
-                    setrows(record)
-                }
-                
-            }
-            catch(e)
-            {
-                alert(e.toString());
-                return;
-            }   
+            }, (error)=> {
+              console.log(error);
+            });
+            
         };
     
     return (
@@ -70,7 +58,7 @@ const columns = [
       <div><br></br><h3>Edited Records</h3></div>
       
       <div style={{ height: 800, width: '100%' }}>
-        <DataGrid rows={rows} columns={columns} pageSize={20} checkboxSelection />
+        <DataGrid rows={rows} columns={columns} pageSize={20}/>
       </div>
       </div>
     );

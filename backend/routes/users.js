@@ -21,6 +21,7 @@ router.post('/login', async (req, res) => {
             if(recordset.recordsets[0].length == 0){
               return res.send('No User')
             }
+              console.log(password)
               if(await bcrypt.compare(password, recordset.recordsets[0][0].Password)){
                     const level = recordset.recordsets[0][0].privledge
                     const user = {email : email}
@@ -37,8 +38,10 @@ router.post('/login', async (req, res) => {
 
 router.post('/signUp', async (req,res) => {
    
+    const {email, password, firstName, lastName, privledge} = req.body;
+
         var request = new sql.Request();
-        request.query("SELECT * FROM Employees WHERE Email = '" + req.body.email + "'", async function(err, recordset){
+        request.query("SELECT * FROM Employees WHERE Email = '" + email + "'", async function(err, recordset){
           try{
             if(recordset.recordsets[0].length > 0){
              return res.send('There Already exists an account with this email');
@@ -52,11 +55,11 @@ router.post('/signUp', async (req,res) => {
     const create = async () => {
         try{
             const salt = await bcrypt.genSalt()
-            const hashedPassword = await bcrypt.hash(req.body.password, salt)
+            const hashedPassword = await bcrypt.hash(password, salt)
         
             var request = new sql.Request();
 
-            request.query("INSERT INTO Employees (Email, Password, privledge ) VALUES ('" + req.body.email + "','" +  hashedPassword + "','" + req.body.level + "')", function (err, recordset) {
+            request.query("INSERT INTO Employees (Email, Password, FirstName, LastName, Privledge ) VALUES ('" + email + "','" +  hashedPassword + "','" + firstName + "','" + lastName + "','" + privledge + "')", function (err, recordset) {
             if (err) console.log(err)
 
             return res.json(recordset);

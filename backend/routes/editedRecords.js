@@ -8,13 +8,12 @@ const SendEmail = require("../emailNotifications").FindRecipients;
 router.get('/' /*,verifyAuthToken*/, async (req, res) => {
     try{
         var request = new sql.Request();
-    
-        request.query("SELECT * FROM NewRecords", function (err, recordset) {
+        request.query("SELECT * FROM EditedRecords", function (err, recordset) {
             if (err){
                  console.log(err);
                  return;
             }
-            res.json(recordset);
+            res.json(recordset.recordsets);
         });
     }catch (err){
         res.status(500).json({message: err.message})
@@ -28,8 +27,7 @@ router.post('/add'/*,verifyAuthToken*/, async (req, res) => {
 
     try{
         var request = new sql.Request();
-    
-        request.query("INSERT INTO NewRecords (UniqueID, pkDowntimeEventID, StartDateTime, EndDateTime, DurationTotalMinutes, LineID, Machine, ComponentID, Comments, Secondarypk, Reason, Status) VALUES ('" + uniqueID + "','" + pkDowntimeEventID + "','" + startDate + "','" + endDate + "','" + durationTotalMinutes + "','" + LineID + "','" + machine + "','" + componentID + "', '" + comments + "', '" + secondarypk + "', '" + reason + "', '" + status + "')", function (err, recordset) {
+        request.query("INSERT INTO EditedRecords (UniqueID, pkDowntimeEventID, StartDateTime, EndDateTime, DurationTotalMinutes, LineID, Machine, ComponentID, Comments, Secondarypk, Reason, Status) VALUES ('" + uniqueID + "','" + pkDowntimeEventID + "','" + startDate + "','" + endDate + "','" + durationTotalMinutes + "','" + LineID + "','" + machine + "','" + componentID + "', '" + comments + "', '" + secondarypk + "', '" + reason + "', '" + status + "')", function (err, recordset) {
             if(err)
             {
                 console.log(err);
@@ -49,7 +47,7 @@ router.post('/delete', async (req, res) => {
     try{
         var request = new sql.Request();
     
-        request.query("DELETE FROM NewRecords WHERE uniqueID = '"+ ID +"'", function (err, recordset) {
+        request.query("DELETE FROM EditedRecords WHERE uniqueID = '"+ ID +"'", function (err, recordset) {
             if (err){
                 console.log(err);
                 return;
@@ -69,7 +67,7 @@ router.post('/search', async (req, res) => {
     try{
         var request = new sql.Request();
     
-        request.query("SELECT * FROM NewRecords", function (err, recordset) {
+        request.query("SELECT * FROM EditedRecords", function (err, recordset) {
             if (err){
                 console.log(err);
                 return;

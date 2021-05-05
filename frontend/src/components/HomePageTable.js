@@ -16,8 +16,9 @@ const useStyles = makeStyles((theme) => ({
     },
   },
 }));
+
 const columns = [
-  { field: 'id', headerName: 'ID', width: 70 },
+  { field: 'id', headerName: 'UniqueID', width: 70 },
   { field: 'lineid', headerName: 'LineID', width: 130 },
   { field: 'machineid', headerName: 'MachineID', width: 130 },
   { field: 'componentid', headerName: 'ComponentID', width: 130 },
@@ -49,7 +50,7 @@ function DataTable() {
   const [selDuration, setselDuration] = useState();
   const [selShift, setselShift] = useState();
 
-  
+  /*
   var DisplayRecords;
   window.onload = DisplayRecords = async event => 
       {
@@ -88,6 +89,7 @@ function DataTable() {
               return;
           }    
       };
+  */
   const EditRecord = (item) =>
   {
       handleShow()
@@ -101,6 +103,7 @@ function DataTable() {
       setselDuration(item.duration)
       setselShift(item.shift)
   }
+  
   const doEditRecord = async event =>
   {
      event.preventDefault();
@@ -135,14 +138,14 @@ function DataTable() {
     var filter = document.getElementById("searchBar").value
     var data = JSON.stringify({ "filter": filter });
     try{    
-      const response = await fetch('http://localhost:5000/API/SearchMachineByLike',
+      const response = await fetch('http://localhost:5000/machineRecords',
       {method:'POST',body:data,headers:{'Content-Type': 'application/json'}});
       const record=[];
       var res = JSON.parse(await response.text());
       if(res.recordset){
         for(i=0;i<res.recordset.length;i++){
           temp = {
-            "id" : res.recordset[i].ID,
+            "id" : res.recordset[i].UniqueID,
             "startTime" : res.recordset[i].StartDateTime,
             "endTime" : res.recordset[i].EndDateTime,
             "duration" : res.recordset[i].DurationTotalMinutes,

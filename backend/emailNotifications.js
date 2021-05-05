@@ -7,10 +7,10 @@ const emailAddr = [];
 
 const FindRecipients = async() => {
     emailAddr.length = 0;
-    var Level = 3;
+    var privledge = 3;
     try{
     var request = new sql.Request();
-    request.query("SELECT Email FROM Employees WHERE privledge = '"+ Level +"'", async function(err, recordset){
+    request.query("SELECT Email FROM Employees WHERE Privledge = '"+ privledge +"'", async function(err, recordset){
         for(var i=0;i<recordset.recordsets[0].length;i++)
         {
             emailAddr.push(recordset.recordsets[0][i].Email);
