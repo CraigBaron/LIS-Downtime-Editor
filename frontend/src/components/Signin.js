@@ -17,6 +17,8 @@ import Toolbar from '@material-ui/core/Toolbar';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import LockIcon from '@material-ui/icons/Lock';
 import InputAdornment from '@material-ui/core/InputAdornment';
+import Visibility from '@material-ui/icons/Visibility';
+import VisibilityOff from '@material-ui/icons/VisibilityOff';
 
 import axios from 'axios';
 import Alert from '@material-ui/lab/Alert';
@@ -66,148 +68,184 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+
+
 export default function SignIn() {
 
   const classes = useStyles();
   const [email, setEmail] = useState("email")
   const [password, setPassword] = useState("password")
   const [open, setOpen] = React.useState(false);
+  
+  const [values, setValues] = React.useState({
+    amount: '',
+    password: '',
+    weight: '',
+    weightRange: '',
+    showPassword: false,
+  });
+
+  const handleChange = (prop) => (event) => {
+    setValues({ ...values, [prop]: event.target.value });
+  };
+
+  const handleClickShowPassword = () => {
+    setValues({ ...values, showPassword: !values.showPassword });
+  };
+
+  const handleMouseDownPassword = (event) => {
+    event.preventDefault();
+  };
 
   function handleEmailChange(e) {
     setEmail(e.target.value)
-    
+
   }
   function handlePasswordChange(e) {
     setPassword(e.target.value)
-    
+
   }
 
-  const Login = async(event) => {
-    await axios.post('http://localhost:5000/users/login',{
-      email : email,
-      password : password
+  const Login = async (event) => {
+    await axios.post('http://localhost:5000/users/login', {
+      email: email,
+      password: password
     })
-    .then((response) => {
-      if(response.data.acessToken)
-      {
+      .then((response) => {
+        if (response.data.acessToken) {
           window.location.href = "http://localhost:3000/HomePage";
-      }
-      else{
-        setOpen(true);
-      }
-    }, (error) => {
-      console.log(error.request)
-    });
+        }
+        else {
+          setOpen(true);
+        }
+      }, (error) => {
+        console.log(error.request)
+      });
   }
-  
+
   return (
     <div className={classes.root}>
 
-    <div>
-    <AppBar top="0px" position="relative">
-      <Toolbar>
-        <Typography variant="h6" align="center" className={classes.title}>
-          LIS-Downtime-Editor
+      <div>
+        <AppBar top="0px" position="relative">
+          <Toolbar>
+            <Typography variant="h6" align="center" className={classes.title}>
+              LIS-Downtime-Editor
         </Typography>
-      </Toolbar>
-    </AppBar>
+          </Toolbar>
+        </AppBar>
+      </div>
+
+
+
+      <div>
+        <Container component="main" maxWidth="xs">
+          <CssBaseline />
+          <div className={classes.paper}>
+            <Avatar className={classes.avatar}>
+              <LockOutlinedIcon />
+            </Avatar>
+            <Typography component="h1" variant="h5">
+              Sign in
+        </Typography>
+            <form className={classes.form} noValidate>
+              <TextField
+                variant="outlined"
+                margin="normal"
+                required
+                fullWidth
+                id="email"
+                onChange={handleEmailChange}
+                label="Email Address"
+                name="email"
+                autoComplete="email"
+                autoFocus
+                InputProps={{
+                  startAdornment: (
+                    <InputAdornment position="start">
+                      <AccountCircle />
+                    </InputAdornment>
+                  ),
+                }}
+              />
+              <TextField
+                variant="outlined"
+                margin="normal"
+                required
+                fullWidth
+                name="password"
+                label="Password"
+
+                id="password"
+                onChange={handlePasswordChange}
+                autoComplete="current-password"
+                type={values.showPassword ? 'text' : 'password'}
+                value={values.password}
+                onChange={handleChange('password')}
+                InputProps={{
+                  startAdornment: (
+                    <InputAdornment position="start">
+                      <LockIcon />
+                    </InputAdornment>
+                  ),
+                  endAdornment:(
+                    <InputAdornment position="end">
+                      <IconButton
+                        aria-label="toggle password visibility"
+                        onClick={handleClickShowPassword}
+                        onMouseDown={handleMouseDownPassword}
+                      >
+                        {values.showPassword ? <Visibility /> : <VisibilityOff />}
+                      </IconButton>
+                    </InputAdornment>
+                  ),
+                }}
+                
+              />
+              <Collapse in={open}>
+                <Alert variant="outlined" severity="error"
+                  action={
+                    <IconButton
+                      aria-label="close"
+                      color="inherit"
+                      size="small"
+                      onClick={() => {
+                        setOpen(false);
+                      }}
+                    >
+                      <CloseIcon fontSize="inherit" />
+                    </IconButton>
+                  }
+                >
+                  Error: Email or password is incorect
+        </Alert>
+              </Collapse>
+              <Button
+                fullWidth
+                variant="contained"
+                color="primary"
+                className={classes.submit}
+                onClick={Login}
+              >
+                Sign In
+          </Button>
+              <Grid container>
+                <Grid item xs>
+                  <Link href="#" variant="body2">
+                    Forgot password?
+              </Link>
+                </Grid>
+                <Grid item>
+                </Grid>
+              </Grid>
+            </form>
+          </div>
+          <Box mt={8}>
+            <Copyright />
+          </Box>
+        </Container>
+      </div>
     </div>
 
-    
-    
-    <div>
-    <Container component="main" maxWidth="xs">
-      <CssBaseline />
-      <div className={classes.paper}>
-        <Avatar className={classes.avatar}>
-          <LockOutlinedIcon />
-        </Avatar>
-        <Typography component="h1" variant="h5">
-          Sign in
-        </Typography>
-        <form className={classes.form} noValidate>
-          <TextField
-            variant="outlined"
-            margin="normal"
-            required
-            fullWidth
-            id="email"
-            onChange={handleEmailChange}
-            label="Email Address"
-            name="email"
-            autoComplete="email"
-            autoFocus
-            InputProps={{
-              startAdornment: (
-                <InputAdornment position="start">
-                  <AccountCircle />
-                </InputAdornment>
-              ),
-            }}
-          />
-          <TextField
-            variant="outlined"
-            margin="normal"
-            required
-            fullWidth
-            name="password"
-            label="Password"
-            type="password"
-            id="password"
-            onChange={handlePasswordChange}
-            autoComplete="current-password"
-            InputProps={{
-              startAdornment: (
-                <InputAdornment position="start">
-                  <LockIcon />
-                </InputAdornment>
-              ),
-            }}
-          />
-          <Collapse in={open}>
-        <Alert variant="outlined" severity="error"
-          action={
-            <IconButton
-              aria-label="close"
-              color="inherit"
-              size="small"
-              onClick={() => {
-                setOpen(false);
-              }}
-            >
-              <CloseIcon fontSize="inherit" />
-            </IconButton>
-          }
-        >
-          Error: Email or password is incorect
-        </Alert>
-      </Collapse>
-          <Button
-            fullWidth
-            variant="contained"
-            color="primary"
-            className={classes.submit}
-            onClick={Login}
-          >
-            Sign In
-          </Button>
-          <Grid container>
-            <Grid item xs>
-              <Link href="#" variant="body2">
-                Forgot password?
-              </Link>
-            </Grid>
-            <Grid item>
-            </Grid>
-          </Grid>
-        </form>
-      </div>
-      <Box mt={8}>
-        <Copyright />
-      </Box>
-    </Container>
-    </div>
-  </div>
-    
   );
 }
