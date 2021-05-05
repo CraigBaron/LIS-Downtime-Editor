@@ -131,8 +131,36 @@ function DataTable() {
             }      
   };
 
-  function searchRecords() {
+  async function searchRecords(){
     var filter = document.getElementById("searchBar").value
+    var data = JSON.stringify({ "filter": filter });
+    try{    
+      const response = await fetch('http://localhost:5000/API/SearchMachineByLike',
+      {method:'POST',body:data,headers:{'Content-Type': 'application/json'}});
+      const record=[];
+      var res = JSON.parse(await response.text());
+      if(res.recordset){
+        for(i=0;i<res.recordset.length;i++){
+          temp = {
+            "id" : res.recordset[i].ID,
+            "startTime" : res.recordset[i].StartDateTime,
+            "endTime" : res.recordset[i].EndDateTime,
+            "duration" : res.recordset[i].DurationTotalMinutes,
+            "lineid" : res.recordset[i].LineID,
+            "machineid" : res.recordset[i].Machine,
+            "componentid" : res.recordset[i].ComponentID,
+            "reason" : res.recordset[i].Comments,
+            "shift" : res.recordset[i].Secondarypk,
+          }
+            record.push(temp);
+        }
+        setrows(record)
+      }
+    }
+    catch(e){
+      alert(e.toString());
+      return;
+     }  
     return true;
   }
 
@@ -145,7 +173,7 @@ function DataTable() {
     </div>
     
     <div style={{ height: 800, width: '100%' }}>
-      <DataGrid rows={rows} columns={columns} pageSize={20} onRowClick = {item => {EditRecord(item.row)}}/>
+      <DataGrid rows={rows} columns={columns} pageSize={20} onRowClick = {item => {EditRecord(item.row)}} cancelOnEscape = {true}/>
     </div>
 
     <Modal show={show} onHide={handleClose}>
