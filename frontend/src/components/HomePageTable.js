@@ -93,7 +93,6 @@ function DataTable() {
   const EditRecord = (item) =>
   {
       handleShow()
-      setselID(item.id)
       setselLineID(item.lineid)
       setselMachineID(item.machineid)
       setselComponentID(item.componentid)
@@ -107,7 +106,6 @@ function DataTable() {
   const doEditRecord = async event =>
   {
      event.preventDefault();
-      var newid = document.getElementById("idEdit").value
       var newlineid = document.getElementById("lineidEdit").value
       var newmachineid = document.getElementById("machineidEdit").value
       var newcomponentid = document.getElementById("componentidEdit").value
@@ -116,7 +114,6 @@ function DataTable() {
       var newreason = document.getElementById("reasonEdit").value
       var newduration = document.getElementById("durationEdit").value
       var newshift = document.getElementById("shiftEdit").value
-      console.log(newid)
       var obj = {startDate : newstarttime, endDate : newendtime, durationTotalMinutes : newduration, lineID : newlineid, machine : newmachineid, componentID : newcomponentid, comments : newreason, secondarypk : newshift}
       
        var js = JSON.stringify(obj);  
@@ -184,15 +181,6 @@ function DataTable() {
           <Modal.Title>Edit Record</Modal.Title>
         </Modal.Header>
         <form className={classes.root} noValidate autoComplete="off">
-          <div>
-              <TextField
-              id="idEdit"
-              label="ID"
-              defaultValue={selID}
-              variant="outlined"
-              
-              />
-          </div>
           <div>
           <TextField
               id="lineidEdit"
