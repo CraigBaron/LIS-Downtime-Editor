@@ -114,6 +114,10 @@ function DataTable() {
       var newreason = document.getElementById("reasonEdit").value
       var newduration = document.getElementById("durationEdit").value
       var newshift = document.getElementById("shiftEdit").value
+<<<<<<< Updated upstream
+=======
+      
+>>>>>>> Stashed changes
       var obj = {startDate : newstarttime, endDate : newendtime, durationTotalMinutes : newduration, lineID : newlineid, machine : newmachineid, componentID : newcomponentid, comments : newreason, secondarypk : newshift}
       
        var js = JSON.stringify(obj);  
