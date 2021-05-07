@@ -5,7 +5,7 @@ const sql = require('mssql');
 const verifyAuthToken = require("../middleware/authenticate");
 const SendEmail = require("../emailNotifications").FindRecipients;
 //get all records
-router.get('/' ,verifyAuthToken, async (req, res) => {
+router.get('/' /*,verifyAuthToken*/, async (req, res) => {
     try{
         var request = new sql.Request();
         request.query("SELECT * FROM EditedRecords", function (err, recordset) {
