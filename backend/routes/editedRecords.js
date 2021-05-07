@@ -5,7 +5,7 @@ const sql = require('mssql');
 const verifyAuthToken = require("../middleware/authenticate");
 const SendEmail = require("../emailNotifications").FindRecipients;
 //get all records
-router.get('/' /*,verifyAuthToken*/, async (req, res) => {
+router.get('/' ,verifyAuthToken, async (req, res) => {
     try{
         var request = new sql.Request();
         request.query("SELECT * FROM EditedRecords", function (err, recordset) {
@@ -21,7 +21,7 @@ router.get('/' /*,verifyAuthToken*/, async (req, res) => {
 })
 
 //add new record
-router.post('/add'/*,verifyAuthToken*/, async (req, res) => {
+router.post('/add',verifyAuthToken, async (req, res) => {
     
     const { uniqueID, pkDowntimeEventID, startDate, endDate, durationTotalMinutes, LineID, machine, componentID, comments, secondarypk, reason, status } = req.body;
 
@@ -42,7 +42,7 @@ router.post('/add'/*,verifyAuthToken*/, async (req, res) => {
   
 })
 //delete record
-router.post('/delete', async (req, res) => {
+router.post('/delete',verifyAuthToken, async (req, res) => {
     const { ID } = req.body;
     try{
         var request = new sql.Request();

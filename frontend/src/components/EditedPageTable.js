@@ -18,7 +18,6 @@ const columns = [
     { field: 'Status', headerName: 'Status', width: 130 },
   ];
   
-  
   function EditedTable() {
     const [rows, setrows] = useState([])
     var DisplayRecords;

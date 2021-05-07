@@ -32,6 +32,7 @@ export default function ButtonAppBar() {
 
   const doLogout = async event =>
   {
+    localStorage.clear();
     window.location.href = '/LoginPage';
   }
   const doEditPage = async event =>

@@ -31,14 +31,13 @@ function Copyright() {
     <Typography variant="body2" color="textSecondary" align="center">
       {'Copyright © '}
       <Link color="inherit">
-        Coke-Cola
+        Coka-Cola
       </Link>{' '}
       {new Date().getFullYear()}
       {'.'}
     </Typography>
   );
 }
-
 const useStyles = makeStyles((theme) => ({
   paper: {
     marginTop: theme.spacing(8),
@@ -85,27 +84,12 @@ export default function SignIn() {
     showPassword: false,
   });
 
-  const handleChange = (prop) => (event) => {
-    setValues({ ...values, [prop]: event.target.value });
-  };
-
-  const handleClickShowPassword = () => {
-    setValues({ ...values, showPassword: !values.showPassword });
-  };
-
-  const handleMouseDownPassword = (event) => {
-    event.preventDefault();
-  };
-
+  
   function handleEmailChange(e) {
     setEmail(e.target.value)
-    console.log(email)
-
   }
   function handlePasswordChange(e) {
     setPassword(e.target.value)
-    console.log(password)
-
   }
 
   const Login = async (event) => {
@@ -116,6 +100,8 @@ export default function SignIn() {
       .then((response) => {
         console.log(response)
         if (response.data.acessToken) {
+          localStorage.setItem('acessToken', response.data.acessToken);
+          localStorage.setItem('Email', response.data.Email);
           window.location.href = "http://localhost:3000/HomePage";
         }
         else {
@@ -177,30 +163,18 @@ export default function SignIn() {
                 fullWidth
                 name="password"
                 label="Password"
+                type="password"
                 id="password"
                 onChange={handlePasswordChange}
                 autoComplete="current-password"
-              /*  type={values.showPassword ? 'text' : 'password'}
-                value={values.password}
-                onChange={handleChange('password')}
                 InputProps={{
                   startAdornment: (
                     <InputAdornment position="start">
                       <LockIcon />
                     </InputAdornment>
                   ),
-                  endAdornment:(
-                    <InputAdornment position="end">
-                      <IconButton
-                        aria-label="toggle password visibility"
-                        onClick={handleClickShowPassword}
-                        onMouseDown={handleMouseDownPassword}
-                      >
-                        {values.showPassword ? <Visibility /> : <VisibilityOff />}
-                      </IconButton>
-                    </InputAdornment>
-                  ),
-                }}*/
+                  
+                }}
                 
               />
               <Collapse in={open}>

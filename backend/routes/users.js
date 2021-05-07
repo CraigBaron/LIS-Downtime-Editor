@@ -58,7 +58,6 @@ router.post('/signUp', async (req,res) => {
             const hashedPassword = await bcrypt.hash(password, salt)
         
             var request = new sql.Request();
-
             request.query("INSERT INTO Employees (Email, Password, FirstName, LastName, Privledge ) VALUES ('" + email + "','" +  hashedPassword + "','" + firstName + "','" + lastName + "','" + privledge + "')", function (err, recordset) {
             if (err) console.log(err)
 
