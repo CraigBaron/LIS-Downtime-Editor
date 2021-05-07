@@ -21,10 +21,12 @@ router.get('/' /*,verifyAuthToken*/, async (req, res) => {
 })
 
 //add new record
-router.post('/add',verifyAuthToken, async (req, res) => {
+router.post('/add',/*verifyAuthToken,*/ async (req, res) => {
+    console.log(req.body)
     
-    const { uniqueID, pkDowntimeEventID, startDate, endDate, durationTotalMinutes, LineID, machine, componentID, comments, secondarypk, reason, status } = req.body;
-
+    const { uniqueID, pkDowntimeEventID, startDate, endDate, durationTotalMinutes, LineID, machine, componentID, comments, secondarypk} = req.body;
+    let reason = "sample";
+    let status = "pending";
     try{
         var request = new sql.Request();
         request.query("INSERT INTO EditedRecords (UniqueID, pkDowntimeEventID, StartDateTime, EndDateTime, DurationTotalMinutes, LineID, Machine, ComponentID, Comments, Secondarypk, Reason, Status) VALUES ('" + uniqueID + "','" + pkDowntimeEventID + "','" + startDate + "','" + endDate + "','" + durationTotalMinutes + "','" + LineID + "','" + machine + "','" + componentID + "', '" + comments + "', '" + secondarypk + "', '" + reason + "', '" + status + "')", function (err, recordset) {

@@ -6,7 +6,7 @@ import {Modal} from 'react-bootstrap'
 import TextField from '@material-ui/core/TextField';
 import { makeStyles } from '@material-ui/core/styles';
 import SearchBar from "material-ui-search-bar";
-
+import {Box} from "@material-ui/core"
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -18,7 +18,8 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const columns = [
-  { field: 'id', headerName: 'UniqueID', width: 70 },
+  { field: 'id', headerName: 'UniqueID', width: 130 },
+  { field: 'pkdowntimeeventid', headerName: 'pkDowntimeEventID', width: 130 },
   { field: 'lineid', headerName: 'LineID', width: 130 },
   { field: 'machineid', headerName: 'MachineID', width: 130 },
   { field: 'componentid', headerName: 'ComponentID', width: 130 },
@@ -40,6 +41,7 @@ function DataTable() {
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
+  const [ selpkID, setselpkID] = useState();
   const [selID, setselID] = useState();
   const [selLineID, setselLineID] = useState();
   const [selMachineID, setselMachineID] = useState();
@@ -93,6 +95,8 @@ function DataTable() {
   const EditRecord = (item) =>
   {
       handleShow()
+      setselID(item.id)
+      setselpkID(item.pkdowntimeeventid)
       setselLineID(item.lineid)
       setselMachineID(item.machineid)
       setselComponentID(item.componentid)
@@ -106,7 +110,9 @@ function DataTable() {
   const doEditRecord = async event =>
   {
      event.preventDefault();
+      var newid = document.getElementById("idEdit").value
       var newlineid = document.getElementById("lineidEdit").value
+      var newpkid = document.getElementById("pkidEdit").value
       var newmachineid = document.getElementById("machineidEdit").value
       var newcomponentid = document.getElementById("componentidEdit").value
       var newstarttime = document.getElementById("startTimeEdit").value
@@ -114,13 +120,13 @@ function DataTable() {
       var newreason = document.getElementById("reasonEdit").value
       var newduration = document.getElementById("durationEdit").value
       var newshift = document.getElementById("shiftEdit").value
-      var obj = {startDate : newstarttime, endDate : newendtime, durationTotalMinutes : newduration, lineID : newlineid, machine : newmachineid, componentID : newcomponentid, comments : newreason, secondarypk : newshift}
+      var obj = {uniqueID : newid, pkDowntimeEventID : newpkid, startDate : newstarttime, endDate : newendtime, durationTotalMinutes : newduration, LineID : newlineid, machine : newmachineid, componentID : newcomponentid, comments : newreason, secondarypk : newshift}
       
        var js = JSON.stringify(obj);  
       
         try
             {    
-                const response = await fetch('http://localhost:5000/API/AddEditedRecord',
+                const response = await fetch('http://localhost:5000/editedRecords/add',
                     {method:'POST',body:js, headers:{'Content-Type': 'application/json'}});
                 var res = JSON.parse(await response.text());      
             }
@@ -143,6 +149,7 @@ function DataTable() {
         for(i=0;i<res.recordset.length;i++){
           temp = {
             "id" : res.recordset[i].UniqueID,
+            "pkdowntimeeventid" : res.recordset[i].pkDowntimeEventID,
             "startTime" : res.recordset[i].StartDateTime,
             "endTime" : res.recordset[i].EndDateTime,
             "duration" : res.recordset[i].DurationTotalMinutes,
@@ -166,14 +173,16 @@ function DataTable() {
 
   return (
     <div>
-    <div><br></br><h3>Machine Data</h3></div>
-
-    <div>
-      <SearchBar id = "searchBar" onRequestSearch={searchRecords} placeholder="Search Records..." autoFocus />
-    </div>
     
+    <div>
+      <Box marginTop="2%" alignItems="center" display="flex" justifyContent="center">
+      <SearchBar style={{width: '20%'}} id = "searchBar" onRequestSearch={searchRecords} placeholder="Search Records..." autoFocus />
+      </Box>
+    </div>
+    <br></br>
     <div style={{ height: 800, width: '100%' }}>
-      <DataGrid rows={rows} columns={columns} pageSize={20} onRowClick = {item => {EditRecord(item.row)}} cancelOnEscape = {true}/>
+    <div><h3>Machine Records</h3></div>
+      <DataGrid Header="MachineData" rows={rows} columns={columns} pageSize={20} onRowClick = {item => {EditRecord(item.row)}} cancelOnEscape = {true}/>
     </div>
 
     <Modal show={show} onHide={handleClose}>
@@ -181,12 +190,32 @@ function DataTable() {
           <Modal.Title>Edit Record</Modal.Title>
         </Modal.Header>
         <form className={classes.root} noValidate autoComplete="off">
+        <div>
+          <TextField
+              id="idEdit"
+              label="UniqueID"
+              defaultValue={selID}
+              variant="outlined"
+              fullWidth
+              InputProps={{readOnly: true,}}
+              />
+          </div>
+          <div>
+          <TextField
+              id="pkidEdit"
+              label="pkDowntimeEventID"
+              defaultValue={selpkID}
+              variant="outlined"
+              fullWidth
+              />
+          </div>
           <div>
           <TextField
               id="lineidEdit"
               label="LineID"
               defaultValue={selLineID}
               variant="outlined"
+              fullWidth
               />
           </div>
           <div>
@@ -195,6 +224,7 @@ function DataTable() {
               label="MachineID"
               defaultValue={selMachineID}
               variant="outlined"
+              fullWidth
               />
           </div>
           <div>
@@ -203,6 +233,7 @@ function DataTable() {
               label="ComponentID"
               defaultValue={selComponentID}
               variant="outlined"
+              fullWidth
               />
           </div>
           <div>
@@ -211,6 +242,7 @@ function DataTable() {
               label="StartTime"
               defaultValue={selStartTime}
               variant="outlined"
+              fullWidth
               />
           </div>
           <div>
@@ -219,6 +251,7 @@ function DataTable() {
               label="EndTime"
               defaultValue={selEndTime}
               variant="outlined"
+              
               />
           </div>
           <div>
@@ -227,6 +260,7 @@ function DataTable() {
               label="Reason"
               defaultValue={selReason}
               variant="outlined"
+              fullWidth
               />
           </div>
           <div>
@@ -235,6 +269,7 @@ function DataTable() {
               label="Duration"
               defaultValue={selDuration}
               variant="outlined"
+              fullWidth
               />
           </div>
           <div>
@@ -243,6 +278,7 @@ function DataTable() {
               label="Shift"
               defaultValue={selShift}
               variant="outlined"
+              fullWidth
               />
           </div>
         </form>

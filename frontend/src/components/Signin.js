@@ -17,8 +17,7 @@ import Toolbar from '@material-ui/core/Toolbar';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import LockIcon from '@material-ui/icons/Lock';
 import InputAdornment from '@material-ui/core/InputAdornment';
-import Visibility from '@material-ui/icons/Visibility';
-import VisibilityOff from '@material-ui/icons/VisibilityOff';
+import { Modal } from 'react-bootstrap'
 
 import axios from 'axios';
 import Alert from '@material-ui/lab/Alert';
@@ -76,15 +75,11 @@ export default function SignIn() {
   const [password, setPassword] = useState("password")
   const [open, setOpen] = React.useState(false);
   
-  const [values, setValues] = React.useState({
-    amount: '',
-    password: '',
-    weight: '',
-    weightRange: '',
-    showPassword: false,
-  });
+ 
+  const [show, setShow] = useState(false);
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
 
-  
   function handleEmailChange(e) {
     setEmail(e.target.value)
   }
@@ -206,7 +201,7 @@ export default function SignIn() {
           </Button>
               <Grid container>
                 <Grid item xs>
-                  <Link href="#" variant="body2">
+                  <Link onClick={handleShow} variant="body2">
                     Forgot password?
               </Link>
                 </Grid>
@@ -220,6 +215,25 @@ export default function SignIn() {
           </Box>
         </Container>
       </div>
+
+      <Modal id="forgetPasswordModal"show={show} onHide={handleClose}>
+        <Modal.Header closeButton>
+          <Modal.Title>Reset Password</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+            <div>
+              <TextField
+              required
+              id="outlined-required"
+              label="Email"
+              defaultValue=""
+              variant="outlined"
+              fullWidth
+              InputProps={{endAdornment : <Button color="primary" variant="contained">Submit</Button>}}
+            />
+            </div>
+       </Modal.Body>
+      </Modal>
     </div>
 
   );

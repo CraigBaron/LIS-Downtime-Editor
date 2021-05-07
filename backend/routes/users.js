@@ -21,7 +21,6 @@ router.post('/login', async (req, res) => {
             if(recordset.recordsets[0].length == 0){
               return res.send('No User')
             }
-              console.log(password)
               if(await bcrypt.compare(password, recordset.recordsets[0][0].Password)){
                     const level = recordset.recordsets[0][0].privledge
                     const user = {email : email}
