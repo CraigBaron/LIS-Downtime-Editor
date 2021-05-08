@@ -187,7 +187,7 @@ export default function SignIn() {
                     </IconButton>
                   }
                 >
-                  Error: Email or password is incorect
+                  Error: Email or password is incorrect
         </Alert>
               </Collapse>
               <Button
