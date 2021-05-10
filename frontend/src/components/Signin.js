@@ -3,8 +3,6 @@ import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
 import Link from '@material-ui/core/Link';
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
@@ -49,7 +47,7 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: theme.palette.secondary.main,
   },
   form: {
-    width: '100%', // Fix IE 11 issue.
+    width: '100%',
     marginTop: theme.spacing(1),
   },
   submit: {
@@ -73,11 +71,20 @@ export default function SignIn() {
   const classes = useStyles();
   const [email, setEmail] = useState("email")
   const [password, setPassword] = useState("password")
-  const [open, setOpen] = React.useState(false);
-  
- 
+  const [open, setOpen] = useState(false);
+  const [AOEmail, setAOEmail] = useState(true);
+  const [addon, setAddon] = useState(false);
+  const [resetCode, setResetCode] = useState("")
+  const [newPassword, setNewPassword] = useState("");
+  const [newConfirmPassword, setNewConfirmPassword] = useState("");
   const [show, setShow] = useState(false);
-  const handleClose = () => setShow(false);
+  const [resetEmail, setResetEmail] = useState("");
+  const handleClose = () => 
+  {
+      setAOEmail(true);
+      setAddon(false);
+      setShow(false);
+  }
   const handleShow = () => setShow(true);
 
   function handleEmailChange(e) {
@@ -86,7 +93,25 @@ export default function SignIn() {
   function handlePasswordChange(e) {
     setPassword(e.target.value)
   }
-
+  const Redirect = () => 
+  {
+      setAOEmail(false);
+      setAddon(true);
+      localStorage.setItem('resetEmail', resetEmail);
+      GetCode();
+  }
+  const handleResetCodeChange = (e) => {
+    setResetCode(e.target.value);
+  }
+  const handleNewPasswordChange = (e) => {
+    setNewPassword(e.target.value);
+  }
+  const handleNewConfirmPasswordChange = (e) => {
+    setNewConfirmPassword(e.target.value);
+  }
+  const handleResetEmailChange = (e) => {
+    setResetEmail(e.target.value);
+  }
   const Login = async (event) => {
     await axios.post('http://localhost:5000/users/login', {
       email: email,
@@ -107,6 +132,39 @@ export default function SignIn() {
       });
   }
 
+  const GetCode = async () => {
+    
+    await axios.post('http://localhost:5000/users/forgot', {
+      email : resetEmail,
+    })
+      .then((response) => {
+
+      }, (error) => {
+        console.log(error.request)
+      })
+      
+  }
+
+  const ResetPassword = async () => {
+    
+    await axios.post('http://localhost:5000/users/resetPassword', {
+      email : resetEmail,
+      password : newPassword,
+      code : resetCode
+    })
+      .then((response) => {
+        if(response.data.status == "Success")
+        {
+          localStorage.removeItem('resetEmail');
+          handleClose();
+        }
+      }, (error) => {
+        console.log(error.request)
+      })
+      
+  }
+  
+
   return (
     <div className={classes.root}>
 
@@ -119,7 +177,6 @@ export default function SignIn() {
           </Toolbar>
         </AppBar>
       </div>
-
 
       <div>
         <Container component="main" maxWidth="xs">
@@ -170,7 +227,6 @@ export default function SignIn() {
                   ),
                   
                 }}
-                
               />
               <Collapse in={open}>
                 <Alert variant="outlined" severity="error"
@@ -188,7 +244,7 @@ export default function SignIn() {
                   }
                 >
                   Error: Email or password is incorrect
-        </Alert>
+              </Alert>
               </Collapse>
               <Button
                 fullWidth
@@ -216,12 +272,14 @@ export default function SignIn() {
         </Container>
       </div>
 
+
       <Modal id="forgetPasswordModal"show={show} onHide={handleClose}>
         <Modal.Header closeButton>
           <Modal.Title>Reset Password</Modal.Title>
         </Modal.Header>
         <Modal.Body>
             <div>
+              <Collapse in={AOEmail}>
               <TextField
               required
               id="outlined-required"
@@ -229,11 +287,57 @@ export default function SignIn() {
               defaultValue=""
               variant="outlined"
               fullWidth
-              InputProps={{endAdornment : <Button color="primary" variant="contained">Submit</Button>}}
+              onChange={handleResetEmailChange}
+              InputProps={{endAdornment : <Button onClick={Redirect}color="primary" variant="contained">Submit</Button>}}
             />
+            </Collapse>
+            </div>
+            <div>
+            <Collapse in={addon}>
+            <Alert variant="outlined" severity="success">An email with a reset code has been sent to the adress you provided.</Alert>
+            <br></br>
+            <div>
+            <TextField
+              required
+              id="outlined-required"
+              label="Reset Code"
+              defaultValue=""
+              variant="outlined"
+              fullWidth
+              onChange={handleResetCodeChange}
+            />
+            </div>
+            <br></br>
+            <div>
+             <TextField
+              required
+              id="outlined-required"
+              label="New Password"
+              defaultValue=""
+              variant="outlined"
+              fullWidth
+              onChange={handleNewPasswordChange}
+            />
+            </div>
+            <br></br>
+            <div>
+              <TextField
+              required
+              id="outlined-required"
+              label="Confirm New Password"
+              defaultValue=""
+              variant="outlined"
+              fullWidth
+              onChange={handleNewConfirmPasswordChange}
+            />
+            </div>
+            <br></br>
+            <Button color="primary" onClick={ResetPassword} variant="contained" fullWidth>Submit</Button>
+            </Collapse>
             </div>
        </Modal.Body>
       </Modal>
+
     </div>
 
   );

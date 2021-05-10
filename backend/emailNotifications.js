@@ -15,14 +15,14 @@ const FindRecipients = async() => {
         {
             emailAddr.push(recordset.recordsets[0][i].Email);
         }
-        Sendemail();
+        SendNotification();
         })   
     }catch(err){
         
     }     
 }
 
-const Sendemail = async() => {
+const SendNotification = async() => {
     
     const msg = {
         to: emailAddr,
@@ -41,4 +41,27 @@ const Sendemail = async() => {
     })
 }
 
+const SendCode = (user) => {
+
+    const msg = {
+        to: user.email,
+        from: 'lis.downtime.editor.test@gmail.com',
+        subject: 'LIS-Downtime-Editor Reset Password',
+        text: 'To reset your password please provide the following code: '+user.code
+    }
+
+    sgMail.send(msg, function(err, info) {
+        if(err){
+            console.log("Email Not Sent");
+        }
+        else {
+            console.log("Email Sent Success");
+        }
+    })
+    
+
+
+}
+
 module.exports.FindRecipients = FindRecipients;
+module.exports.SendCode = SendCode;

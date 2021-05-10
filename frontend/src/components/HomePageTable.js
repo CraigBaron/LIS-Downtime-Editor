@@ -134,7 +134,8 @@ function DataTable() {
             {
                 alert(e.toString());
                 return;
-            }      
+            }   
+    
   };
 
   async function searchRecords(){
