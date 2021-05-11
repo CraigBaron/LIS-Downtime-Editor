@@ -22,7 +22,7 @@ const columns = [
 function RegisterTable() {
 
 const rows = [
-  { id: 1,Email: 'Craig@gmail.com', Password: 'password0',lastName: 'Barron', firstName: 'Craig', Privilage: 3 },
+  {id: 1,Email: 'Craig@gmail.com', Password: 'password0',lastName: 'Barron', firstName: 'Craig', Privilage: 3 },
   {id: 2, Email: 'Jesse@gmail.com', Password: 'password1',lastName: 'Chelhal', firstName: 'Jesse',Privilage: 2  },
   {id: 3, Email: 'Rebecca@gmail.com', Password: 'password2',lastName: 'Kizelewicz', firstName: 'Rebecca',Privilage: 2 },
   {id: 4, Email: 'Shane@gmail.com', Password: 'password3',lastName: 'Desilva', firstName: 'Shane',Privilage: 1},
@@ -43,7 +43,7 @@ const rows = [
     <Col>
     <br/>
     <div style={{ height: 400, width: '100%' }}>
-      <DataGrid autoHeight rows={rows} columns={columns} pageSize={7} checkboxSelection />
+      <DataGrid autoHeight rows={rows} columns={columns} pageSize={7}/>
     </div>
     </Col>
     <Col>

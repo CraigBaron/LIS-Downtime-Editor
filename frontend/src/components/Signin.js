@@ -118,10 +118,11 @@ export default function SignIn() {
       password: password
     })
       .then((response) => {
-        console.log(response)
+      
         if (response.data.acessToken) {
           localStorage.setItem('acessToken', response.data.acessToken);
           localStorage.setItem('Email', response.data.Email);
+
           window.location.href = "http://localhost:3000/HomePage";
         }
         else {
@@ -153,7 +154,7 @@ export default function SignIn() {
       code : resetCode
     })
       .then((response) => {
-        if(response.data.status == "Success")
+        if(response.data.status === "Success")
         {
           localStorage.removeItem('resetEmail');
           handleClose();

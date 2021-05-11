@@ -50,6 +50,7 @@ export default function ButtonAppBar() {
           <Typography variant="h6" className={classes.title}>
             LIS-Downtime-Editor
           </Typography>
+          
            <Button  color="inherit" onClick={doMachinePage}>Machine Records</Button>
           <Button  color="inherit" onClick={doEditPage}>Edited Records</Button>
           <Button  color="inherit" onClick={handleShow}>Help</Button>
