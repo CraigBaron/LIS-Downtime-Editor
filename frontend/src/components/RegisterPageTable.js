@@ -12,7 +12,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
-import {Card, Collapse} from '@material-ui/core';
+import {Card, Collapse, Snackbar} from '@material-ui/core';
 import axios from 'axios';
 import { buildPath } from "./config";
 import {useState} from 'react'
@@ -65,7 +65,6 @@ function  RegisterTable () {
 
   const handleErrorChange = (e) => {setError(e.target.value)};
   const handleDisplayErrorChange = (e) => {setDisplayError(e.target.value)};
-
   
 
 
@@ -109,13 +108,16 @@ window.onload = getEmployees = async () => {
                 privledge : privilege
               }
               );
-
+              
         }catch(err){
         console.log(err);
+        setError("Some Server Error");
+        setDisplayError(true);
       }
     }
     else{
-      alert("Passwords Must match");
+      setError("Error : Passwords do not match");
+      setDisplayError(true);
     }
   }
 
@@ -213,7 +215,7 @@ window.onload = getEmployees = async () => {
                   
                 </Select>
               </FormControl>
-              <Collapse in={displayError}>
+              <Collapse on={displayError}>
                   <Alert variant="outlined" severity="error">
                       {error}
                   </Alert>

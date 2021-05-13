@@ -16,7 +16,7 @@ router.post('/', async (req, res) =>
 
     var request = new sql.Request();
     // query to the database and get the records
-    request.query("SELECT * FROM MachineRecords WHERE UniqueID LIKE '"+ filter +"%' OR LineID LIKE '"+ filter +"%' OR Machine LIKE '"+ filter +"%' OR ComponentID LIKE '"+ filter +"%' OR Secondarypk LIKE '"+ filter +"%'", function (err, recordset) {
+    request.query("SELECT * FROM [DowntimeEvents_Line1 System 1] WHERE UniqueID LIKE '"+ filter +"%' OR LineID LIKE '"+ filter +"%' OR Machine LIKE '"+ filter +"%' OR ComponentID LIKE '"+ filter +"%' OR Secondarypk LIKE '"+ filter +"%'", function (err, recordset) {
         if (err) console.log(err)
 
         // send records as a response
