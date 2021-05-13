@@ -76,7 +76,7 @@ window.onload = getEmployees = async () => {
    try{ 
         const res = await axios.get(buildPath("users/"));
         temp.length = 0;
-        for(let i = 0; i < res.data.length; i++)
+        for(let i = 0; i < res.data[0].length; i++)
         {
            let user  = {
             "id" : res.data[0][i].ID,
