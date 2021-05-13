@@ -122,7 +122,7 @@ export default function SignIn() {
         if (response.data.acessToken) {
           localStorage.setItem('acessToken', response.data.acessToken);
           localStorage.setItem('Email', response.data.Email);
-
+          localStorage.setItem('privledge', response.data.privledge);
           window.location.href = "http://localhost:3000/HomePage";
         }
         else {

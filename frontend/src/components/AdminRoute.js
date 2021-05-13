@@ -1,10 +1,11 @@
 import React from 'react';
 import { Route, Redirect } from 'react-router-dom';
 
-function AdminRoute({isAuth: isAuth, component: Component, ...rest}){
+function AdminRoute({isAuth: isAuth, privledge: privledge, component: Component, ...rest}){
     return <Route {...rest} render={(props)=>{
-        if(isAuth){
-            return <Component />
+        
+        if(isAuth && privledge == 3){
+        return <Component />
         }
         else{
             return <Redirect to={{pathname: '/', state: {from: props.location} }}/>

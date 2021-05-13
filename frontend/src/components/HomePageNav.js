@@ -9,6 +9,7 @@ import MenuIcon from '@material-ui/icons/Menu';
 import { render } from '@testing-library/react';
 import {Modal} from 'react-bootstrap';
 import './styles.css';
+import { Collapse } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -23,13 +24,20 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function ButtonAppBar() {
-  const classes = useStyles();
 
+
+  const classes = useStyles();
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
+  const [configShow, setConfigShow] = useState(true);
 
+  
+  const doRootPage = () =>
+  {
+    window.location.href = '/RootPage'
+  }
   const doLogout = async event =>
   {
     localStorage.clear();
@@ -50,7 +58,9 @@ export default function ButtonAppBar() {
           <Typography variant="h6" className={classes.title}>
             LIS-Downtime-Editor
           </Typography>
-          
+          <Collapse in={configShow}>
+            <Button color="inherit" onClick={doRootPage}>Config</Button>
+          </Collapse>
            <Button  color="inherit" onClick={doMachinePage}>Machine Records</Button>
           <Button  color="inherit" onClick={doEditPage}>Edited Records</Button>
           <Button  color="inherit" onClick={handleShow}>Help</Button>

@@ -4,6 +4,10 @@ import {Button} from '@material-ui/core'
 import {useState} from 'react'
 import axios from 'axios';
 
+const config = {
+  headers : {'Authorization' : 'Bearer ' + localStorage.getItem('acessToken')
+  }
+}
 const columns = [
     { field: 'id', headerName: 'ID', width: 150 },
     { field: 'LineID', headerName: 'LineID', width: 130 },
@@ -25,7 +29,7 @@ const columns = [
         {
             const record = [];
             let temp
-            await axios.get('http://localhost:5000/editedRecords')
+            await axios.get('http://localhost:5000/editedRecords', config)
             .then((response) => {
               console.log(response.data[0]);
               for(var i=0;i<response.data[0].length;i++)
@@ -57,7 +61,7 @@ const columns = [
       <div><br></br><h3>Edited Records</h3></div>
       
       <div style={{ height: 800, width: '100%' }}>
-        <DataGrid rows={rows} columns={columns} pageSize={20}/>
+        <DataGrid  autoHeight rows={rows} columns={columns} rowsPerPageOptions={[5, 10, 20, 50]}/>
       </div>
       </div>
     );

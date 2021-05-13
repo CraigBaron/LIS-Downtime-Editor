@@ -6,50 +6,142 @@ import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import Container from '@material-ui/core/Container';
+import { makeStyles } from '@material-ui/core/styles';
+import InputLabel from '@material-ui/core/InputLabel';
+import MenuItem from '@material-ui/core/MenuItem';
+import FormHelperText from '@material-ui/core/FormHelperText';
+import FormControl from '@material-ui/core/FormControl';
+import Select from '@material-ui/core/Select';
+import {Card, Collapse} from '@material-ui/core';
+import axios from 'axios';
+import { buildPath } from "./config";
+import {useState} from 'react'
+import Alert from '@material-ui/lab/Alert';
 
-
-
+const useStyles = makeStyles((theme) => ({
+  formControl: {
+    margin: theme.spacing(1),
+    minWidth: 120,
+  },
+  selectEmpty: {
+    marginTop: theme.spacing(2),
+  },
+}));
 
 const columns = [
   { field: 'id', headerName: 'ID', width: 70 },
-  { field: 'Email', headerName: 'Email', width: 130 },
-  { field: 'Password', headerName: 'Password', width: 130 },
-  { field: 'firstName', headerName: 'First name', width: 130 },
-  { field: 'lastName', headerName: 'Last name', width: 130 },
-  { field: 'Privilage', headerName: 'Privilage level', width: 130 },
+  { field: 'Email', headerName: 'Email', width: 200 },
+  { field: 'firstName', headerName: 'First name', width: 180 },
+  { field: 'lastName', headerName: 'Last name', width: 180 },
+  { field: 'privilage', headerName: 'Privilage level', width: 180 },
   
 ];
-function RegisterTable() {
+const temp = [];
+function  RegisterTable () {
 
-const rows = [
-  {id: 1,Email: 'Craig@gmail.com', Password: 'password0',lastName: 'Barron', firstName: 'Craig', Privilage: 3 },
-  {id: 2, Email: 'Jesse@gmail.com', Password: 'password1',lastName: 'Chelhal', firstName: 'Jesse',Privilage: 2  },
-  {id: 3, Email: 'Rebecca@gmail.com', Password: 'password2',lastName: 'Kizelewicz', firstName: 'Rebecca',Privilage: 2 },
-  {id: 4, Email: 'Shane@gmail.com', Password: 'password3',lastName: 'Desilva', firstName: 'Shane',Privilage: 1},
-  {id: 5, Email: 'Jacob@gmail.com', Password: 'password4',lastName: 'Reed', firstName: 'Jacob',Privilage: 1},
-  {id: 6, Email: 'Edward@gmail.com', Password: 'password5',lastName: 'Amoruso', firstName: 'Edwrd',Privilage: 1 },
-  {id: 7, Email: 'Manny@gmail.com', Password: 'password6',lastName: 'Gotay', firstName: 'Manny',Privilage: 2 },
-  {id: 8, Email: 'Mark@gmail.com', Password: 'password7', lastName: 'Heinrich', firstName: 'Mark' ,Privilage: 1 },
-  {id: 9, Email: 'Richard@gmail.com', Password: 'password8', lastName: 'Leinecker', firstName: 'Richard',Privilage: 2 },
-];
+  const classes = useStyles();
+  const [privilege, setPrivilege] = useState('');
+  const [rows, setRows] = useState([]);
+
+  const handleChange = (event) => {
+    setPrivilege(event.target.value);
+  }
+
+  const [email, setEmail] = useState("");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
 
 
+  const handleEmailChange = (e) => {setEmail(e.target.value)};
+  const handleFirstNameChange = (e) => {setFirstName(e.target.value)};
+  const handleLastNameChange = (e) => {setLastName(e.target.value)};
+  const handlePasswordChange = (e) => {setPassword(e.target.value)};
+  const handleConfirmPasswordChange = (e) => {setConfirmPassword(e.target.value)};
+
+  const[error, setError] = useState("");
+  const[displayError, setDisplayError] = useState(false)
+
+  const handleErrorChange = (e) => {setError(e.target.value)};
+  const handleDisplayErrorChange = (e) => {setDisplayError(e.target.value)};
+
+  
+
+
+
+var getEmployees
+window.onload = getEmployees = async () => {
+    
+   try{ 
+        const res = await axios.get(buildPath("users/"));
+        temp.length = 0;
+        for(let i = 0; i < res.data.length; i++)
+        {
+           let user  = {
+            "id" : res.data[0][i].ID,
+            "Email" : res.data[0][i].Email,
+            "firstName": res.data[0][i].FirstName,
+            "lastName" : res.data[0][i].LastName,
+            "privilage" : res.data[0][i].Privledge
+           }
+          temp.push(user);
+          setRows(temp);
+          
+        }
+      }catch(err){
+     console.log(err);
+   }
+
+  }
+
+  const signUp = async () => {
+
+    if(password === confirmPassword)
+    {
+        try{
+              const res = await axios.post(buildPath("users/signUp"),
+              {
+                email : email,
+                password : password,
+                firstName : firstName,
+                lastName : lastName,
+                privledge : privilege
+              }
+              );
+
+        }catch(err){
+        console.log(err);
+      }
+    }
+    else{
+      alert("Passwords Must match");
+    }
+  }
+
+  
   return (
 
     
     <div>
     <Form>
   <Row>
+
     <Col>
+    
     <br/>
     <div style={{ height: 400, width: '100%' }}>
-      <DataGrid autoHeight rows={rows} columns={columns} pageSize={7}/>
+      <h5>Registered Accounts</h5>
+      <DataGrid autoHeight rows={rows} columns={columns} rowsPerPageOptions={[5, 10, 20]}/>
     </div>
+    
     </Col>
     <Col>
     <br/>
-    <h5> &emsp; Registration form</h5>
     <Container  maxWidth="md">
+    <Card>
+    <br/>
+    <h5> Register New Account</h5>
       <TextField
                 variant="outlined"
                 margin="normal"
@@ -58,7 +150,9 @@ const rows = [
                 size="small"
                 label="First Name"
                 name="email"
-                autoComplete="email"/>
+                autoComplete="email"
+                onChange={handleFirstNameChange}
+                />
                     
                 <TextField
                 variant="outlined"
@@ -67,60 +161,70 @@ const rows = [
                 fullWidth
                 size="small"
                 label="Last Name"
-                
-                autoComplete="email"/>
+                autoComplete="email"
+                onChange={handleLastNameChange}
+                />
               
-      <TextField
+                <TextField
                 variant="outlined"
                 margin="normal"
                 required
                 fullWidth
                 size="small"
-                label="Email Address"
+                label="Email Address"             
+                autoComplete="email"
+                onChange={handleEmailChange}
+                />
+                
+                <TextField
+                variant="outlined"
+                margin="normal"
+                required
+                fullWidth
+                size="small"
+                label="Password"               
+                autoComplete="email"
+                onChange={handlePasswordChange}
+                />
               
-                autoComplete="email"></TextField>
+                <TextField
+                variant="outlined"
+                margin="normal"
+                required
+                fullWidth
+                size="small"
+                label="Confirm Password"          
+                autoComplete="email"
+                onChange={handleConfirmPasswordChange}
+                />
+                
                   
-                <TextField
-                variant="outlined"
-                margin="normal"
-                required
-                fullWidth
-                size="small"
-                label="Password"
-               
-                autoComplete="email"/>
-              
-                <TextField
-                variant="outlined"
-                margin="normal"
-                required
-                fullWidth
-                size="small"
-                label="Confirm Password"
-             
-                autoComplete="email"/>
-                
+              <FormControl variant="outlined" className={classes.formControl}>
+                <InputLabel id="demo-simple-select-outlined-label">Privledge *</InputLabel>
+                <Select
+                  labelId="demo-simple-select-outlined-label"
+                  id="demo-simple-select-outlined"
+                  value={privilege}
+                  onChange={handleChange}
+                  label="Privledge"
+                >
+                  <MenuItem value={1}>Employee</MenuItem>
+                  <MenuItem value={2}>Manager</MenuItem>
                   
-                <TextField
-                variant="outlined"
-                margin="normal"
-                required
-                fullWidth
-                size="small"
-                label="Privliage Level"
-             
-                autoComplete="email"/>
-                  <br/>
-                  <br/>
-                  <Button
-                fullWidth
-                variant="contained"
-                color="primary"
-                
-              >
-               Register
-          </Button>
+                </Select>
+              </FormControl>
+              <Collapse in={displayError}>
+                  <Alert variant="outlined" severity="error">
+                      {error}
+                  </Alert>
+              </Collapse>
+              <br/>
+              <br/>
+              <Button fullWidth variant="contained" color="primary" onClick={signUp}>Register</Button>
+              <br/>
+              </Card>
         </Container>
+        
     </Col>
   </Row>
 </Form>
@@ -130,5 +234,6 @@ const rows = [
 
    
   );
-}export default RegisterTable;
+}
+export default RegisterTable;
 

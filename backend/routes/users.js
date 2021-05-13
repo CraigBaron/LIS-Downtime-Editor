@@ -24,10 +24,10 @@ router.post('/login', async (req, res) => {
               return res.json({status : "Fail"})
             }
               if(await bcrypt.compare(password, recordset.recordsets[0][0].Password)){
-                    const level = recordset.recordsets[0][0].privledge
+                    const privledge = recordset.recordsets[0][0].Privledge
                     const user = {email : email}
                     const acessToken = createToken(user);
-                    res.json({acessToken: acessToken, Email: email, privledge: level})
+                    res.json({acessToken: acessToken, Email: email, privledge: privledge})
               }else{
                 res.send('Not ALlowed')
               }
@@ -40,12 +40,11 @@ router.post('/login', async (req, res) => {
 router.post('/signUp', async (req,res) => {
    
     const {email, password, firstName, lastName, privledge} = req.body;
-
         var request = new sql.Request();
         request.query("SELECT * FROM Employees WHERE Email = '" + email + "'", async function(err, recordset){
           try{
             if(recordset.recordsets[0].length > 0){
-             return res.send('There Already exists an account with this email');
+             return res.json({error : 'There Already exists an account with this email'});
             }
           }catch(err){
             return res.status(500).send()
@@ -62,7 +61,7 @@ router.post('/signUp', async (req,res) => {
             request.query("INSERT INTO Employees (Email, Password, FirstName, LastName, Privledge ) VALUES ('" + email + "','" +  hashedPassword + "','" + firstName + "','" + lastName + "','" + privledge + "')", function (err, recordset) {
             if (err) console.log(err)
 
-            return res.json(recordset);
+            return res.json({status : "Successful"});
         });
         }catch (err){
             return res.status(500).send();
@@ -84,6 +83,24 @@ router.post('/delete', (req,res) => {
           res.json({status : "Successful"})
           
   })
+  }catch(err) {
+      res.status(500).json({message : err.message})
+  }
+})
+
+
+router.get('/', (req,res) => {
+
+  try{
+    var request = new sql.Request();
+    request.query("SELECT * FROM Employees", function (err, recordset) {
+
+      if (err){
+        console.log(err);
+        return;
+      } 
+      return res.json(recordset.recordsets)
+    })
   }catch(err) {
       res.status(500).json({message : err.message})
   }

@@ -4,9 +4,10 @@ const cors = require('cors');
 const app = express();
 const sql = require('mssql');
 const PORT = process.env.PORT || 5000;
+const path = ('path');
 app.use(cors());
 app.use(bodyParser.json());
-
+/*
 app.use((req, res, next) =>
 {
   res.setHeader('Access-Control-Allow-Origin', '*');
@@ -20,7 +21,7 @@ app.use((req, res, next) =>
   );
   next();
 });
-
+*/
 //Local
 /*
 var config = {
@@ -70,7 +71,6 @@ app.use('/users', userRouter);
 
 const machineRecordsRouter = require('./backend/routes/machineRecords');
 app.use('/machineRecords', machineRecordsRouter);
-
 
 app.listen(PORT, () => {
   console.log(`Server listening on port ${PORT}.`);
