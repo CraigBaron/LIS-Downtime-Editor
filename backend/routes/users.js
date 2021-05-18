@@ -125,13 +125,15 @@ router.post('/forgot', (req, res) => {
                 return;
               }
               if(recordset.recordsets[0].length > 0){
-                return res.json({status : "Fail"})
-              }
-              else{
                 makeCode();
               }
+              else{
+                return res.json({status : "Fail"})
+              }
           })
-
+        }catch(err){
+          res.status(500).send()
+        }
       const makeCode = () => {
           let dt = new Date()
           dt.setMinutes(dt.getMinutes()+10);
@@ -156,9 +158,6 @@ router.post('/forgot', (req, res) => {
           return res.json({status : "Success"})
           })
         }
-      }catch(err){
-      res.status(500).send()
-    }
 })
 
 router.post('/resetpassword', async (req,res) => {

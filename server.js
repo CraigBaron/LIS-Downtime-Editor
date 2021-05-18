@@ -7,7 +7,7 @@ const PORT = process.env.PORT || 5000;
 const path = ('path');
 app.use(cors());
 app.use(bodyParser.json());
-/*
+
 app.use((req, res, next) =>
 {
   res.setHeader('Access-Control-Allow-Origin', '*');
@@ -21,7 +21,7 @@ app.use((req, res, next) =>
   );
   next();
 });
-*/
+
 //Local
 /*
 var config = {

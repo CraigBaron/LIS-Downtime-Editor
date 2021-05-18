@@ -84,16 +84,15 @@ window.onload = getEmployees = async () => {
             "lastName" : res.data[0][i].LastName,
             "privilage" : res.data[0][i].Privledge
            }
-          temp.push(user);
-          setRows(temp);
-          
+          temp.push(user);          
         }
+        setRows(temp);
+
       }catch(err){
      console.log(err);
    }
-
   }
-
+  
   const signUp = async () => {
 
     if(password === confirmPassword)

@@ -31,7 +31,7 @@ const columns = [
             let temp
             await axios.get('http://localhost:5000/editedRecords', config)
             .then((response) => {
-              console.log(response.data[0]);
+              console.log(response.data[0].length);
               for(var i=0;i<response.data[0].length;i++)
                     {
                       temp = {
@@ -48,8 +48,8 @@ const columns = [
                         "Status" : response.data[0][i].Status,
                       }
                       record.push(temp);
-                      setrows(record)
                     }
+                    setrows(record)
             }, (error)=> {
               console.log(error);
             });

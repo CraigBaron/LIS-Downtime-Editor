@@ -22,7 +22,7 @@ import Alert from '@material-ui/lab/Alert';
 import IconButton from '@material-ui/core/IconButton';
 import Collapse from '@material-ui/core/Collapse';
 import CloseIcon from '@material-ui/icons/Close';
-
+import Snackbar from '@material-ui/core/Snackbar';
 function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
@@ -78,7 +78,19 @@ export default function SignIn() {
   const [newPassword, setNewPassword] = useState("");
   const [newConfirmPassword, setNewConfirmPassword] = useState("");
   const [show, setShow] = useState(false);
-  const [resetEmail, setResetEmail] = useState("");
+  const [resetEmail, setResetEmail] = useState("email");
+
+  const [snack, setSnack] = useState(false);
+
+
+  const snackClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+
+    setSnack(false);
+  };
+
   const handleClose = () => 
   {
       setAOEmail(true);
@@ -93,13 +105,7 @@ export default function SignIn() {
   function handlePasswordChange(e) {
     setPassword(e.target.value)
   }
-  const Redirect = () => 
-  {
-      setAOEmail(false);
-      setAddon(true);
-      localStorage.setItem('resetEmail', resetEmail);
-      GetCode();
-  }
+  
   const handleResetCodeChange = (e) => {
     setResetCode(e.target.value);
   }
@@ -139,7 +145,17 @@ export default function SignIn() {
       email : resetEmail,
     })
       .then((response) => {
+          if(response.data.status === "Fail")
+          {
 
+          }
+          else
+          {
+            setAOEmail(false);
+            setAddon(true);
+            localStorage.setItem('resetEmail', resetEmail);
+
+          }
       }, (error) => {
         console.log(error.request)
       })
@@ -158,6 +174,7 @@ export default function SignIn() {
         {
           localStorage.removeItem('resetEmail');
           handleClose();
+          setSnack(true)
         }
       }, (error) => {
         console.log(error.request)
@@ -178,6 +195,12 @@ export default function SignIn() {
           </Toolbar>
         </AppBar>
       </div>
+
+      <Snackbar open={snack} anchorOrigin={{vertical: 'top', horizontal : 'left'}} autoHideDuration={4000} onClose={snackClose}>
+        <Alert variant="filled" severity="success">
+          Your Password has been changed!
+        </Alert>
+      </Snackbar>
 
       <div>
         <Container component="main" maxWidth="xs">
@@ -230,6 +253,7 @@ export default function SignIn() {
                 }}
               />
               <Collapse in={open}>
+                <br/>
                 <Alert variant="outlined" severity="error"
                   action={
                     <IconButton
@@ -289,7 +313,7 @@ export default function SignIn() {
               variant="outlined"
               fullWidth
               onChange={handleResetEmailChange}
-              InputProps={{endAdornment : <Button onClick={Redirect}color="primary" variant="contained">Submit</Button>}}
+              InputProps={{endAdornment : <Button onClick={GetCode}color="primary" variant="contained">Submit</Button>}}
             />
             </Collapse>
             </div>
