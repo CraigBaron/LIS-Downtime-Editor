@@ -3,6 +3,12 @@ import { DataGrid } from '@material-ui/data-grid';
 import {Button} from '@material-ui/core'
 import {useState} from 'react'
 import axios from 'axios';
+import SearchBar from "material-ui-search-bar";
+import {Box} from "@material-ui/core"
+
+
+var temp;
+var i;
 
 const config = {
   headers : {'Authorization' : 'Bearer ' + localStorage.getItem('acessToken')
@@ -55,14 +61,54 @@ const columns = [
             });
             
         };
+
+    async function searchRecords(){
+      var filter = document.getElementById("searchBar").value
+      var data = JSON.stringify({ "filter": filter });
+      try{    
+        const response = await fetch('http://localhost:5000/editedRecords',
+        {method:'POST',body:data,headers:{'Content-Type': 'application/json'}});
+        const record=[];
+        var res = JSON.parse(await response.text());
+        if(res.recordset){
+          for(i=0;i<res.recordset.length;i++){
+            temp = {
+              "id" : res.recordset[i].UniqueID,
+              "pkdowntimeeventid" : res.recordset[i].pkDowntimeEventID,
+              "startTime" : res.recordset[i].StartDateTime,
+              "endTime" : res.recordset[i].EndDateTime,
+              "duration" : res.recordset[i].DurationTotalMinutes,
+              "lineid" : res.recordset[i].LineID,
+              "machineid" : res.recordset[i].Machine,
+              "componentid" : res.recordset[i].ComponentID,
+              "reason" : res.recordset[i].Comments,
+              "shift" : res.recordset[i].Secondarypk,
+            }
+              record.push(temp);
+          }
+          setrows(record)
+        }
+      }
+      catch(e){
+        alert(e.toString());
+        return;
+       }  
+      return true;
+    }
     
     return (
       <div>
-      <div><br></br><h3>Edited Records</h3></div>
-      
-      <div style={{ height: 800, width: '100%' }}>
-        <DataGrid  autoHeight rows={rows} columns={columns} rowsPerPageOptions={[5, 10, 20, 50]}/>
-      </div>
-      </div>
+    
+    <div>
+      <Box marginTop="2%" alignItems="center" display="flex" justifyContent="center">
+      <SearchBar style={{width: '20%'}} id = "searchBar" onRequestSearch={searchRecords} placeholder="Search Records..." autoFocus />
+      </Box>
+    </div>
+    <br></br>
+    <div style={{ height: 800, width: '100%' }}>
+    <div><h3>Edited Records</h3></div>
+    <DataGrid  autoHeight rows={rows} columns={columns} rowsPerPageOptions={[5, 10, 20, 50]}/>
+    </div>
+    </div>
     );
   }export default EditedTable;
