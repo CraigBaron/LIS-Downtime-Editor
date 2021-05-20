@@ -22,7 +22,6 @@ router.get('/' ,verifyAuthToken, async (req, res) => {
 
 //add new record
 router.post('/add' /*verifyAuthToken*/, async (req, res) => {
-    console.log(req.body)
     
     const { uniqueID, pkDowntimeEventID, startDate, endDate, durationTotalMinutes, LineID, machine, componentID, comments, secondarypk} = req.body;
     let reason = "sample";

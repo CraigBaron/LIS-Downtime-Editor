@@ -118,7 +118,7 @@ export default function SignIn() {
   const handleResetEmailChange = (e) => {
     setResetEmail(e.target.value);
   }
-  const Login = async (event) => {
+  const Login = async () => {
     await axios.post('http://localhost:5000/users/login', {
       email: email,
       password: password

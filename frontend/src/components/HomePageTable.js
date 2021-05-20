@@ -25,9 +25,9 @@ const columns = [
   { field: 'componentid', headerName: 'ComponentID', width: 130 },
   { field: 'startTime', headerName: 'StartTime', width: 250 },
   { field: 'endTime', headerName: 'EndTime', width: 250 },
-  { field: 'reason', headerName: 'Reason', width: 130 },
+  { field: 'reason', headerName: 'Comments', width: 130 },
   { field: 'duration', headerName: 'Duration', width: 130 },
-  { field: 'shift', headerName: 'Shift', width: 130 },
+  { field: 'shift', headerName: 'Secondarypk', width: 130 },
 ];
 
 const rows = [];
@@ -52,24 +52,24 @@ function DataTable() {
   const [selDuration, setselDuration] = useState();
   const [selShift, setselShift] = useState();
 
-  /*
+  
   var DisplayRecords;
   window.onload = DisplayRecords = async event => 
       {
           event.preventDefault();
           try
           {    
-              const response = await fetch('http://localhost:5000/API/SearchMachine',
+              const response = await fetch('http://localhost:5000/machineRecords/',
                   {method:'GET',headers:{'Content-Type': 'application/json'}});
               const record=[];
               var res = JSON.parse(await response.text());
-              console.log(res.recordset)
               if(res.recordset)
               {
                   for(i=0;i<res.recordset.length;i++)
                   {
                     temp = {
-                      "id" : res.recordset[i].ID,
+                      "id" : res.recordset[i].UniqueID,
+                      "pkdowntimeeventid" : res.recordset[i].pkDowntimeEventID,
                       "lineid" : res.recordset[i].LineID,
                       "machineid" : res.recordset[i].Machine,
                       "componentid" : res.recordset[i].ComponentID,
@@ -91,7 +91,7 @@ function DataTable() {
               return;
           }    
       };
-  */
+  
   const EditRecord = (item) =>
   {
       handleShow()
@@ -171,6 +171,7 @@ function DataTable() {
      }  
     return true;
   }
+  
 
   return (
     <div>
@@ -183,7 +184,7 @@ function DataTable() {
     <br></br>
     <div style={{ height: 800, width: '100%' }}>
     <div><h3>Machine Records</h3></div>
-      <DataGrid Header="MachineData" rows={rows} columns={columns} pageSize={20} onRowClick = {item => {EditRecord(item.row)}} cancelOnEscape = {true}/>
+      <DataGrid Header="MachineData" rows={rows} columns={columns} autoHeight pageSize={20} onRowClick = {item => {EditRecord(item.row)}} cancelOnEscape = {true}/>
     </div>
 
     <Modal show={show} onHide={handleClose}>

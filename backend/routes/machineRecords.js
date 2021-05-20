@@ -4,26 +4,23 @@ const sql = require('mssql');
 
 const verifyAuthToken = require("../middleware/authenticate");
 
-router.get('/get', async(res)=>{
-    console.log("(:")
-})
 
-router.post('/', async (req, res) =>
+router.get('/', async (req, res) =>
 {
-    var err = '';
-
-    const { filter } = req.body;
-
+    
     var request = new sql.Request();
     // query to the database and get the records
-    request.query("SELECT * FROM [DowntimeEvents_Line1 System 1] WHERE UniqueID LIKE '"+ filter +"%' OR LineID LIKE '"+ filter +"%' OR Machine LIKE '"+ filter +"%' OR ComponentID LIKE '"+ filter +"%' OR Secondarypk LIKE '"+ filter +"%'", function (err, recordset) {
+    request.query("SELECT UniqueID, pkDowntimeEventID, StartDateTime, EndDateTime, DurationTotalMinutes, LineID, Machine, ComponentID, Comments, Secondarypk FROM [DowntimeEvents_Line2 System 1]", function (err, recordset) {
         if (err) console.log(err)
 
         // send records as a response
-        res.json(recordset);
+        
+        return res.json(recordset)
+        
 
     });
 
+    
 });
 
 router.post('/add', async (req, res) =>
@@ -41,6 +38,25 @@ router.post('/add', async (req, res) =>
         // send records as a response
         res.json(recordset);
             
+    });
+
+});
+
+
+router.post('/search', async (req, res) =>
+{
+    var err = '';
+
+    const { filter } = req.body;
+
+    var request = new sql.Request();
+    // query to the database and get the records
+    request.query("SELECT * FROM [DowntimeEvents_Line1 System 1] WHERE UniqueID LIKE '"+ filter +"%' OR LineID LIKE '"+ filter +"%' OR Machine LIKE '"+ filter +"%' OR ComponentID LIKE '"+ filter +"%' OR Secondarypk LIKE '"+ filter +"%'", function (err, recordset) {
+        if (err) console.log(err)
+
+        // send records as a response
+        res.json(recordset);
+
     });
 
 });
