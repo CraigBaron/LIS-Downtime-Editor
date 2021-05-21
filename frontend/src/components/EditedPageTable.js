@@ -4,7 +4,7 @@ import {Button} from '@material-ui/core'
 import {useState} from 'react'
 import axios from 'axios';
 import SearchBar from "material-ui-search-bar";
-import {Box} from "@material-ui/core"
+import {Box, Card} from "@material-ui/core"
 
 
 var temp;
@@ -31,7 +31,7 @@ const columns = [
   function EditedTable() {
     const [rows, setrows] = useState([])
     var DisplayRecords;
-    window.onload = DisplayRecords = async event => 
+    window.onload = DisplayRecords = async () => 
         {
             const record = [];
             let temp
@@ -56,7 +56,7 @@ const columns = [
                       record.push(temp);
                     }
                     setrows(record)
-            }, (error)=> {
+            }, (error) => {
               console.log(error);
             });
             

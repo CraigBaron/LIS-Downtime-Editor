@@ -1,5 +1,3 @@
-import React from 'react';
-
 export const config = {
     headers : {'Authorization' : 'Bearer ' + localStorage.getItem('acessToken')
     }

@@ -47,11 +47,11 @@ function  RegisterTable () {
     setPrivilege(event.target.value);
   }
 
-  const [email, setEmail] = useState("");
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
+  const [email, setEmail] = useState(null);
+  const [firstName, setFirstName] = useState(null);
+  const [lastName, setLastName] = useState(null);
+  const [password, setPassword] = useState(null);
+  const [confirmPassword, setConfirmPassword] = useState(null);
 
 
   const handleEmailChange = (e) => {setEmail(e.target.value)};
@@ -90,35 +90,30 @@ window.onload = getEmployees = async () => {
 
       }catch(err){
      console.log(err);
+     setDisplayError(true)
    }
   }
   
   const signUp = async () => {
 
-    if(password === confirmPassword)
-    {
         try{
               const res = await axios.post(buildPath("users/signUp"),
               {
                 email : email,
                 password : password,
+                confirmPassword : confirmPassword,
                 firstName : firstName,
                 lastName : lastName,
                 privledge : privilege
               }
               );
-              
+              console.log(res.data)
         }catch(err){
         console.log(err);
-        setError("Some Server Error");
-        setDisplayError(true);
+        
       }
     }
-    else{
-      setError("Error : Passwords do not match");
-      setDisplayError(true);
-    }
-  }
+  
 
   
   return (
@@ -129,18 +124,29 @@ window.onload = getEmployees = async () => {
   <Row>
 
     <Col>
-    
+
     <br/>
+    <Container maxWidth="md">
+    <Card>
+      <Col>
     <div style={{ height: 400, width: '100%' }}>
+      <br/>
       <h5>Registered Accounts</h5>
       <DataGrid autoHeight rows={rows} columns={columns} rowsPerPageOptions={[5, 10, 20]}/>
     </div>
-    
+    <br/>
+    <br/>
+    <br/>
+    </Col>
+    </Card>
+    </Container>
     </Col>
     <Col>
+    
     <br/>
     <Container  maxWidth="md">
     <Card>
+      <Col>
     <br/>
     <h5> Register New Account</h5>
       <TextField
@@ -199,29 +205,27 @@ window.onload = getEmployees = async () => {
                 onChange={handleConfirmPasswordChange}
                 />
                 
-                  
-              <FormControl variant="outlined" className={classes.formControl}>
-                <InputLabel id="demo-simple-select-outlined-label">Privledge *</InputLabel>
+              <FormControl fullWidth className={classes.formControl}>
+                <InputLabel id="demo-simple-select-label">Privilage *</InputLabel>
                 <Select
-                  labelId="demo-simple-select-outlined-label"
-                  id="demo-simple-select-outlined"
+                  labelId="demo-simple-select-label"
+                  id="demo-simple-select"
                   value={privilege}
                   onChange={handleChange}
-                  label="Privledge"
                 >
                   <MenuItem value={1}>Employee</MenuItem>
                   <MenuItem value={2}>Manager</MenuItem>
-                  
                 </Select>
               </FormControl>
-              <Collapse on={displayError}>
-                  <Alert variant="outlined" severity="error">
-                      {error}
-                  </Alert>
-              </Collapse>
+                  
+              
+       
+
               <br/>
               <br/>
               <Button fullWidth variant="contained" color="primary" onClick={signUp}>Register</Button>
+              
+              </Col>
               <br/>
               </Card>
         </Container>

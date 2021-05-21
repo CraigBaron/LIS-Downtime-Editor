@@ -43,7 +43,7 @@ router.post('/login', async (req, res) => {
 
 router.post('/signUp', async (req,res) => {
    
-    const post = {email, password, firstName, lastName, privledge} = req.body;
+    const post = {email, password, confirmPassword, firstName, lastName, privledge} = req.body;
     const validationResult = userValidator.validate(post, userSchema);
     if(validationResult !== true){
       return res.status(400).json({message : "Validation failed", errors: validationResult});

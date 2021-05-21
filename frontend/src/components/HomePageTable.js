@@ -6,7 +6,8 @@ import {Modal} from 'react-bootstrap'
 import TextField from '@material-ui/core/TextField';
 import { makeStyles } from '@material-ui/core/styles';
 import SearchBar from "material-ui-search-bar";
-import {Box} from "@material-ui/core"
+import {Box, Card} from "@material-ui/core"
+import {Form, Row, Col} from 'react-bootstrap';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -183,8 +184,16 @@ function DataTable() {
     </div>
     <br></br>
     <div style={{ height: 800, width: '100%' }}>
-    <div><h3>Machine Records</h3></div>
+    <Col>
+    <Card variant="outlined">
+    <Col>
+    <br/>
+    <div><h3>LIS-Downtime-Data</h3></div>
       <DataGrid Header="MachineData" rows={rows} columns={columns} autoHeight pageSize={20} onRowClick = {item => {EditRecord(item.row)}} cancelOnEscape = {true}/>
+      <br/>
+      </Col>
+      </Card>
+      </Col>
     </div>
 
     <Modal show={show} onHide={handleClose}>

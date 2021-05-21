@@ -5,41 +5,17 @@ const sql = require('mssql');
 const verifyAuthToken = require("../middleware/authenticate");
 
 
+
 router.get('/', async (req, res) =>
 {
-    
     var request = new sql.Request();
     // query to the database and get the records
-    request.query("SELECT UniqueID, pkDowntimeEventID, StartDateTime, EndDateTime, DurationTotalMinutes, LineID, Machine, ComponentID, Comments, Secondarypk FROM [DowntimeEvents_Line2 System 1]", function (err, recordset) {
+   request.query("SELECT UniqueID, pkDowntimeEventID, StartDateTime, EndDateTime, DurationTotalMinutes, LineID, Machine, ComponentID, Comments, Secondarypk FROM [DowntimeEvents_Line2 System 1]", function (err, recordset) {
         if (err) console.log(err)
 
-        // send records as a response
-        
-        return res.json(recordset)
-        
+        res.json(recordset)        
 
     });
-
-    
-});
-
-router.post('/add', async (req, res) =>
-{
-    
-    var err = '';
-    
-    const { uniqueID, pkDowntimeEventID, startDate, endDate, durationTotalMinutes, LineID, machine, componentID, comments, secondarypk } = req.body;
-    
-    var request = new sql.Request();
-    // query to the database and get the records
-    request.query("INSERT INTO MachineRecords (UniqueID, pkDowntimeEventID, StartDateTime, EndDateTime, DurationTotalMinutes, LineID, Machine, ComponentID, Comments, Secondarypk) VALUES ('" + uniqueID + "','" + pkDowntimeEventID + "','" + startDate + "','" + endDate + "','" + durationTotalMinutes + "','" + LineID + "','" + machine + "','" + componentID + "', '" + comments + "', '" + secondarypk + "')", function (err, recordset) {
-        if (err) console.log("err")
-
-        // send records as a response
-        res.json(recordset);
-            
-    });
-
 });
 
 

@@ -16,6 +16,7 @@ import AccountCircle from '@material-ui/icons/AccountCircle';
 import LockIcon from '@material-ui/icons/Lock';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import { Modal } from 'react-bootstrap'
+import {Card} from "@material-ui/core"
 
 import axios from 'axios';
 import Alert from '@material-ui/lab/Alert';
@@ -201,7 +202,7 @@ export default function SignIn() {
           Your Password has been changed!
         </Alert>
       </Snackbar>
-
+      
       <div>
         <Container component="main" maxWidth="xs">
           <CssBaseline />
@@ -296,7 +297,7 @@ export default function SignIn() {
           </Box>
         </Container>
       </div>
-
+      
 
       <Modal id="forgetPasswordModal"show={show} onHide={handleClose}>
         <Modal.Header closeButton>
