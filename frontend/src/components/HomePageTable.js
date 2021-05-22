@@ -31,10 +31,480 @@ const columns = [
   { field: 'shift', headerName: 'Secondarypk', width: 130 },
 ];
 
+const Reason = [
+  {
+    value: 'Null',
+    label: 'Select',
+  },
+  {
+    value: 'Accumulation Table',
+    label: 'Accumulation Table',
+  },
+  {
+    value: 'Accumulation Table 1',
+    label: 'Accumulation Table 1',
+  },
+  {
+    value: 'Accumulation Table 2',
+    label: 'Accumulation Table 2',
+  },
+  {
+    value: 'Air Conveyor',
+    label: 'Air Conveyor',
+  },
+  
+  {
+    value: 'AS-6 / Explain',
+    label: 'AS-6 / Explain',
+  },
+  {
+    value: 'Automation',
+    label: 'Automation',
+  },
+  {
+    value: 'Bad Material/Explain',
+    label: 'Bad Material/Explain',
+  },
+  {
+    value: 'Bad Photoeye',
+    label: 'Bad Photoeye',
+  },
+  {
+    value: 'Bad Suction Cup/Filter',
+    label: 'Bad Suction Cup/Filter',
+  },
+  {
+    value: 'Bag Feed',
+    label: 'Bag Feed',
+  },
+  {
+    value: 'Blend Not Ready/Blend Corrections',
+    label: 'Blend Not Ready/Blend Corrections',
+  },
+  {
+    value: 'Blending Water Purge',
+    label: 'Blending Water Purge',
+  },
+  {
+    value: 'Bottle Coder',
+    label: 'Bottle Coder',
+  },
+  {
+    value: 'Bottle Jam',
+    label: 'Bottle Jam',
+  },
+  {
+    value: 'Bottle Jam (Laner)',
+    label: 'Bottle Jam (Laner)',
+  },
+  {
+    value: 'Bottle Jam/Reset Machine/Web Break',
+    label: 'Bottle Jam/Reset Machine/Web Break',
+  },
+  {
+    value: 'Bottle Process Adjustment',
+    label: 'Bottle Process Adjustment',
+  },
+  {
+    value: 'Box Infeed Jam',
+    label: 'Box Infeed Jam',
+  },
+  {
+    value: 'Box Outfeed Jam',
+    label: 'Box Outfeed Jam',
+  },
+
+   {
+    value: 'Broken Belt',
+    label: 'Broken Belt',
+  },
+  {
+    value: 'Broken Conveyor',
+    label: 'Broken Conveyor',
+  },
+  {
+    value: 'Broken Film',
+    label: 'Broken Film',
+  },
+  {
+    value: 'Broken Finger',
+    label: 'Broken Finger',
+  },
+  {
+    value: 'Cap Jam',
+    label: 'Cap Jam',
+  },
+  {
+    value: 'Cap Jam/No Closure',
+    label: 'Cap Jam/No Closure',
+  },
+  {
+    value: 'Case Jam',
+    label: 'Case Jam',
+  },
+  {
+    value: 'Cleaning',
+    label: 'Cleaning',
+  },
+  {
+    value: 'Cocked/Broken Caps',
+    label: 'Cocked/Broken Caps',
+  },
+  {
+    value: 'Code Not Legible',
+    label: 'Code Not Legible',
+  },
+  {
+    value: 'Coder Out of Ink',
+    label: 'Coder Out of Ink',
+  },
+  {
+    value: 'Collating Section',
+    label: 'Collating Section',
+  },
+  {
+    value: 'Crash in Hoist',
+    label: 'Crash in Hoist',
+  },
+  {
+    value: 'Cutting Issue',
+    label: 'Cutting Issue',
+  },
+  {
+    value: 'Cutting Knife',
+    label: 'Cutting Knife',
+  },
+  {
+    value: 'Cutting/Wrapping/ShrinkTunnel',
+    label: 'Cutting/Wrapping/ShrinkTunnel',
+  },
+  {
+    value: 'Damaged Gripper',
+    label: 'Damaged Gripper',
+  },
+  {
+    value: 'Damaged Neck Rail',
+    label: 'Damaged Neck Rail',
+  },
+  {
+    value: 'Discharge Jam',
+    label: 'Discharge Jam',
+  },
+  {
+    value: 'Down Bottle Bin Fault',
+    label: 'Down Bottle Bin Fault',
+  },
+  {
+    value: 'Down Bottles',
+    label: 'Down Bottles',
+  },
+  {
+    value: 'Elevator',
+    label: 'Elevator',
+  },
+  {
+    value: 'E-Ray/Explain',
+    label: 'E-Ray/Explain',
+  },
+  {
+    value: 'E-Stop',
+    label: 'E-Stop',
+  },
+  {
+    value: 'Fill Weight Adjustments',
+    label: 'Fill Weight Adjustments',
+  },
+  {
+    value: 'Film Roll Changes',
+    label: 'Film Roll Changes',
+  },
+  {
+    value: 'Film Wrap',
+    label: 'Film Wrap',
+  },
+  {
+    value: 'Folding/Glueing',
+    label: 'Folding/Glueing',
+  },
+  {
+    value: 'Glue Nozzle',
+    label: 'Glue Nozzle',
+  },
+  {
+    value: 'Glueing Issue',
+    label: 'Glueing Issue',
+  },
+  {
+    value: 'Hot Water Flush',
+    label: 'Hot Water Flush',
+  },
+  {
+    value: 'Hueft',
+    label: 'Hueft',
+  },
+  {
+    value: 'Hueft/Reject',
+    label: 'Hueft/Reject',
+  },
+  {
+    value: 'Hygiene Center',
+    label: 'Hygiene Center',
+  },
+  {
+    value: 'IF Screw Fault',
+    label: 'IF Screw Fault',
+  },
+  {
+    value: 'Infeed Backing Up',
+    label: 'Infeed Backing Up',
+  },
+  {
+    value: 'Infeed Bottle Jam',
+    label: 'Infeed Bottle Jam',
+  },
+  {
+    value: 'Infeed Gap / Down Bottles',
+    label: 'Infeed Gap / Down Bottles',
+  },
+  {
+    value: 'Infeed Jam',
+    label: 'Infeed Jam',
+  },
+  {
+    value: 'Infeed Pallet Jam',
+    label: 'Infeed Pallet Jam',
+  },
+  {
+    value: 'Infeed/Collating/Tray feed',
+    label: 'Infeed/Collating/Tray feed',
+  },
+  {
+    value: 'Label Adjustment',
+    label: 'Label Adjustment',
+  },
+  {
+    value: 'Laner Jam',
+    label: 'Laner Jam',
+  },
+  {
+    value: 'Layering Issues',
+    label: 'Layering Issues',
+  },
+  {
+    value: 'Mechanical',
+    label: 'Mechanical',
+  },
+  {
+    value: 'Mechanical Failure',
+    label: 'Mechanical Failure',
+  },
+  {
+    value: 'Not Reading',
+    label: 'Not Reading',
+  },
+  {
+    value: 'Octave',
+    label: 'Octave',
+  },
+  {
+    value: 'Open Box',
+    label: 'Open Box',
+  },
+  
+  {
+    value: 'Orientation',
+    label: 'Orientation',
+  },
+  {
+    value: 'Other/Explain',
+    label: 'Other/Explain',
+  },
+  {
+    value: 'Out of Ink/Make up Fluid',
+    label: 'Out of Ink/Make up Fluid',
+  },
+  {
+    value: 'Outfeed Jam',
+    label: 'Outfeed Jam',
+  },
+  {
+    value: 'Outfeed/Reject',
+    label: 'Outfeed/Reject',
+  },
+  {
+    value: 'Pallet Crash',
+    label: 'Pallet Crash',
+  },
+  {
+    value: 'Pallet Discharge',
+    label: 'Pallet Discharge',
+  },
+  {
+    value: 'Photo Eye',
+    label: 'Photo Eye',
+  },
+  {
+    value: 'Photoeye Fogged',
+    label: 'Photoeye Fogged',
+  },
+  {
+    value: 'Power Outage',
+    label: 'Power Outage',
+  },
+  {
+    value: 'Preform Hopper/Conveyor',
+    label: 'Preform Hopper/Conveyor',
+  },
+  {
+    value: 'Print and Apply',
+    label: 'Print and Apply',
+  },
+  {
+    value: 'Print Head Fault',
+    label: 'Print Head Fault',
+  },
+  {
+    value: 'Rinser',
+    label: 'Rinser',
+  },
+  {
+    value: 'Robot/Automation Issues',
+    label: 'Robot/Automation Issues',
+  },
+  {
+    value: 'Saber Adjustment',
+    label: 'Saber Adjustment',
+  },
+  {
+    value: 'Safety Circuit',
+    label: 'Safety Circuit',
+  },
+  {
+    value: 'Sanibar',
+    label: 'Sanibar',
+  },
+  {
+    value: 'Sanitation/Shared Equipment',
+    label: 'Sanitation/Shared Equipment',
+  },
+  {
+    value: 'Sanitize/Excessive Foam',
+    label: 'Sanitize/Excessive Foam',
+  },
+  {
+    value: 'Scale Calibration',
+    label: 'Scale Calibration',
+  },
+  {
+    value: 'Servo Fault',
+    label: 'Servo Fault',
+  },
+  {
+    value: 'Side-A Servo Gate/Laner jam',
+    label: 'Side-A Servo Gate/Laner jam',
+  },
+  {
+    value: 'Side-B Servo Gate/Laner jam',
+    label: 'Side-B Servo Gate/Laner jam',
+  },
+  {
+    value: 'Sleeve Jam',
+    label: 'Sleeve Jam',
+  },
+  {
+    value: 'SOP',
+    label: 'SOP',
+  },
+  {
+    value: 'Spiral',
+    label: 'Spiral',
+  },
+  {
+    value: 'Starwheel Jam',
+    label: 'Starwheel Jam',
+  },
+  {
+    value: 'Station 1/Explain',
+    label: 'Station 1/Explain',
+  },
+  {
+    value: 'Station 2/Explain',
+    label: 'Station 2/Explain',
+  },
+  {
+    value: 'Station 3/Explain',
+    label: 'Station 3/Explain',
+  },
+  {
+    value: 'Station 4/Explain',
+    label: 'Station 4/Explain',
+  },
+  {
+    value: 'Station 5/Explain',
+    label: 'Station 5/Explain',
+  },
+  {
+    value: 'Station 6/Explain',
+    label: 'Station 6/Explain',
+  },
+  {
+    value: 'Steam Tunnel Issues/Explain',
+    label: 'Steam Tunnel Issues/Explain',
+  },
+  {
+    value: 'Temperature',
+    label: 'Temperature',
+  },
+  {
+    value: 'Transfer Issue',
+    label: 'Transfer Issue',
+  },
+  {
+    value: 'Tray Jam',
+    label: 'Tray Jam',
+  },
+  {
+    value: 'Turned Box',
+    label: 'Turned Box',
+  },
+   {
+    value: 'Valve/Explain',
+    label: 'Valve/Explain',
+  },
+   {
+    value: 'VFD Fault',
+    label: 'VFD Fault',
+  },
+  {
+    value: 'Water Purge',
+    label: 'Water Purge',
+  },
+  {
+    value: 'Weight Scale Fault',
+    label: 'Weight Scale Fault',
+  },
+  {
+    value: 'Whse Conveyor Jam',
+    label: 'Whse Conveyor Jam',
+  },
+  {
+    value: 'X-Ray/Explain',
+    label: 'X-Ray/Explain',
+  },
+  
+];
+
+
 const rows = [];
 var temp;
 var i;
 function DataTable() {
+
+  const [Reasons, setReason] = React.useState('EUR');
+
+  const handleChange = (event) => {
+    setReason(event.target.value);
+  };
 
   const classes = useStyles();
   const [show, setShow] = useState(false);
@@ -52,7 +522,6 @@ function DataTable() {
   const [selReason, setselReason] = useState();
   const [selDuration, setselDuration] = useState();
   const [selShift, setselShift] = useState();
-
   
   var DisplayRecords;
   window.onload = DisplayRecords = async event => 
@@ -266,13 +735,34 @@ function DataTable() {
               />
           </div>
           <div>
-          <TextField
+          {/* <TextField
               id="reasonEdit"
               label="Reason"
               defaultValue={selReason}
               variant="outlined"
               fullWidth
-              />
+              /> */}
+                  
+              
+              
+                  <TextField
+          id="reasonEdit"
+          select
+          label="Reason for change"
+       
+          onChange={handleChange}
+          SelectProps={{
+            native: true,
+          }}
+         
+          variant="outlined"
+        >
+          {Reason.map((option) => (
+            <option key={option.value} value={option.value}>
+              {option.label}
+            </option>
+          ))}
+        </TextField>
           </div>
           <div>
           <TextField
