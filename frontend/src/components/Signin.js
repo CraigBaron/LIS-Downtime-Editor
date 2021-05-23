@@ -17,6 +17,8 @@ import LockIcon from '@material-ui/icons/Lock';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import { Modal } from 'react-bootstrap'
 import {Card} from "@material-ui/core"
+import Visibility from '@material-ui/icons/Visibility';
+import VisibilityOff from '@material-ui/icons/VisibilityOff';
 
 import axios from 'axios';
 import Alert from '@material-ui/lab/Alert';
@@ -70,6 +72,9 @@ const useStyles = makeStyles((theme) => ({
 export default function SignIn() {
 
   const classes = useStyles();
+  const [values, setValues] = React.useState({
+    showPassword: false,
+  });
   const [email, setEmail] = useState("email")
   const [password, setPassword] = useState("password")
   const [open, setOpen] = useState(false);
@@ -99,13 +104,31 @@ export default function SignIn() {
       setShow(false);
   }
   const handleShow = () => setShow(true);
+  
+
+  const handleChange = (prop) => (e) => {
+    setValues({ ...values, [prop]: e.target.value });
+
+    function handlePasswordChange(e) {
+      setPassword(e.target.value)
+   
+    }
+
+    handlePasswordChange(e);
+
+  };
+  const handleClickShowPassword = () => {
+    setValues({ ...values, showPassword: !values.showPassword });
+  };
+
+  const handleMouseDownPassword = (e) => {
+    e.preventDefault();
+  };
 
   function handleEmailChange(e) {
     setEmail(e.target.value)
   }
-  function handlePasswordChange(e) {
-    setPassword(e.target.value)
-  }
+
   
   const handleResetCodeChange = (e) => {
     setResetCode(e.target.value);
@@ -184,7 +207,19 @@ export default function SignIn() {
   }
   
 
+  
+
+
+
+  
+
+
   return (
+
+    
+  
+
+
     <div className={classes.root}>
 
       <div>
@@ -240,9 +275,10 @@ export default function SignIn() {
                 fullWidth
                 name="password"
                 label="Password"
-                type="password"
+                type={values.showPassword ? 'text' : 'password'}
+                value={values.password}
                 id="password"
-                onChange={handlePasswordChange}
+                onChange={ handleChange('password')}
                 autoComplete="current-password"
                 InputProps={{
                   startAdornment: (
@@ -250,6 +286,18 @@ export default function SignIn() {
                       <LockIcon />
                     </InputAdornment>
                   ),
+                  endAdornment: (
+                    <InputAdornment position="end">
+                      <IconButton
+                        aria-label="toggle password visibility"
+                        onClick={handleClickShowPassword}
+                        onMouseDown={handleMouseDownPassword}
+                        edge="end"
+                      >
+                        {values.showPassword ? <Visibility /> : <VisibilityOff />}
+                      </IconButton>
+                    </InputAdornment>
+                    )
                   
                 }}
               />
