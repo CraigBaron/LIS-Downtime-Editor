@@ -21,7 +21,7 @@
   },
   "devDependencies": {},
   "scripts": {
-    "start": "nodemon server.js",
+    "start": "node ./server.js",
     "test": "echo \"Error: no test specified\"",
     "azure": "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client && npm run start"
   },
