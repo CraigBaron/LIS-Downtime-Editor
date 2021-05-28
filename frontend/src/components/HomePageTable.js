@@ -495,6 +495,326 @@ const Reason = [
 ];
 
 
+const Machine = [
+  {
+    value: 'Null',
+    label: 'Select',
+  },
+  {
+    value: 'Airveyor',
+    label: 'Airveyor',
+  },
+  {
+    value: 'Airveyor (BM - Labeler)',
+    label: 'Airveyor (BM - Labeler)',
+  },
+  {
+    value: 'Airveyor (Labeler-Filler)',
+    label: 'Airveyor (Labeler-Filler)',
+  },
+  {
+    value: 'Bag Conveyor (Filler-Box Sealer)',
+    label: 'Bag Conveyor (Filler-Box Sealer)',
+  },
+  {
+    value: 'Bag Scale',
+    label: 'Bag Scale',
+  },
+  {
+    value: 'Blending',
+    label: 'Blending',
+  },
+
+  {
+    value: 'Blow Mold',
+    label: 'Blow Mold',
+  },
+  {
+    value: 'Blow Mold 1',
+    label: 'Blow Mold 1',
+  },
+  {
+    value: 'Blow Mold 2',
+    label: 'Blow Mold 2',
+  },
+
+    {
+    value: 'Bottle Coder',
+    label: 'Bottle Coder',
+  },
+    {
+    value: 'Bottle Conveyor (Cooling-Labeler)',
+    label: 'Bottle Conveyor (Cooling-Labeler)',
+  },  {
+    value: 'Bottle Conveyor (Filler-Tamperband)',
+    label: 'Bottle Conveyor (Filler-Tamperband)',
+  },
+  {
+    value: 'Bottle Conveyor (Filler-Labeler)',
+    label: 'Bottle Conveyor (Filler-Labeler)',
+  },
+
+    {
+    value: 'Bottle Conveyor (Labeler - Kister)',
+    label: 'Bottle Conveyor (Labeler - Kister)',
+  },
+  {
+    value: 'Bottle Conveyor (Labeler-Filler)',
+    label: 'Bottle Conveyor (Labeler-Filler)',
+  },  {
+    value: 'Bottle Conveyor (Tamperband-Douglas-Kister)',
+    label: 'Bottle Conveyor (Tamperband-Douglas-Kister)',
+  },
+  {
+    value: 'Bottle Conveyor (Tamperband-Kister)',
+    label: 'Bottle Conveyor (Tamperband-Kister)',
+  },
+  {
+    value: 'Bottle Conveyor (Tamperband-Kister A)',
+    label: 'Bottle Conveyor (Tamperband-Kister A)',
+  },
+  {
+    value: 'Bottle Conveyor (Tamperband-Kister B)',
+    label: 'Bottle Conveyor (Tamperband-Kister B)',
+  },
+  
+  {
+    value: 'Bottle Conveyor (Tamperband-Mezz)',
+    label: 'Bottle Conveyor (Tamperband-Mezz)',
+  },
+  {
+    value: 'Box Coder',
+    label: 'Box Coder',
+  },
+
+  {
+    value: 'Box Sealer',
+    label: 'Box Sealer',
+  },
+  {
+    value: 'Bundler',
+    label: 'Bundler',
+  },
+  {
+    value: 'Cooling Tunel',
+    label: 'Cooling Tunel',
+  },
+  {
+    value: 'Depal',
+    label: 'Depal',
+  },
+  {
+    value: 'Douglas',
+    label: 'Douglas',
+  },
+  {
+    value: 'East Fallas Bag Drop',
+    label: 'East Fallas Bag Drop',
+  },
+  {
+    value: 'Empty Bottle Inverter',
+    label: 'Empty Bottle Inverter',
+  },
+  {
+    value: 'Empty box Conveyor',
+    label: 'Empty box Conveyor',
+  },
+  {
+    value: 'Facilities',
+    label: 'Facilities',
+  },
+  {
+    value: 'Filler',
+    label: 'Filler',
+  },
+  {
+    value: 'Filler A',
+    label: 'Filler A',
+  },
+  {
+    value: 'Filler B',
+    label: 'Filler B',
+  },
+  {
+    value: 'Fuji A',
+    label: 'Fuji A',
+  },
+  {
+    value: 'Fuji B',
+    label: 'Fuji B',
+  },
+  {
+    value: 'Full Bottle Inverter',
+    label: 'Full Bottle Inverter',
+  },
+  {
+    value: 'Hi-Cone',
+    label: 'Hi-Cone',
+  },
+  {
+    value: 'I-Pack Box Former',
+    label: 'I-Pack Box Former',
+  },
+  {
+    value: 'Kister',
+    label: 'Kister',
+  },
+  {
+    value: 'Kister-A',
+    label: 'Kister-A',
+  },
+  {
+    value: 'Kister-B',
+    label: 'Kister-B',
+  },
+  {
+    value: 'Label Machine',
+    label: 'Label Machine',
+  },
+  {
+    value: 'Labeler A',
+    label: 'Labeler A',
+  },
+  {
+    value: 'Labeler B',
+    label: 'Labeler B',
+  },
+  {
+    value: 'Mezzanine Bottle conveyors',
+    label: 'Mezzanine Bottle conveyors',
+  },
+  {
+    value: 'Multi - Pack conveyors',
+    label: 'Multi - Pack conveyors',
+  },
+  {
+    value: 'Overhead Case Conveyor',
+    label: 'Overhead Case Conveyor',
+  },
+  {
+    value: 'Overhead Case Conveyor (KisterA-PZ1)',
+    label: 'Overhead Case Conveyor (KisterA-PZ1)',
+  },
+  {
+    value: 'Overhead Case Conveyor (KisterA-PZ2)',
+    label: 'Overhead Case Conveyor (KisterA-PZ2)',
+  },
+  {
+    value: 'Overhead Case Conveyor (KisterA-PZ3)',
+    label: 'Overhead Case Conveyor (KisterA-PZ3)',
+  },
+  {
+    value: 'Overhead Case Conveyor (KisterA-PZ4)',
+    label: 'Overhead Case Conveyor (KisterA-PZ4)',
+  },
+  {
+    value: 'Overhead Case Conveyor (KisterA-PZ6)',
+    label: 'Overhead Case Conveyor (KisterA-PZ6)',
+  },
+  {
+    value: 'Overhead Case Conveyor (KisterB-PZ5)',
+    label: 'Overhead Case Conveyor (KisterB-PZ5)',
+  },
+  {
+    value: 'Overhead Case Conveyor (KisterB-PZ7)',
+    label: 'Overhead Case Conveyor (KisterB-PZ7)',
+  },
+  {
+    value: 'Overhead Case Conveyor (KisterB-PZ8)',
+    label: 'Overhead Case Conveyor (KisterB-PZ8)',
+  },
+  {
+    value: 'Overhead Case Conveyor (Kister-Palletizer)',
+    label: 'Overhead Case Conveyor (Kister-Palletizer)',
+  },
+  {
+    value: 'Palletizer',
+    label: 'Palletizer',
+  },
+  {
+    value: 'Palletizer 1A (PZ1)',
+    label: 'Palletizer 1A (PZ1)',
+  },
+  {
+    value: 'Palletizer 1B (PZ5)',
+    label: 'Palletizer 1B (PZ5)',
+  },
+  {
+    value: 'Palletizer 2B (PZ4)',
+    label: 'Palletizer 2B (PZ4)',
+  },
+  {
+    value: 'Palletizer 2B (PZ8)',
+    label: 'Palletizer 2B (PZ8)',
+  },
+  {
+    value: 'Palletizer 3A (PZ3)',
+    label: 'Palletizer 3A (PZ3)',
+  },
+  {
+    value: 'Palletizer 3B (PZ2)',
+    label: 'Palletizer 3B (PZ2)',
+  },
+  {
+    value: 'Palletizer 8B (PZ6)',
+    label: 'Palletizer 8B (PZ6)',
+  },
+  {
+    value: 'Palletizer 8B (PZ7)',
+    label: 'Palletizer 8B (PZ7)',
+  },
+  {
+    value: 'Tamper-Band',
+    label: 'Tamper-Band',
+  },
+  {
+    value: 'Varia-Glide',
+    label: 'Varia-Glide',
+  },
+  {
+    value: 'Vario-Glide',
+    label: 'Vario-Glide',
+  },
+  {
+    value: 'West Fallas Bag Drop',
+    label: 'West Fallas Bag Drop',
+  },
+  {
+    value: 'Wrapper',
+    label: 'Wrapper',
+  },
+  {
+    value: 'Wrapper PZ1',
+    label: 'Wrapper PZ1',
+  },
+  {
+    value: 'Wrapper PZ2',
+    label: 'Wrapper PZ2',
+  },
+  {
+    value: 'Wrapper PZ3',
+    label: 'Wrapper PZ3',
+  },
+  {
+    value: 'Wrapper PZ4',
+    label: 'Wrapper PZ4',
+  },
+  {
+    value: 'Wrapper PZ5',
+    label: 'Wrapper PZ5',
+  },
+  {
+    value: 'Wrapper PZ6',
+    label: 'Wrapper PZ6',
+  },
+  {
+    value: 'Wrapper PZ7',
+    label: 'Wrapper PZ7',
+  },
+  
+];
+
+
 const rows = [];
 var temp;
 var i;
@@ -524,15 +844,15 @@ function DataTable() {
   const [selShift, setselShift] = useState();
   
   var DisplayRecords;
-  window.onload = DisplayRecords = async event => 
-      {
-          event.preventDefault();
-          try
-          {    
-              const response = await fetch('http://localhost:5000/machineRecords/',
-                  {method:'GET',headers:{'Content-Type': 'application/json'}});
+  window.onload = DisplayRecords = async event => 
+      {
+          event.preventDefault();
+          try
+          {    
+              const response = await fetch('http://localhost:5000/machineRecords/',
+                  {method:'GET',headers:{'Content-Type': 'application/json'}});
               const record=[];
-              var res = JSON.parse(await response.text());
+              var res = JSON.parse(await response.text());
               if(res.recordset)
               {
                   for(i=0;i<res.recordset.length;i++)
@@ -554,13 +874,13 @@ function DataTable() {
                   setrows(record)
               }
               
-          }
-          catch(e)
-          {
-              alert(e.toString());
-              return;
-          }    
-      };
+          }
+          catch(e)
+          {
+              alert(e.toString());
+              return;
+          }    
+      };
   
   const EditRecord = (item) =>
   {
@@ -579,7 +899,7 @@ function DataTable() {
   
   const doEditRecord = async event =>
   {
-     event.preventDefault();
+     event.preventDefault();
       var newid = document.getElementById("idEdit").value
       var newlineid = document.getElementById("lineidEdit").value
       var newpkid = document.getElementById("pkidEdit").value
@@ -591,31 +911,31 @@ function DataTable() {
       var newduration = document.getElementById("durationEdit").value
       var newshift = document.getElementById("shiftEdit").value
       var obj = {uniqueID : newid, pkDowntimeEventID : newpkid, startDate : newstarttime, endDate : newendtime, durationTotalMinutes : newduration, LineID : newlineid, machine : newmachineid, componentID : newcomponentid, comments : newreason, secondarypk : newshift}
-      
-       var js = JSON.stringify(obj);  
-      
+      
+       var js = JSON.stringify(obj);  
+      
         try
-            {    
-                const response = await fetch('http://localhost:5000/editedRecords/add',
-                    {method:'POST',body:js, headers:{'Content-Type': 'application/json'}});
-                var res = JSON.parse(await response.text());      
-            }
-            catch(e)
-            {
-                alert(e.toString());
-                return;
-            }   
+            {    
+                const response = await fetch('http://localhost:5000/editedRecords/add',
+                    {method:'POST',body:js, headers:{'Content-Type': 'application/json'}});
+                var res = JSON.parse(await response.text());      
+            }
+            catch(e)
+            {
+                alert(e.toString());
+                return;
+            }   
     
   };
 
   async function searchRecords(){
     var filter = document.getElementById("searchBar").value
     var data = JSON.stringify({ "filter": filter });
-    try{    
+    try{    
       const response = await fetch('http://localhost:5000/machineRecords',
       {method:'POST',body:data,headers:{'Content-Type': 'application/json'}});
       const record=[];
-      var res = JSON.parse(await response.text());
+      var res = JSON.parse(await response.text());
       if(res.recordset){
         for(i=0;i<res.recordset.length;i++){
           temp = {
@@ -635,10 +955,10 @@ function DataTable() {
         setrows(record)
       }
     }
-    catch(e){
+    catch(e){
       alert(e.toString());
-      return;
-     }  
+      return;
+     }  
     return true;
   }
   
@@ -699,13 +1019,34 @@ function DataTable() {
               />
           </div>
           <div>
-          <TextField
+          {/* <TextField
               id="machineidEdit"
               label="MachineID"
               defaultValue={selMachineID}
               variant="outlined"
               fullWidth
-              />
+              /> */}
+
+        <TextField
+          id="machineidEdit"
+          select
+          label="MachineID"
+       
+          onChange={handleChange}
+          SelectProps={{
+            native: true,
+          }}
+         
+          variant="outlined"
+        >
+          {Machine.map((option) => (
+            <option key={option.value} value={option.value}>
+              {option.label}
+            </option>
+          ))}
+        </TextField>
+
+
           </div>
           <div>
           <TextField
