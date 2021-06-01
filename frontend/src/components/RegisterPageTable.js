@@ -71,7 +71,6 @@ function  RegisterTable () {
 
 var getEmployees
 window.onload = getEmployees = async () => {
-    
    try{ 
         const res = await axios.get(buildPath("users/"));
         temp.length = 0;

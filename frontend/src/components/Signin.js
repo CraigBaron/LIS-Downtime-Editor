@@ -26,6 +26,10 @@ import IconButton from '@material-ui/core/IconButton';
 import Collapse from '@material-ui/core/Collapse';
 import CloseIcon from '@material-ui/icons/Close';
 import Snackbar from '@material-ui/core/Snackbar';
+
+import MicrosoftLogin from "react-microsoft-login";
+import Auth from "./MicrosoftLogin"
+
 function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
@@ -85,6 +89,8 @@ export default function SignIn() {
   const [newConfirmPassword, setNewConfirmPassword] = useState("");
   const [show, setShow] = useState(false);
   const [resetEmail, setResetEmail] = useState("email");
+
+  const YOUR_CLIENT_ID = '588ded30-60cf-408d-a54a-47ec8f66a5dc'
 
   const [snack, setSnack] = useState(false);
 
@@ -153,7 +159,7 @@ export default function SignIn() {
           localStorage.setItem('acessToken', response.data.acessToken);
           localStorage.setItem('Email', response.data.Email);
           localStorage.setItem('privledge', response.data.privledge);
-          window.location.href = "http://localhost:3000/HomePage";
+          window.location.href = "/HomePage";
         }
         else {
           setOpen(true);
@@ -207,18 +213,7 @@ export default function SignIn() {
   }
   
 
-  
-
-
-
-  
-
-
   return (
-
-    
-  
-
 
     <div className={classes.root}>
 
@@ -231,7 +226,6 @@ export default function SignIn() {
           </Toolbar>
         </AppBar>
       </div>
-
       <Snackbar open={snack} anchorOrigin={{vertical: 'top', horizontal : 'left'}} autoHideDuration={4000} onClose={snackClose}>
         <Alert variant="filled" severity="success">
           Your Password has been changed!

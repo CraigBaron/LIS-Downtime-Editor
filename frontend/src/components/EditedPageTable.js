@@ -17,8 +17,8 @@ const config = {
 const columns = [
     { field: 'id', headerName: 'ID', width: 150 },
     { field: 'LineID', headerName: 'LineID', width: 130 },
-    { field: 'Machine', headerName: 'MachineID', width: 130 },
-    { field: 'ComponentID', headerName: 'ComponentID', width: 130 },
+    { field: 'Machine', headerName: 'MachineID', width: 200 },
+    { field: 'ComponentID', headerName: 'ComponentID', width: 200 },
     { field: 'StartDateTime', headerName: 'StartTime', width: 250 },
     { field: 'EndDateTime', headerName: 'EndTime', width: 250 },
     { field: 'Comments', headerName: 'Comments', width: 130 },

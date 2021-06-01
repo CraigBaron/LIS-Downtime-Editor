@@ -4,7 +4,7 @@ const cors = require('cors');
 const app = express();
 const sql = require('mssql');
 const PORT = process.env.PORT || 5000;
-const path = ('path');
+const path = require('path');
 app.use(cors());
 app.use(bodyParser.json());
 
