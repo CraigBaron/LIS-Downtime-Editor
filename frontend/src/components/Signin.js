@@ -28,7 +28,7 @@ import CloseIcon from '@material-ui/icons/Close';
 import Snackbar from '@material-ui/core/Snackbar';
 
 import MicrosoftLogin from "react-microsoft-login";
-import Auth from "./MicrosoftLogin"
+
 
 function Copyright() {
   return (
