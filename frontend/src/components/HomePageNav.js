@@ -51,6 +51,10 @@ export default function ButtonAppBar() {
   {
     window.location.href = '/HomePage';
   }
+  const doGraphPage = async event =>
+  {
+    window.location.href = '/GraphPage';
+  }
   return (
     <div className={classes.root}>
       <AppBar  position="static">
@@ -61,10 +65,11 @@ export default function ButtonAppBar() {
           <Collapse in={configShow}>
             <Button color="inherit" onClick={doRootPage}>Config</Button>
           </Collapse>
-           <Button  color="inherit" onClick={doMachinePage}>Machine Records</Button>
+          <Button  color="inherit" onClick={doMachinePage}>Machine Records</Button>
           <Button  color="inherit" onClick={doEditPage}>Edited Records</Button>
+          <Button  color="inherit" onClick={doGraphPage}>Graphs</Button>
           <Button  color="inherit" onClick={handleShow}>Help</Button>
-          <Button color="inherit" onClick={doLogout}>Log Out</Button>
+          <Button  color="inherit" onClick={doLogout}>Log Out</Button>
         </Toolbar>
       </AppBar>
 
