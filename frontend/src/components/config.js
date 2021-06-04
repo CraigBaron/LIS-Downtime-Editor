@@ -3,11 +3,11 @@ export const config = {
     }
 }
 
-const app_name = "lis-test"
+const app_name = "listest"
 
 export function buildPath(route) {
     if (process.env.NODE_ENV === "production") {
-        return "https://" + app_name + ".azurewebsites.net" + route;
+        return "https://" + app_name + ".eastus.cloudapp.azure.com/" + route;
     } else {
         return "http://localhost:5000/" + route;
     }

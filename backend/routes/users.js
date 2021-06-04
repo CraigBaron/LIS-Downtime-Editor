@@ -28,10 +28,12 @@ router.post('/login', async (req, res) => {
               return res.json({status : "Fail"})
             }
               if(await bcrypt.compare(password, recordset.recordsets[0][0].Password)){
-                    const privledge = recordset.recordsets[0][0].Privledge
+                    const privledge = recordset.recordsets[0][0].Privledge;
+                    const firstName = recordset.recordsets[0][0].FirstName;
+                    const lastName = recordset.recordsets[0][0].LastName;
                     const user = {email : email}
                     const acessToken = createToken(user);
-                    res.json({acessToken: acessToken, Email: email, privledge: privledge})
+                    res.json({acessToken: acessToken, Email: email, privledge: privledge, firstName : firstName, lastName : lastName })
               }else{
                 res.send('Not ALlowed')
               }

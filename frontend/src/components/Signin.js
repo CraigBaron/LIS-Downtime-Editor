@@ -16,18 +16,15 @@ import AccountCircle from '@material-ui/icons/AccountCircle';
 import LockIcon from '@material-ui/icons/Lock';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import { Modal } from 'react-bootstrap'
-import {Card} from "@material-ui/core"
 import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
-
 import axios from 'axios';
 import Alert from '@material-ui/lab/Alert';
 import IconButton from '@material-ui/core/IconButton';
 import Collapse from '@material-ui/core/Collapse';
 import CloseIcon from '@material-ui/icons/Close';
 import Snackbar from '@material-ui/core/Snackbar';
-
-import MicrosoftLogin from "react-microsoft-login";
+import { buildPath } from './config';
 
 
 function Copyright() {
@@ -75,10 +72,13 @@ const useStyles = makeStyles((theme) => ({
 
 export default function SignIn() {
 
+
+
   const classes = useStyles();
   const [values, setValues] = React.useState({
     showPassword: false,
   });
+
   const [email, setEmail] = useState("email")
   const [password, setPassword] = useState("password")
   const [open, setOpen] = useState(false);
@@ -90,7 +90,6 @@ export default function SignIn() {
   const [show, setShow] = useState(false);
   const [resetEmail, setResetEmail] = useState("email");
 
-  const YOUR_CLIENT_ID = '588ded30-60cf-408d-a54a-47ec8f66a5dc'
 
   const [snack, setSnack] = useState(false);
 
@@ -135,7 +134,7 @@ export default function SignIn() {
     setEmail(e.target.value)
   }
 
-  
+
   const handleResetCodeChange = (e) => {
     setResetCode(e.target.value);
   }
@@ -148,8 +147,9 @@ export default function SignIn() {
   const handleResetEmailChange = (e) => {
     setResetEmail(e.target.value);
   }
+
   const Login = async () => {
-    await axios.post('http://localhost:5000/users/login', {
+    await axios.post(buildPath('users/login'), {
       email: email,
       password: password
     })
@@ -159,6 +159,8 @@ export default function SignIn() {
           localStorage.setItem('acessToken', response.data.acessToken);
           localStorage.setItem('Email', response.data.Email);
           localStorage.setItem('privledge', response.data.privledge);
+          localStorage.setItem('firstName', response.data.firstName);
+          localStorage.setItem('lastName', response.data.lastName);
           window.location.href = "/HomePage";
         }
         else {
@@ -171,7 +173,7 @@ export default function SignIn() {
 
   const GetCode = async () => {
     
-    await axios.post('http://localhost:5000/users/forgot', {
+    await axios.post(buildPath('users/forgot'), {
       email : resetEmail,
     })
       .then((response) => {
@@ -194,7 +196,7 @@ export default function SignIn() {
 
   const ResetPassword = async () => {
     
-    await axios.post('http://localhost:5000/users/resetPassword', {
+    await axios.post(buildPath('resetPassword'), {
       email : resetEmail,
       password : newPassword,
       code : resetCode

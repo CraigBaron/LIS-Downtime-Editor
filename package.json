@@ -21,7 +21,7 @@
   },
   "devDependencies": {},
   "scripts": {
-    "start": "node server.js",
+    "start": "nodemon server.js",
     "test": "echo \"Error: no test specified\"",
     "azure": "NPM_CONFIG_PRODUCTION=false npm install --prefix frontend && npm run build --prefix frontend && NODE_ENV=production PORT=80 npm run start"
   },

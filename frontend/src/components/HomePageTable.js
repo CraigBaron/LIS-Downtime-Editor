@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { DataGrid } from '@material-ui/data-grid';
-import {Button} from '@material-ui/core'
+import {Button, Container, InputAdornment} from '@material-ui/core'
 import {useState} from 'react'
 import {Modal} from 'react-bootstrap'
 import TextField from '@material-ui/core/TextField';
@@ -8,13 +8,26 @@ import { makeStyles } from '@material-ui/core/styles';
 import SearchBar from "material-ui-search-bar";
 import {Box, Card} from "@material-ui/core"
 import {Form, Row, Col} from 'react-bootstrap';
-
+import MenuItem from '@material-ui/core/MenuItem';
+import FormHelperText from '@material-ui/core/FormHelperText';
+import FormControl from '@material-ui/core/FormControl';
+import Select from '@material-ui/core/Select';
+import InputLabel from '@material-ui/core/InputLabel';
+import SearchIcon from '@material-ui/icons/Search';
+import TableChartIcon from '@material-ui/icons/TableChart';
 const useStyles = makeStyles((theme) => ({
   root: {
     '& .MuiTextField-root': {
       margin: theme.spacing(1),
       width: '25ch',
     },
+  },
+  formControl: {
+    margin: theme.spacing(1),
+    minWidth: 120,
+  },
+  selectEmpty: {
+    marginTop: theme.spacing(2),
   },
 }));
 
@@ -29,6 +42,7 @@ const columns = [
   { field: 'reason', headerName: 'Comments', width: 130 },
   { field: 'duration', headerName: 'Duration', width: 130 },
   { field: 'shift', headerName: 'Secondarypk', width: 130 },
+
 ];
 
 const Reason = [
@@ -495,7 +509,6 @@ const Reason = [
 ];
 
 
-
 const rows = [];
 var temp;
 var i;
@@ -524,6 +537,12 @@ function DataTable() {
   const [selDuration, setselDuration] = useState();
   const [selShift, setselShift] = useState();
   
+  const [tableValue, setTableValue] = React.useState('');
+
+  const handleTableChange = (event) => {
+    setTableValue(event.target.value);
+  };
+
   var DisplayRecords;
   window.onload = DisplayRecords = async event => 
       {
@@ -577,11 +596,7 @@ function DataTable() {
       setselEndTime(item.endTime)
       setselReason(item.reason)
       setselDuration(item.duration)
-      setselShift(item.shift)
-
-     
-     
-     
+      setselShift(item.shift)               
   }
 
   const Machine = [
@@ -936,56 +951,61 @@ function DataTable() {
     
   };
 
-  async function searchRecords(){
-    var filter = document.getElementById("searchBar").value
-    var data = JSON.stringify({ "filter": filter });
-    try{    
-      const response = await fetch('http://localhost:5000/machineRecords',
-      {method:'POST',body:data,headers:{'Content-Type': 'application/json'}});
-      const record=[];
-      var res = JSON.parse(await response.text());
-      if(res.recordset){
-        for(i=0;i<res.recordset.length;i++){
-          temp = {
-            "id" : res.recordset[i].UniqueID,
-            "pkdowntimeeventid" : res.recordset[i].pkDowntimeEventID,
-            "startTime" : res.recordset[i].StartDateTime,
-            "endTime" : res.recordset[i].EndDateTime,
-            "duration" : res.recordset[i].DurationTotalMinutes,
-            "lineid" : res.recordset[i].LineID,
-            "machineid" : res.recordset[i].Machine,
-            "componentid" : res.recordset[i].ComponentID,
-            "reason" : res.recordset[i].Comments,
-            "shift" : res.recordset[i].Secondarypk,
-          }
-            record.push(temp);
-        }
-        setrows(record)
-      }
-    }
-    catch(e){
-      alert(e.toString());
-      return;
-     }  
-    return true;
-  }
   
-
   return (
     <div>
-    
-    <div>
-      <Box marginTop="2%" alignItems="center" display="flex" justifyContent="center">
-      <SearchBar style={{width: '20%'}} id = "searchBar" onRequestSearch={searchRecords} placeholder="Search Records..." autoFocus />
-      </Box>
-    </div>
+    <br/>
     <br></br>
     <div style={{ height: 800, width: '100%' }}>
     <Col>
     <Card variant="outlined">
     <Col>
     <br/>
-    <div><h3>LIS-Downtime-Data</h3></div>
+    <Container>
+      <Row>
+        <Col>
+          <h3>LIS-Downtime-Data</h3>
+        </Col>
+        <Col>
+          <TextField
+            label="Search Records"
+            placeholder="Search..."
+            variant="outlined"
+            InputProps={{
+              endAdornment: <InputAdornment position=""><SearchIcon/></InputAdornment>
+            }}
+          />
+        </Col>
+        <Col>
+          <FormControl fullWidth variant="outlined" className={classes.formControl}>
+          <InputLabel id="demo-simple-select-outlined-label">Select Table</InputLabel>
+            <Select
+              labelId="demo-simple-select-outlined-label"
+              id="demo-simple-select-outlined"
+              value={tableValue}
+              label="Select Table"
+              onChange={handleTableChange}
+              IconComponent = {TableChartIcon}
+            >
+              <MenuItem value="">
+                <em>None</em>
+              </MenuItem>
+              <MenuItem value={11}>System 1 Line 1</MenuItem>
+              <MenuItem value={12}>System 1 Line 2</MenuItem>
+              <MenuItem value={13}>System 1 Line 3</MenuItem>
+              <MenuItem value={14}>System 1 Line 4</MenuItem>
+              <MenuItem value={18}>System 1 Line 8</MenuItem>
+              <MenuItem value={24}>System 2 Line 4</MenuItem>
+              <MenuItem value={25}>System 2 Line 5</MenuItem>
+              <MenuItem value={26}>System 2 Line 6</MenuItem>
+              <MenuItem value={27}>System 2 Line 7</MenuItem>
+              <MenuItem value={29}>System 2 Line 9</MenuItem>
+            </Select>
+          </FormControl>
+        </Col>
+      </Row>
+      <br/>
+    </Container>
       <DataGrid Header="MachineData" rows={rows} columns={columns} autoHeight pageSize={20} onRowClick = {item => {EditRecord(item.row)}} cancelOnEscape = {true}/>
       <br/>
       </Col>
