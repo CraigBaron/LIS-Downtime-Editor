@@ -58,11 +58,6 @@ router.get('/', async (req, res) =>
            
                 res.json(recordset)        
             }); 
-            request.query("UPDATE [DowntimeEvents_Line5 System 1] SET LineID = '8' WHERE LineID = '5'", function (err, recordset) {
-                if (err) console.log(err)
-           
-                console.log(recordset.rowsAffected + " records updated");      
-            }); 
             break;   
 
         //system 2 line 4
@@ -71,11 +66,6 @@ router.get('/', async (req, res) =>
                 if (err) console.log(err)
                
                 res.json(recordset)        
-            }); 
-            request.query("UPDATE [DowntimeEvents_Line1 System 2] SET LineID = '4' WHERE LineID = '1'", function (err, recordset) {
-                if (err) console.log(err)
-               
-                console.log(recordset.rowsAffected + " records updated");      
             }); 
             break;   
 
@@ -86,11 +76,6 @@ router.get('/', async (req, res) =>
                    
                 res.json(recordset)        
             }); 
-            request.query("UPDATE [DowntimeEvents_Line2 System 2] SET LineID = '5' WHERE LineID = '2'", function (err, recordset) {
-                if (err) console.log(err)
-                   
-                console.log(recordset.rowsAffected + " records updated");      
-            }); 
             break;   
 
         //system 2 line 7
@@ -99,11 +84,6 @@ router.get('/', async (req, res) =>
                 if (err) console.log(err)
                        
                 res.json(recordset)        
-            }); 
-            request.query("UPDATE [DowntimeEvents_Line3 System 2] SET LineID = '7' WHERE LineID = '3'", function (err, recordset) {
-                if (err) console.log(err)
-                       
-                console.log(recordset.rowsAffected + " records updated");      
             }); 
             break;  
 
@@ -114,11 +94,6 @@ router.get('/', async (req, res) =>
                            
                 res.json(recordset)        
             }); 
-            request.query("UPDATE [DowntimeEvents_Line4 System 2] SET LineID = '9' WHERE LineID = '4'", function (err, recordset) {
-                if (err) console.log(err)
-                           
-                console.log(recordset.rowsAffected + " records updated");      
-            }); 
             break; 
 
         //system 2 line 6
@@ -128,15 +103,10 @@ router.get('/', async (req, res) =>
                                
                 res.json(recordset)        
             }); 
-            request.query("UPDATE [DowntimeEvents_Line5 System 2] SET LineID = '6' WHERE LineID = '5'", function (err, recordset) {
-                if (err) console.log(err)
-                               
-                console.log(recordset.rowsAffected + " records updated");      
-            }); 
             break; 
         
         default:
-            request.query("SELECT UniqueID, pkDowntimeEventID_NO, StartDateTime, EndDateTime, DurationTotalMinutes, LineID, Machine, ComponentID, Comments, Secondarypk FROM [DowntimeEvents_Line1 System 1]", function (err, recordset) {
+            request.query("SELECT UniqueID, pkDowntimeEventID, StartDateTime, EndDateTime, DurationTotalMinutes, LineID, Machine, ComponentID, Comments, Secondarypk FROM [DowntimeEvents_Line1 System 1]", function (err, recordset) {
                 if (err) console.log(err)
 
                 res.json(recordset)     
