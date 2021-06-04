@@ -17,7 +17,7 @@ router.get('/', async (req, res) =>
        //system 1 line 1
         case 11:
             
-            request.query("SELECT UniqueID, pkDowntimeEventID_NO, StartDateTime, EndDateTime, DurationTotalMinutes, LineID, Machine, ComponentID, Comments, Secondarypk FROM [DowntimeEvents_Line1 System 1]", function (err, recordset) {
+            request.query("SELECT UniqueID, pkDowntimeEventID, StartDateTime, EndDateTime, DurationTotalMinutes, LineID, Machine, ComponentID, Comments, Secondarypk FROM [DowntimeEvents_Line1 System 1]", function (err, recordset) {
                 if (err) console.log(err)
 
                 res.json(recordset)     
