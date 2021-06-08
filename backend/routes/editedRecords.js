@@ -43,12 +43,12 @@ router.post('/add',verifyAuthToken, async (req, res) => {
   
 })
 //delete record
-router.post('/delete',verifyAuthToken, async (req, res) => {
+router.post('/delete', verifyAuthToken, async (req, res) => {
     const { ID } = req.body;
     try{
         var request = new sql.Request();
     
-        request.query("DELETE FROM EditedRecords WHERE uniqueID = '"+ ID +"'", function (err, recordset) {
+        request.query("DELETE FROM EditedRecords WHERE UniqueID = '"+ ID +"'", function (err, recordset) {
             if (err){
                 console.log(err);
                 return;
@@ -62,6 +62,22 @@ router.post('/delete',verifyAuthToken, async (req, res) => {
     }
 
 })
+//edit status of record
+router.post('/edit', verifyAuthToken, (req, res) => {
+    const { ID, status} = req.body;
+    var request = new sql.Request();
+
+    request.query("UPDATE EditedRecords SET Status = '"+ status +"' WHERE UniqueID = '"+ ID +"'", function (err, recordset) {
+        if (err){
+            console.log(err);
+            return;
+        } 
+        res.json({status : "Successful"})
+        
+})
+})
+
+
 //search record
 router.post('/search', async (req, res) => {
     const { filter } = req.body;

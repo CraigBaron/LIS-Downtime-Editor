@@ -15,6 +15,8 @@ import Select from '@material-ui/core/Select';
 import InputLabel from '@material-ui/core/InputLabel';
 import SearchIcon from '@material-ui/icons/Search';
 import TableChartIcon from '@material-ui/icons/TableChart';
+import { positions } from '@material-ui/system'
+import Typograghy from '@material-ui/core/Typography'
 const useStyles = makeStyles((theme) => ({
   root: {
     '& .MuiTextField-root': {
@@ -956,17 +958,20 @@ function DataTable() {
     <div>
     <br/>
     <br></br>
-    <div style={{ height: 800, width: '100%' }}>
     <Col>
     <Card variant="outlined">
     <Col>
     <br/>
-    <Container>
       <Row>
         <Col>
-          <h3>LIS-Downtime-Data</h3>
+          <Typograghy>
+          <Box color="white" textAlign="center" fontSize="h4.fontSize" fontWeight="fontWeightRegular" height="80%" width={350} bgcolor="primary.main" boxShadow={4} borderRadius="borderRadius">
+            LIS-Downtime Data
+          </Box>
+          </Typograghy>
         </Col>
         <Col>
+          <Box >
           <TextField
             label="Search Records"
             placeholder="Search..."
@@ -975,9 +980,11 @@ function DataTable() {
               endAdornment: <InputAdornment position=""><SearchIcon/></InputAdornment>
             }}
           />
+          </Box>
         </Col>
         <Col>
-          <FormControl fullWidth variant="outlined" className={classes.formControl}>
+          <Box>
+          <FormControl fullWidth variant="outlined" >
           <InputLabel id="demo-simple-select-outlined-label">Select Table</InputLabel>
             <Select
               labelId="demo-simple-select-outlined-label"
@@ -1002,16 +1009,22 @@ function DataTable() {
               <MenuItem value={29}>System 2 Line 9</MenuItem>
             </Select>
           </FormControl>
+          </Box>
+          </Col>
+        </Row>
+        <br/>
+      <Row>
+        <Col>
+          <Box width="auto" display="flex" justifyContent="center">
+            <DataGrid rows={rows} columns={columns} autoHeight pageSize={20} onRowClick = {item => {EditRecord(item.row)}} cancelOnEscape = {true}/>
+          </Box>
         </Col>
       </Row>
-      <br/>
-    </Container>
-      <DataGrid Header="MachineData" rows={rows} columns={columns} autoHeight pageSize={20} onRowClick = {item => {EditRecord(item.row)}} cancelOnEscape = {true}/>
       <br/>
       </Col>
       </Card>
       </Col>
-    </div>
+    
 
     <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
