@@ -1033,29 +1033,32 @@ function DataTable() {
         <form className={classes.root} noValidate autoComplete="off">
         <div>
           <TextField
+          disabled
               id="idEdit"
               label="UniqueID"
               defaultValue={selID}
-              variant="outlined"
+              variant="filled"
               fullWidth
               InputProps={{readOnly: true,}}
               />
           </div>
           <div>
           <TextField
+            disabled
               id="pkidEdit"
               label="pkDowntimeEventID"
               defaultValue={selpkID}
-              variant="outlined"
+              variant="filled"
               fullWidth
               />
           </div>
           <div>
           <TextField
+          disabled
               id="lineidEdit"
               label="LineID"
               defaultValue={selLineID}
-              variant="outlined"
+              variant="filled"
               fullWidth
               />
           </div>
@@ -1091,10 +1094,11 @@ function DataTable() {
           </div>
           <div>
           <TextField
+          disabled
               id="componentidEdit"
               label="ComponentID"
               defaultValue={selComponentID}
-              variant="outlined"
+              variant="filled"
               fullWidth
               />
           </div>
@@ -1148,10 +1152,11 @@ function DataTable() {
           </div>
           <div>
           <TextField
+          disabled
               id="durationEdit"
               label="Duration"
               defaultValue={selDuration}
-              variant="outlined"
+              variant="filled"
               fullWidth
               />
           </div>
