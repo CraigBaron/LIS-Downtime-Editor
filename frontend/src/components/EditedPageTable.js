@@ -1,11 +1,28 @@
 import * as React from 'react';
+import RadioGroup from '@material-ui/core/RadioGroup';
+import FormControl from '@material-ui/core/FormControl';
+import FormLabel from '@material-ui/core/FormLabel';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Radio from '@material-ui/core/Radio';
 import { DataGrid } from '@material-ui/data-grid';
 import {Button} from '@material-ui/core'
 import {useState} from 'react'
 import axios from 'axios';
 import SearchBar from "material-ui-search-bar";
 import {Box, Card} from "@material-ui/core"
+import {Modal} from 'react-bootstrap'
+import {Form, Row, Col} from 'react-bootstrap';
+import { makeStyles } from '@material-ui/core/styles';
+import TextField from '@material-ui/core/TextField';
 
+const useStyles = makeStyles((theme) => ({
+  root: {
+    '& .MuiTextField-root': {
+      margin: theme.spacing(1),
+      width: '25ch',
+    },
+  },
+}));
 
 var temp;
 var i;
@@ -26,16 +43,60 @@ const columns = [
     { field: 'Secondarypk', headerName: 'Shift', width: 130 },
     { field: 'Reason', headerName: 'Reason', width: 130 },
     { field: 'Status', headerName: 'Status', width: 130 },
+    
   ];
+
+ 
   
+  
+
+
   function EditedTable() {
-    const [rows, setrows] = useState([])
+
+    const classes = useStyles();
+    const [show, setShow] = useState(false);
+    const [rows, setrows] = useState([]);
+    const handleClose = () => setShow(false);
+    const handleShow = () => setShow(true);
+
+    const [ selpkID, setselpkID] = useState();
+    const [selID, setselID] = useState();
+    const [selLineID, setselLineID] = useState();
+    const [selMachineID, setselMachineID] = useState();
+    const [selComponentID, setselComponentID] = useState();
+    const [selStartTime, setselStartTime] = useState();
+    const [selEndTime, setselEndTime] = useState();
+    const [selReason, setselReason] = useState();
+    const [selDuration, setselDuration] = useState();
+    const [selComments, setselComments] = useState();
+    
+
+
+    const EditRecord = (item) =>
+  {
+
+
+    handleShow()
+      setselID(item.id)
+      setselpkID(item.pkdowntimeeventid)
+      setselLineID(item.LineID)
+      setselMachineID(item.Machine)
+      setselComponentID(item.ComponentID)
+      setselStartTime(item.StartDateTime)
+      setselEndTime(item.EndDateTime)
+      setselReason(item.Reasdon)
+      setselDuration(item.DurationTotalMinutes)
+      setselComments(item.Comments)
+
+  }
+
+   
     var DisplayRecords;
-    window.onload = DisplayRecords = async () => 
-        {
+    window.onload = DisplayRecords = async () => 
+        {
             const record = [];
             let temp
-            await axios.get('http://localhost:5000/editedRecords', config)
+            await axios.get('http://localhost:5000/editedRecords', config)
             .then((response) => {
               console.log(response.data[0].length);
               for(var i=0;i<response.data[0].length;i++)
@@ -60,39 +121,79 @@ const columns = [
               console.log(error);
             });
             
-        };
+        };
+
+  
+
+     
+
+        const doEditRecord = async event =>
+        {
+           event.preventDefault();
+            var newid = document.getElementById("idEdit").value
+            var newlineid = document.getElementById("lineidEdit").value
+            var newpkid = document.getElementById("pkidEdit").value
+            var newmachineid = document.getElementById("machineidEdit").value
+            var newcomponentid = document.getElementById("componentidEdit").value
+            var newstarttime = document.getElementById("startTimeEdit").value
+            var newendtime = document.getElementById("endTimeEdit").value
+            var newreason = document.getElementById("reasonEdit").value
+            var newduration = document.getElementById("durationEdit").value
+            var newshift = document.getElementById("shiftEdit").value
+            var obj = {uniqueID : newid, pkDowntimeEventID : newpkid, startDate : newstarttime, endDate : newendtime, durationTotalMinutes : newduration, LineID : newlineid, machine : newmachineid, componentID : newcomponentid, comments : newreason, secondarypk : newshift}
+            
+             var js = JSON.stringify(obj);  
+            
+              try
+                  {    
+                      const response = await fetch('http://localhost:5000/editedRecords/add',
+                          {method:'POST',body:js, headers:{'Content-Type': 'application/json'}});
+                      var res = JSON.parse(await response.text());      
+                  }
+                  catch(e)
+                  {
+                      alert(e.toString());
+                      return;
+                  }   
+          
+        };
+
+
 
     async function searchRecords(){
+      handleShow();
       var filter = document.getElementById("searchBar").value
       var data = JSON.stringify({ "filter": filter });
-      try{    
+      try{    
         const response = await fetch('http://localhost:5000/editedRecords',
         {method:'POST',body:data,headers:{'Content-Type': 'application/json'}});
         const record=[];
-        var res = JSON.parse(await response.text());
+        var res = JSON.parse(await response.text());
         if(res.recordset){
           for(i=0;i<res.recordset.length;i++){
             temp = {
-              "id" : res.recordset[i].UniqueID,
-              "pkdowntimeeventid" : res.recordset[i].pkDowntimeEventID,
-              "startTime" : res.recordset[i].StartDateTime,
-              "endTime" : res.recordset[i].EndDateTime,
-              "duration" : res.recordset[i].DurationTotalMinutes,
-              "lineid" : res.recordset[i].LineID,
-              "machineid" : res.recordset[i].Machine,
-              "componentid" : res.recordset[i].ComponentID,
-              "reason" : res.recordset[i].Comments,
-              "shift" : res.recordset[i].Secondarypk,
+              "id" : response.data[0][i].UniqueID,
+              "LineID" : response.data[0][i].LineID,
+              "Machine" : response.data[0][i].Machine,
+              "ComponentID" : response.data[0][i].ComponentID,
+              "StartDateTime" : response.data[0][i].StartDateTime,
+              "EndDateTime" : response.data[0][i].EndDateTime,
+              "Comments" : response.data[0][i].Comments,
+              "DurationTotalMinutes" : response.data[0][i].DurationTotalMinutes,
+              "Secondarypk" : response.data[0][i].Secondarypk,
+              "Reason" : response.data[0][i].Reason,
+              "Status" : response.data[0][i].Status,
+              
             }
               record.push(temp);
           }
           setrows(record)
         }
       }
-      catch(e){
+      catch(e){
         alert(e.toString());
-        return;
-       }  
+        return;
+       }  
       return true;
     }
     
@@ -107,8 +208,138 @@ const columns = [
     <br></br>
     <div style={{ height: 800, width: '100%' }}>
     <div><h3>Edited Records</h3></div>
-    <DataGrid  autoHeight rows={rows} columns={columns} rowsPerPageOptions={[5, 10, 20, 50]}/>
+    <DataGrid  rows={rows} columns={columns} autoHeight pageSize={20} onRowClick = {item => {EditRecord(item.row)}} cancelOnEscape = {true}/>
     </div>
+    <Modal show={show} onHide={handleClose}>
+  <Modal.Header closeButton>
+    <Modal.Title>Record Confirmation</Modal.Title>
+  </Modal.Header>
+  <Modal.Body>
+ 
+            <div>
+             <TextField
+             disabled
+              id="ID"
+              label="ID"
+              defaultValue={selID}
+              variant="filled"
+              fullWidth
+              />
+              </div>
+              <br/>
+              <div> 
+              <TextField
+              disabled
+              id="LineID"
+              label="LineID"
+              defaultValue={selLineID}
+              variant="filled"
+              fullWidth
+              />
+              </div>
+             <br/>
+              <div> 
+               
+               <TextField
+               disabled
+              id="MachineID"
+              label="MachineID"
+              defaultValue={selMachineID}
+              variant="filled"
+              fullWidth
+              />
+              </div>
+                <br/>
+                <div>
+              <TextField
+              disabled
+              id="ComponentID"
+              label="ComponentID"
+              defaultValue={selComponentID}
+              variant="filled"
+              fullWidth
+              />
+              </div>
+              <br/>
+              <div>   
+             
+               <TextField
+               disabled
+              id="startTime"
+              label="StartTime"
+              defaultValue={selStartTime}
+              variant="filled"
+              fullWidth
+              />
+              </div>
+              
+                <br/>
+                <div>
+              <TextField
+
+              disabled
+              id="EndTime"
+              label="EndTime"
+              defaultValue={selEndTime}
+              variant="filled"
+              fullWidth
+              />
+              </div>
+                <br/>
+                <div>
+
+               <TextField
+               disabled
+              id="Comment"
+              label="Comment"
+              defaultValue={selComments}
+              variant="filled"
+              fullWidth
+              />
+              </div>
+                <br/>
+                
+              <div>
+
+               <TextField    
+              disabled
+              id="Duration"
+              label="Duration"
+              defaultValue={selDuration}
+              variant="filled"
+              fullWidth
+              />
+             </div>
+
+            <br/>
+            
+  <FormControl component="fieldset">
+
+
+<FormLabel component="legend">Select record status:</FormLabel>
+<RadioGroup aria-label="gender" name="gender1" >
+<FormControlLabel value="Approve" control={<Radio />} label="Approve" />
+<FormControlLabel value="Reject" control={<Radio />} label="Reject" />
+<FormControlLabel value="Pending" control={<Radio />} label="Leave pending" />
+<FormControlLabel value="Delete" control={<Radio />} label="Delete" />
+
+</RadioGroup>
+</FormControl>
+
+ 
+   </Modal.Body>
+   <Modal.Footer>
+    <Button variant="secondary" onClick={handleClose}>
+      Cancel
+    </Button>
+    <Button color="primary" onClick={handleClose}>
+      Submit Edit
+    </Button>
+  </Modal.Footer>
+</Modal>
     </div>
     );
   }export default EditedTable;
+
+
+  

@@ -1,4 +1,4 @@
-import React from 'react'
+ import React from 'react'
 import { Chart } from 'react-charts'
  
 function Graph() {
@@ -36,4 +36,4 @@ function Graph() {
       <Chart data={data} axes={axes} />
     </div>
   );
-}export default Graph;
+}export default Graph; 
