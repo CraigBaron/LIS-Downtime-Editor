@@ -561,7 +561,7 @@ function DataTable() {
                   for(i=0;i<res.recordset.length;i++)
                   {
                     temp = {
-                      "id" : res.recordset[i].ID,
+                      "id" : res.recordset[i].id,
                       "pkdowntimeeventid" : res.recordset[i].pkDowntimeEventID,
                       "lineid" : res.recordset[i].LineID,
                       "machineid" : res.recordset[i].Machine,
