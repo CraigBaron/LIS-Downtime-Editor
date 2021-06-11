@@ -45,11 +45,6 @@ const columns = [
     
   ];
 
- 
-  
-  
-
-
   function EditedTable() {
 
     const classes = useStyles();
@@ -80,7 +75,6 @@ const columns = [
 
     const EditRecord = (item) =>
   {
-
 
     handleShow()
       setselID(item.id)
@@ -165,22 +159,24 @@ const columns = [
         };
 
 
-        const updateStatus = async () => {
-
-          try{
-            const res = await axios.post(buildPath("editedRecords/edit"),
-
-                {
-                  ID : selID,
-                  status : status
-                }
-                );
-                console.log(res.data)
-          }catch(err){
-          console.log(err);
-          
+        const closeAndAccept = () => {
+            updateStatus();
+            handleClose();
         }
-      }
+
+        const updateStatus = async () => {
+          await axios.post(buildPath('editedRecords/edit'), 
+          {
+            ID: selID,
+            status: status
+          })
+            .then((response) => {
+              console.log(response.data)
+              DisplayRecords();
+            }, (error) => {
+              console.log(error.request)
+            });
+        }
 
 
 
@@ -354,7 +350,6 @@ const columns = [
 <FormControlLabel value="Approve" control={<Radio />} label="Approve" />
 <FormControlLabel value="Reject" control={<Radio />} label="Reject" />
 <FormControlLabel value="Delete" control={<Radio />} label="Delete" />
-
 </RadioGroup>
 </FormControl>
 
@@ -364,7 +359,7 @@ const columns = [
     <Button variant="secondary" onClick={handleClose}>
       Cancel
     </Button>
-    <Button color="primary" onClick={updateStatus}>
+    <Button color="primary" onClick={closeAndAccept}>
       Submit Edit
     </Button>
   </Modal.Footer>

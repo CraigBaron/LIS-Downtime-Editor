@@ -63,7 +63,7 @@ router.post('/delete', verifyAuthToken, async (req, res) => {
 
 })
 //edit status of record
-router.post('/edit', verifyAuthToken, (req, res) => {
+router.post('/edit', /*verifyAuthToken,*/ async (req, res) => {
     const { ID, status} = req.body;
     var request = new sql.Request();
 

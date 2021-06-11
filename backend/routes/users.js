@@ -3,7 +3,6 @@ const router = express.Router()
 const sql = require('mssql')
 const bcrypt = require('bcrypt')
 require('dotenv').config()
-const jwt = require('jsonwebtoken')
 const{ v1: uuidv1 } = require('uuid');
 
 const createToken = require("../createToken");
@@ -31,9 +30,9 @@ router.post('/login', async (req, res) => {
                     const privledge = recordset.recordsets[0][0].Privledge;
                     const firstName = recordset.recordsets[0][0].FirstName;
                     const lastName = recordset.recordsets[0][0].LastName;
-                    const user = {email : email}
-                   const acessToken = createToken(user);
-                    res.json({acessToken: acessToken, Email: email, privledge: privledge, firstName : firstName, lastName : lastName })
+                    const user = {email : email, firstName : firstName, lastName : lastName, privledge : privledge}
+                    const acessToken = createToken(user);
+                    res.json({acessToken: acessToken, user : user})
               }else{
                 res.send('Not ALlowed')
               }

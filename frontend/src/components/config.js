@@ -1,5 +1,6 @@
+
 export const config = {
-    headers : {'Authorization' : 'Bearer ' + localStorage.getItem('acessToken')
+    headers : {'Authorization' : `Bearer ${localStorage.getItem('acessToken')}`
     }
 }
 
