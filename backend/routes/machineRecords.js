@@ -11,16 +11,22 @@ router.get('/', async (req, res) =>
 {
     
     var request = new sql.Request(); 
-    // query to the database and get the records
+    
    switch (templinenumber) {
 
        //system 1 line 1
         case 11:
-            
+            // query to the database and get the records
             request.query("SELECT UniqueID, pkDowntimeEventID, StartDateTime, EndDateTime, DurationTotalMinutes, LineID, Machine, ComponentID, Comments, Secondarypk FROM [DowntimeEvents_Line1 System 1]", function (err, recordset) {
                 if (err) console.log(err)
 
-                res.json(recordset)     
+                var temp = recordset;
+                  
+                for(var i = 0; i < temp.recordsets[0].length; i++){
+                    temp.recordsets[0][i].ID = temp.recordsets[0][i].UniqueID;
+                    delete temp.recordsets[0][i].UniqueID;
+                }
+                res.json(temp)      
             });  
             break;
 
@@ -29,7 +35,13 @@ router.get('/', async (req, res) =>
             request.query("SELECT UniqueID, pkDowntimeEventID, StartDateTime, EndDateTime, DurationTotalMinutes, LineID, Machine, ComponentID, Comments, Secondarypk FROM [DowntimeEvents_Line2 System 1]", function (err, recordset) {
                 if (err) console.log(err)
 
-                res.json(recordset)        
+                var temp = recordset;
+                  
+                for(var i = 0; i < temp.recordsets[0].length; i++){
+                    temp.recordsets[0][i].ID = temp.recordsets[0][i].UniqueID;
+                    delete temp.recordsets[0][i].UniqueID;
+                }
+                res.json(temp)         
             }); 
             break;
 
@@ -38,7 +50,13 @@ router.get('/', async (req, res) =>
             request.query("SELECT UniqueID, pkDowntimeEventID, StartDateTime, EndDateTime, DurationTotalMinutes, LineID, Machine, ComponentID, Comments, Secondarypk FROM [DowntimeEvents_Line3 System 1]", function (err, recordset) {
                 if (err) console.log(err)
        
-                res.json(recordset)        
+                var temp = recordset;
+                  
+                for(var i = 0; i < temp.recordsets[0].length; i++){
+                    temp.recordsets[0][i].ID = temp.recordsets[0][i].UniqueID;
+                    delete temp.recordsets[0][i].UniqueID;
+                }
+                res.json(temp)        
             }); 
             break;
 
@@ -47,16 +65,29 @@ router.get('/', async (req, res) =>
             request.query("SELECT UniqueID, pkDowntimeEventID, StartDateTime, EndDateTime, DurationTotalMinutes, LineID, Machine, ComponentID, Comments, Secondarypk FROM [DowntimeEvents_Line4 System 1]", function (err, recordset) {
                 if (err) console.log(err)
            
-                res.json(recordset)        
+                var temp = recordset;
+                  
+                for(var i = 0; i < temp.recordsets[0].length; i++){
+                    temp.recordsets[0][i].ID = temp.recordsets[0][i].UniqueID;
+                    delete temp.recordsets[0][i].UniqueID;
+                }
+                res.json(temp)        
             }); 
             break;
 
         //system 1 line 8
         case 15:
             request.query("SELECT UniqueID, pkDowntimeEventID, StartDateTime, EndDateTime, DurationTotalMinutes, LineID, Machine, ComponentID, Comments, Secondarypk FROM [DowntimeEvents_Line5 System 1]", function (err, recordset) {
-                if (err) console.log(err)
-           
-                res.json(recordset)        
+                if (err) console.log(err) 
+        
+                var temp = recordset;
+                  
+                for(var i = 0; i < temp.recordsets[0].length; i++){
+                    temp.recordsets[0][i].LineID = 8;
+                    temp.recordsets[0][i].ID = temp.recordsets[0][i].UniqueID;
+                    delete temp.recordsets[0][i].UniqueID;
+                }
+                res.json(temp)
             }); 
             break;   
 
@@ -65,7 +96,14 @@ router.get('/', async (req, res) =>
             request.query("SELECT UniqueID, pkDowntimeEventID, StartDateTime, EndDateTime, DurationTotalMinutes, LineID, Machine, ComponentID, Comments, Secondarypk FROM [DowntimeEvents_Line1 System 2]", function (err, recordset) {
                 if (err) console.log(err)
                
-                res.json(recordset)        
+                var temp = recordset;
+                  
+                for(var i = 0; i < temp.recordsets[0].length; i++){
+                    temp.recordsets[0][i].LineID = 4;
+                    temp.recordsets[0][i].ID = temp.recordsets[0][i].UniqueID;
+                    delete temp.recordsets[0][i].UniqueID;
+                }
+                res.json(temp)      
             }); 
             break;   
 
@@ -73,8 +111,15 @@ router.get('/', async (req, res) =>
         case 22:
             request.query("SELECT UniqueID, pkDowntimeEventID, StartDateTime, EndDateTime, DurationTotalMinutes, LineID, Machine, ComponentID, Comments, Secondarypk FROM [DowntimeEvents_Line2 System 2]", function (err, recordset) {
                 if (err) console.log(err)
-                   
-                res.json(recordset)        
+                
+                var temp = recordset;
+                  
+                for(var i = 0; i < temp.recordsets[0].length; i++){
+                    temp.recordsets[0][i].LineID = 5;
+                    temp.recordsets[0][i].ID = temp.recordsets[0][i].UniqueID;
+                    delete temp.recordsets[0][i].UniqueID;
+                }
+                res.json(temp)         
             }); 
             break;   
 
@@ -83,7 +128,14 @@ router.get('/', async (req, res) =>
             request.query("SELECT UniqueID, pkDowntimeEventID, StartDateTime, EndDateTime, DurationTotalMinutes, LineID, Machine, ComponentID, Comments, Secondarypk FROM [DowntimeEvents_Line3 System 2]", function (err, recordset) {
                 if (err) console.log(err)
                        
-                res.json(recordset)        
+                var temp = recordset;
+                  
+                for(var i = 0; i < temp.recordsets[0].length; i++){
+                    temp.recordsets[0][i].LineID = 7;
+                    temp.recordsets[0][i].ID = temp.recordsets[0][i].UniqueID;
+                    delete temp.recordsets[0][i].UniqueID;
+                }
+                res.json(temp)       
             }); 
             break;  
 
@@ -92,7 +144,14 @@ router.get('/', async (req, res) =>
             request.query("SELECT UniqueID, pkDowntimeEventID, StartDateTime, EndDateTime, DurationTotalMinutes, LineID, Machine, ComponentID, Comments, Secondarypk FROM [DowntimeEvents_Line4 System 2]", function (err, recordset) {
                 if (err) console.log(err)
                            
-                res.json(recordset)        
+                var temp = recordset;
+                  
+                for(var i = 0; i < temp.recordsets[0].length; i++){
+                    temp.recordsets[0][i].LineID = 9;
+                    temp.recordsets[0][i].ID = temp.recordsets[0][i].UniqueID;
+                    delete temp.recordsets[0][i].UniqueID;
+                }
+                res.json(temp)        
             }); 
             break; 
 
@@ -101,7 +160,14 @@ router.get('/', async (req, res) =>
             request.query("SELECT UniqueID, pkDowntimeEventID, StartDateTime, EndDateTime, DurationTotalMinutes, LineID, Machine, ComponentID, Comments, Secondarypk FROM [DowntimeEvents_Line5 System 2]", function (err, recordset) {
                 if (err) console.log(err)
                                
-                res.json(recordset)        
+                var temp = recordset;
+                  
+                for(var i = 0; i < temp.recordsets[0].length; i++){
+                    temp.recordsets[0][i].LineID = 6;
+                    temp.recordsets[0][i].ID = temp.recordsets[0][i].UniqueID;
+                    delete temp.recordsets[0][i].UniqueID;
+                }
+                res.json(temp)         
             }); 
             break; 
         
