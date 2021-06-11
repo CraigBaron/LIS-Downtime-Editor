@@ -5,14 +5,13 @@ const app = express();
 const sql = require('mssql');
 const PORT = process.env.PORT || 5000;
 const path = require('path');
-app.use(cors());
 app.use(bodyParser.json());
-
+app.use(cors());
 
 // Serve Static assests if in production
 if (process.env.NODE_ENV === "production") {
   console.log("starting frontend");
-  app.use(express.static("frontend/build")); // change this if your dir structure is different
+  app.use(express.static("frontend/build")); 
   app.get("*", (req, res) => {
     res.sendFile(path.resolve(__dirname, "frontend", "build", "index.html"));
   });
@@ -81,6 +80,9 @@ app.use('/users', userRouter);
 
 const machineRecordsRouter = require('./backend/routes/machineRecords');
 app.use('/machineRecords', machineRecordsRouter);
+
+
+
 
 app.listen(PORT, () => {
   console.log(`Server listening on port ${PORT}.`);

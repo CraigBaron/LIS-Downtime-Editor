@@ -17,6 +17,7 @@ import SearchIcon from '@material-ui/icons/Search';
 import TableChartIcon from '@material-ui/icons/TableChart';
 import { positions } from '@material-ui/system'
 import Typograghy from '@material-ui/core/Typography'
+
 const useStyles = makeStyles((theme) => ({
   root: {
     '& .MuiTextField-root': {
@@ -528,7 +529,7 @@ function DataTable() {
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
-  const [ selpkID, setselpkID] = useState();
+  const [selpkID, setselpkID] = useState();
   const [selID, setselID] = useState();
   const [selLineID, setselLineID] = useState();
   const [selMachineID, setselMachineID] = useState();
@@ -588,17 +589,18 @@ function DataTable() {
   
   const EditRecord = (item) =>
   {
-      handleShow()
-      setselID(item.id)
-      setselpkID(item.pkdowntimeeventid)
-      setselLineID(item.lineid)
-      setselMachineID(item.machineid)
-      setselComponentID(item.componentid)
-      setselStartTime(item.startTime)
-      setselEndTime(item.endTime)
-      setselReason(item.reason)
-      setselDuration(item.duration)
-      setselShift(item.shift)               
+      handleShow();
+      setselID(item.id);
+      setselpkID(item.pkdowntimeeventid);
+      setselLineID(item.lineid);
+      setselMachineID(item.machineid);
+      setselComponentID(item.componentid);
+      setselStartTime(item.startTime);
+      setselEndTime(item.endTime);
+      setselReason(item.reason);
+      setselDuration(item.duration);
+      setselShift(item.shift); 
+                 
   }
 
   const Machine = [
@@ -1030,151 +1032,143 @@ function DataTable() {
         <Modal.Header closeButton>
           <Modal.Title>Edit Record</Modal.Title>
         </Modal.Header>
-        <form className={classes.root} noValidate autoComplete="off">
-        <div>
-          <TextField
-          disabled
+        <br/>
+        <Col>
+          <Box display="block" >
+            <TextField
+              disabled
               id="idEdit"
               label="UniqueID"
               defaultValue={selID}
-              variant="filled"
+              variant="outlined"
               fullWidth
               InputProps={{readOnly: true,}}
               />
-          </div>
-          <div>
-          <TextField
-            disabled
+          </Box>
+          <br/>
+
+          <Box display="block">
+            <TextField
+              disabled
               id="pkidEdit"
               label="pkDowntimeEventID"
               defaultValue={selpkID}
-              variant="filled"
+              variant="outlined"
               fullWidth
               />
-          </div>
-          <div>
-          <TextField
-          disabled
+          </Box>
+          <br/>
+          
+          <Box display="block">
+            <TextField
+              disabled
               id="lineidEdit"
               label="LineID"
               defaultValue={selLineID}
-              variant="filled"
-              fullWidth
-              />
-          </div>
-          <div>
-          {/* <TextField
-              id="machineidEdit"
-              label="MachineID"
-              defaultValue={selMachineID}
               variant="outlined"
               fullWidth
-              /> */}
-
-        <TextField
-          id="machineidEdit"
-          select
-          label="MachineID"
-          defaultValue={selMachineID}
-          onChange={handleChange}
-          SelectProps={{
-            native: true,
-          }}
-         
-          variant="outlined"
-        >
-          {Machine.map((option) => (
-            <option key={option.value} value={option.value}>
-              {option.label}
-            </option>
-          ))}
-        </TextField>
-
-
-          </div>
-          <div>
-          <TextField
-          disabled
-              id="componentidEdit"
-              label="ComponentID"
-              defaultValue={selComponentID}
-              variant="filled"
-              fullWidth
               />
-          </div>
-          <div>
+          </Box>
+          <br/>
+
+          <Box>
+            <TextField
+              id="machineidEdit"
+              fullWidth
+              select
+              label="MachineID"
+              defaultValue={selMachineID}
+              onChange={handleChange}
+              variant="outlined"
+              SelectProps={{
+                native: true,
+              }}
+            >
+            {Machine.map((option) => (
+              <option key={option.value} value={option.value}>
+                {option.label}
+              </option>
+            ))}       
+            </TextField>
+          </Box>
+          <br/>
+
+          <Box>
+            <TextField
+                disabled
+                id="componentidEdit"
+                label="ComponentID"
+                defaultValue={selComponentID}
+                variant="outlined"
+                fullWidth
+                />
+          </Box>
+          <br/>
+          <Box>
           <TextField
               id="startTimeEdit"
               label="StartTime"
               defaultValue={selStartTime}
               variant="outlined"
-              fullWidth
               />
-          </div>
-          <div>
+         
+          </Box>              
+          <br/>
           <TextField
               id="endTimeEdit"
               label="EndTime"
               defaultValue={selEndTime}
-              variant="outlined"
-              
+              variant="outlined"             
               />
-          </div>
-          <div>
-          {/* <TextField
-              id="reasonEdit"
-              label="Reason"
-              defaultValue={selReason}
-              variant="outlined"
-              fullWidth
-              /> */}
-                  
-              
-              
-                  <TextField
-          id="reasonEdit"
-          select
-          label="Reason for change"
-       
-          onChange={handleChange}
-          SelectProps={{
-            native: true,
-          }}
-         
-          variant="outlined"
-        >
-          {Reason.map((option) => (
-            <option key={option.value} value={option.value}>
-              {option.label}
-            </option>
-          ))}
-        </TextField>
-          </div>
-          <div>
+
+        <Box>
           <TextField
-          disabled
+            id="reasonEdit"
+            select
+            fullWidth
+            label="Reason for change"
+            onChange={handleChange}
+            variant="outlined"
+            SelectProps={{
+              native: true,
+            }}          
+            >
+            {Reason.map((option) => (
+              <option key={option.value} value={option.value}>
+                {option.label}
+              </option>
+            ))}
+          </TextField>
+        </Box> 
+        <br/> 
+
+        <Box>
+          <TextField
+              disabled
               id="durationEdit"
               label="Duration"
               defaultValue={selDuration}
-              variant="filled"
+              variant="outlined"
               fullWidth
               />
-          </div>
-          <div>
+        </Box>
+        <br/>
           <TextField
+              disabled
               id="shiftEdit"
               label="Shift"
               defaultValue={selShift}
               variant="outlined"
               fullWidth
               />
-          </div>
-        </form>
+          </Col>
+          <br/>
+        
         <Modal.Footer>
           <Button variant="secondary" onClick={handleClose}>
             Cancel
           </Button>
-          <Button color="primary" onClick={doEditRecord}>
+          <Button  color="primary" onClick={doEditRecord}>
             Submit Edit
           </Button>
         </Modal.Footer>

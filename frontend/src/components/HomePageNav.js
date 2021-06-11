@@ -31,9 +31,6 @@ export default function ButtonAppBar() {
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
-  const [configShow, setConfigShow] = useState(true);
-
-  
   const doRootPage = () =>
   {
     window.location.href = '/RootPage'
@@ -62,9 +59,8 @@ export default function ButtonAppBar() {
           <Typography variant="h6" className={classes.title}>
             LIS-Downtime-Editor
           </Typography>
-          <Collapse in={configShow}>
-            <Button color="inherit" onClick={doRootPage}>Config</Button>
-          </Collapse>
+          
+          { localStorage.getItem("privledge") == 3 ? <Button color="inherit" onClick={doRootPage}>Config</Button> : null}
           <Button  color="inherit" onClick={doMachinePage}>Machine Records</Button>
           <Button  color="inherit" onClick={doEditPage}>Edited Records</Button>
           <Button  color="inherit" onClick={doGraphPage}>Graphs</Button>
