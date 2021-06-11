@@ -5,7 +5,7 @@ const sql = require('mssql');
 const verifyAuthToken = require("../middleware/authenticate");
 
 //set templinenumber to case of table you want 
-var templinenumber = 11;
+var templinenumber = 15;
 
 router.get('/', async (req, res) =>
 {
@@ -23,7 +23,7 @@ router.get('/', async (req, res) =>
                 var temp = recordset;
                   
                 for(var i = 0; i < temp.recordsets[0].length; i++){
-                    temp.recordsets[0][i].ID = temp.recordsets[0][i].UniqueID;
+                    temp.recordsets[0][i].id = temp.recordsets[0][i].UniqueID;
                     delete temp.recordsets[0][i].UniqueID;
                 }
                 res.json(temp)      
@@ -38,7 +38,7 @@ router.get('/', async (req, res) =>
                 var temp = recordset;
                   
                 for(var i = 0; i < temp.recordsets[0].length; i++){
-                    temp.recordsets[0][i].ID = temp.recordsets[0][i].UniqueID;
+                    temp.recordsets[0][i].id = temp.recordsets[0][i].UniqueID;
                     delete temp.recordsets[0][i].UniqueID;
                 }
                 res.json(temp)         
@@ -53,7 +53,7 @@ router.get('/', async (req, res) =>
                 var temp = recordset;
                   
                 for(var i = 0; i < temp.recordsets[0].length; i++){
-                    temp.recordsets[0][i].ID = temp.recordsets[0][i].UniqueID;
+                    temp.recordsets[0][i].id = temp.recordsets[0][i].UniqueID;
                     delete temp.recordsets[0][i].UniqueID;
                 }
                 res.json(temp)        
@@ -68,7 +68,7 @@ router.get('/', async (req, res) =>
                 var temp = recordset;
                   
                 for(var i = 0; i < temp.recordsets[0].length; i++){
-                    temp.recordsets[0][i].ID = temp.recordsets[0][i].UniqueID;
+                    temp.recordsets[0][i].id = temp.recordsets[0][i].UniqueID;
                     delete temp.recordsets[0][i].UniqueID;
                 }
                 res.json(temp)        
@@ -84,7 +84,7 @@ router.get('/', async (req, res) =>
                   
                 for(var i = 0; i < temp.recordsets[0].length; i++){
                     temp.recordsets[0][i].LineID = 8;
-                    temp.recordsets[0][i].ID = temp.recordsets[0][i].UniqueID;
+                    temp.recordsets[0][i].id = temp.recordsets[0][i].UniqueID;
                     delete temp.recordsets[0][i].UniqueID;
                 }
                 res.json(temp)
@@ -100,7 +100,7 @@ router.get('/', async (req, res) =>
                   
                 for(var i = 0; i < temp.recordsets[0].length; i++){
                     temp.recordsets[0][i].LineID = 4;
-                    temp.recordsets[0][i].ID = temp.recordsets[0][i].UniqueID;
+                    temp.recordsets[0][i].id = temp.recordsets[0][i].UniqueID;
                     delete temp.recordsets[0][i].UniqueID;
                 }
                 res.json(temp)      
@@ -116,7 +116,7 @@ router.get('/', async (req, res) =>
                   
                 for(var i = 0; i < temp.recordsets[0].length; i++){
                     temp.recordsets[0][i].LineID = 5;
-                    temp.recordsets[0][i].ID = temp.recordsets[0][i].UniqueID;
+                    temp.recordsets[0][i].id = temp.recordsets[0][i].UniqueID;
                     delete temp.recordsets[0][i].UniqueID;
                 }
                 res.json(temp)         
@@ -132,7 +132,7 @@ router.get('/', async (req, res) =>
                   
                 for(var i = 0; i < temp.recordsets[0].length; i++){
                     temp.recordsets[0][i].LineID = 7;
-                    temp.recordsets[0][i].ID = temp.recordsets[0][i].UniqueID;
+                    temp.recordsets[0][i].id = temp.recordsets[0][i].UniqueID;
                     delete temp.recordsets[0][i].UniqueID;
                 }
                 res.json(temp)       
@@ -148,7 +148,7 @@ router.get('/', async (req, res) =>
                   
                 for(var i = 0; i < temp.recordsets[0].length; i++){
                     temp.recordsets[0][i].LineID = 9;
-                    temp.recordsets[0][i].ID = temp.recordsets[0][i].UniqueID;
+                    temp.recordsets[0][i].id = temp.recordsets[0][i].UniqueID;
                     delete temp.recordsets[0][i].UniqueID;
                 }
                 res.json(temp)        
@@ -164,7 +164,7 @@ router.get('/', async (req, res) =>
                   
                 for(var i = 0; i < temp.recordsets[0].length; i++){
                     temp.recordsets[0][i].LineID = 6;
-                    temp.recordsets[0][i].ID = temp.recordsets[0][i].UniqueID;
+                    temp.recordsets[0][i].id = temp.recordsets[0][i].UniqueID;
                     delete temp.recordsets[0][i].UniqueID;
                 }
                 res.json(temp)         
