@@ -1114,13 +1114,15 @@ function DataTable() {
          
           </Box>              
           <br/>
+          <Box>
           <TextField
               id="endTimeEdit"
               label="EndTime"
               defaultValue={selEndTime}
               variant="outlined"             
               />
-
+          </Box>  
+          <br/>
         <Box>
           <TextField
             id="reasonEdit"

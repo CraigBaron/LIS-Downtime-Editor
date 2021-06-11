@@ -14,6 +14,8 @@ import {Modal} from 'react-bootstrap'
 import {Form, Row, Col} from 'react-bootstrap';
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
+import { buildPath } from "./config";
+import {config} from "./config";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -27,10 +29,7 @@ const useStyles = makeStyles((theme) => ({
 var temp;
 var i;
 
-const config = {
-  headers : {'Authorization' : 'Bearer ' + localStorage.getItem('acessToken')
-  }
-}
+
 const columns = [
     { field: 'id', headerName: 'ID', width: 150 },
     { field: 'LineID', headerName: 'LineID', width: 130 },
@@ -70,6 +69,13 @@ const columns = [
     const [selDuration, setselDuration] = useState();
     const [selComments, setselComments] = useState();
     
+    const [status, setStatus] = useState(null);
+    const [ID, setID] = useState(null);
+
+
+
+    const handleStatusChange = (e) => {setStatus(e.target.value)};
+    const handleIDChange = (e) => {setID(e.target.value)};
 
 
     const EditRecord = (item) =>
@@ -159,6 +165,24 @@ const columns = [
         };
 
 
+        const updateStatus = async () => {
+
+          try{
+            const res = await axios.post(buildPath("editedRecords/edit"),
+
+                {
+                  ID : selID,
+                  status : status
+                }
+                );
+                console.log(res.data)
+          }catch(err){
+          console.log(err);
+          
+        }
+      }
+
+
 
     async function searchRecords(){
       handleShow();
@@ -222,8 +246,10 @@ const columns = [
               id="ID"
               label="ID"
               defaultValue={selID}
-              variant="filled"
+              variant="outlined"
               fullWidth
+              InputProps={{readOnly: true,}}
+              onChange={handleIDChange}
               />
               </div>
               <br/>
@@ -233,8 +259,9 @@ const columns = [
               id="LineID"
               label="LineID"
               defaultValue={selLineID}
-              variant="filled"
+              variant="outlined"
               fullWidth
+              InputProps={{readOnly: true,}}
               />
               </div>
              <br/>
@@ -245,8 +272,9 @@ const columns = [
               id="MachineID"
               label="MachineID"
               defaultValue={selMachineID}
-              variant="filled"
+              variant="outlined"
               fullWidth
+              InputProps={{readOnly: true,}}
               />
               </div>
                 <br/>
@@ -256,8 +284,9 @@ const columns = [
               id="ComponentID"
               label="ComponentID"
               defaultValue={selComponentID}
-              variant="filled"
+              variant="outlined"
               fullWidth
+              InputProps={{readOnly: true,}}
               />
               </div>
               <br/>
@@ -268,8 +297,9 @@ const columns = [
               id="startTime"
               label="StartTime"
               defaultValue={selStartTime}
-              variant="filled"
+              variant="outlined"
               fullWidth
+              InputProps={{readOnly: true,}}
               />
               </div>
               
@@ -281,8 +311,9 @@ const columns = [
               id="EndTime"
               label="EndTime"
               defaultValue={selEndTime}
-              variant="filled"
+              variant="outlined"
               fullWidth
+              InputProps={{readOnly: true,}}
               />
               </div>
                 <br/>
@@ -293,8 +324,9 @@ const columns = [
               id="Comment"
               label="Comment"
               defaultValue={selComments}
-              variant="filled"
+              variant="outlined"
               fullWidth
+              InputProps={{readOnly: true,}}
               />
               </div>
                 <br/>
@@ -306,8 +338,9 @@ const columns = [
               id="Duration"
               label="Duration"
               defaultValue={selDuration}
-              variant="filled"
+              variant="outlined"
               fullWidth
+              InputProps={{readOnly: true,}}
               />
              </div>
 
@@ -317,10 +350,9 @@ const columns = [
 
 
 <FormLabel component="legend">Select record status:</FormLabel>
-<RadioGroup aria-label="gender" name="gender1" >
+<RadioGroup aria-label="select" name="select" onChange={handleStatusChange} >
 <FormControlLabel value="Approve" control={<Radio />} label="Approve" />
 <FormControlLabel value="Reject" control={<Radio />} label="Reject" />
-<FormControlLabel value="Pending" control={<Radio />} label="Leave pending" />
 <FormControlLabel value="Delete" control={<Radio />} label="Delete" />
 
 </RadioGroup>
@@ -332,7 +364,7 @@ const columns = [
     <Button variant="secondary" onClick={handleClose}>
       Cancel
     </Button>
-    <Button color="primary" onClick={handleClose}>
+    <Button color="primary" onClick={updateStatus}>
       Submit Edit
     </Button>
   </Modal.Footer>

@@ -32,7 +32,7 @@ router.post('/login', async (req, res) => {
                     const firstName = recordset.recordsets[0][0].FirstName;
                     const lastName = recordset.recordsets[0][0].LastName;
                     const user = {email : email}
-                    const acessToken = createToken(user);
+                   const acessToken = createToken(user);
                     res.json({acessToken: acessToken, Email: email, privledge: privledge, firstName : firstName, lastName : lastName })
               }else{
                 res.send('Not ALlowed')
