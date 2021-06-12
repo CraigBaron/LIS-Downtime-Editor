@@ -79,8 +79,8 @@ export default function SignIn() {
     showPassword: false,
   });
 
-  const [email, setEmail] = useState("email")
-  const [password, setPassword] = useState("password")
+  const [email, setEmail] = useState("")
+  const [password, setPassword] = useState("")
   const [open, setOpen] = useState(false);
   const [AOEmail, setAOEmail] = useState(true);
   const [addon, setAddon] = useState(false);
@@ -157,7 +157,7 @@ export default function SignIn() {
       
         if (response.data.acessToken) {
           localStorage.setItem('acessToken', response.data.acessToken);
-          localStorage.setItem('Email', response.data.Email);
+          localStorage.setItem('email', response.data.user.email);
           localStorage.setItem('privledge', response.data.privledge);
           localStorage.setItem('firstName', response.data.firstName);
           localStorage.setItem('lastName', response.data.lastName);
@@ -172,7 +172,6 @@ export default function SignIn() {
   }
 
   const GetCode = async () => {
-    
     await axios.post(buildPath('users/forgot'), {
       email : resetEmail,
     })
