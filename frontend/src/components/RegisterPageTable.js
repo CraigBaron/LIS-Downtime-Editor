@@ -148,7 +148,7 @@ window.onload = getEmployees = async () => {
       <Col>
     <br/>
     <h5> Register New Account</h5>
-      <TextField
+              <TextField
                 variant="outlined"
                 margin="normal"
                 required
@@ -158,9 +158,9 @@ window.onload = getEmployees = async () => {
                 name="email"
                 autoComplete="email"
                 onChange={handleFirstNameChange}
-                />
+              />
                     
-                <TextField
+              <TextField
                 variant="outlined"
                 margin="normal"
                 required
@@ -169,9 +169,9 @@ window.onload = getEmployees = async () => {
                 label="Last Name"
                 autoComplete="email"
                 onChange={handleLastNameChange}
-                />
+              />
               
-                <TextField
+              <TextField
                 variant="outlined"
                 margin="normal"
                 required
@@ -180,9 +180,9 @@ window.onload = getEmployees = async () => {
                 label="Email Address"             
                 autoComplete="email"
                 onChange={handleEmailChange}
-                />
+              />
                 
-                <TextField
+              <TextField
                 variant="outlined"
                 margin="normal"
                 required
@@ -191,9 +191,9 @@ window.onload = getEmployees = async () => {
                 label="Password"               
                 autoComplete="email"
                 onChange={handlePasswordChange}
-                />
+              />
               
-                <TextField
+              <TextField
                 variant="outlined"
                 margin="normal"
                 required
@@ -202,10 +202,10 @@ window.onload = getEmployees = async () => {
                 label="Confirm Password"          
                 autoComplete="email"
                 onChange={handleConfirmPasswordChange}
-                />
+              />
                 
               <FormControl fullWidth className={classes.formControl}>
-                <InputLabel id="demo-simple-select-label">Privilage *</InputLabel>
+                <InputLabel >Privilage *</InputLabel>
                 <Select
                   labelId="demo-simple-select-label"
                   id="demo-simple-select"
@@ -217,9 +217,6 @@ window.onload = getEmployees = async () => {
                 </Select>
               </FormControl>
                   
-              
-       
-
               <br/>
               <br/>
               <Button fullWidth variant="contained" color="primary" onClick={signUp}>Register</Button>

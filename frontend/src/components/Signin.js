@@ -158,9 +158,9 @@ export default function SignIn() {
         if (response.data.acessToken) {
           localStorage.setItem('acessToken', response.data.acessToken);
           localStorage.setItem('email', response.data.user.email);
-          localStorage.setItem('privledge', response.data.privledge);
-          localStorage.setItem('firstName', response.data.firstName);
-          localStorage.setItem('lastName', response.data.lastName);
+          localStorage.setItem('privledge', response.data.user.privledge);
+          localStorage.setItem('firstName', response.data.user.firstName);
+          localStorage.setItem('lastName', response.data.user.lastName);
           window.location.href = "/HomePage";
         }
         else {

@@ -25,7 +25,6 @@ const useStyles = makeStyles((theme) => ({
 
 export default function ButtonAppBar() {
 
-
   const classes = useStyles();
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
@@ -48,10 +47,7 @@ export default function ButtonAppBar() {
   {
     window.location.href = '/HomePage';
   }
-  const doGraphPage = async event =>
-  {
-    window.location.href = '/GraphPage';
-  }
+
   return (
     <div className={classes.root}>
       <AppBar  position="static">
@@ -59,11 +55,9 @@ export default function ButtonAppBar() {
           <Typography variant="h6" className={classes.title}>
             LIS-Downtime-Editor
           </Typography>
-          
           { localStorage.getItem("privledge") == 3 ? <Button color="inherit" onClick={doRootPage}>Config</Button> : null}
           <Button  color="inherit" onClick={doMachinePage}>Machine Records</Button>
           <Button  color="inherit" onClick={doEditPage}>Edited Records</Button>
-          <Button  color="inherit" onClick={doGraphPage}>Graphs</Button>
           <Button  color="inherit" onClick={handleShow}>Help</Button>
           <Button  color="inherit" onClick={doLogout}>Log Out</Button>
         </Toolbar>

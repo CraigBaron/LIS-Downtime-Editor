@@ -1,12 +1,12 @@
 import React from 'react';
 import ButtonAppBar from '../components/HomePageNav';
-import RegisterTable from '../components/RegisterPageTable';
+import Tabs from '../components/Tabs';
 const RootPage = () =>
 {
     return(
         <div>
                 <ButtonAppBar></ButtonAppBar>
-                <RegisterTable></RegisterTable> 
+                <Tabs></Tabs>
         </div>
     );
 };
