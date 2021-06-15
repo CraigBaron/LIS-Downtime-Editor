@@ -47,7 +47,7 @@ const SendCode = (user) => {
         to: user.email,
         from: 'lis.downtime.editor.test@gmail.com',
         subject: 'LIS-Downtime-Editor Reset Password',
-        text: 'To reset your password please provide the following code: '+user.code
+        text: 'To reset your password please provide the following code: '+user.code+' This code expires in 10 mins.'
     }
 
     sgMail.send(msg, function(err, info) {

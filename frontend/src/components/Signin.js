@@ -195,7 +195,7 @@ export default function SignIn() {
 
   const ResetPassword = async () => {
     
-    await axios.post(buildPath('resetPassword'), {
+    await axios.post(buildPath('users/resetPassword'), {
       email : resetEmail,
       password : newPassword,
       code : resetCode

@@ -14,8 +14,7 @@ import {Modal} from 'react-bootstrap'
 import {Form, Row, Col} from 'react-bootstrap';
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
-import { buildPath } from "./config";
-import {config} from "./config";
+import { buildPath, config } from "./config";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -31,15 +30,15 @@ var i;
 
 
 const columns = [
-    { field: 'id', headerName: 'ID', width: 150 },
+    { field: 'id', headerName: 'UniqueID', width: 150 },
     { field: 'LineID', headerName: 'LineID', width: 130 },
-    { field: 'Machine', headerName: 'MachineID', width: 200 },
+    { field: 'Machine', headerName: 'Machine', width: 200 },
     { field: 'ComponentID', headerName: 'ComponentID', width: 200 },
-    { field: 'StartDateTime', headerName: 'StartTime', width: 250 },
-    { field: 'EndDateTime', headerName: 'EndTime', width: 250 },
+    { field: 'StartDateTime', headerName: 'StartDateTime', width: 250 },
+    { field: 'EndDateTime', headerName: 'EndDateTime', width: 250 },
     { field: 'Comments', headerName: 'Comments', width: 130 },
     { field: 'DurationTotalMinutes', headerName: 'Duration', width: 130 },
-    { field: 'Secondarypk', headerName: 'Shift', width: 130 },
+    { field: 'Secondarypk', headerName: 'Secondarypk', width: 130 },
     { field: 'Reason', headerName: 'Reason', width: 130 },
     { field: 'Status', headerName: 'Status', width: 130 },
     
@@ -76,18 +75,17 @@ const columns = [
     const EditRecord = (item) =>
   {
 
-    handleShow()
-      setselID(item.id)
-      setselpkID(item.pkdowntimeeventid)
-      setselLineID(item.LineID)
-      setselMachineID(item.Machine)
-      setselComponentID(item.ComponentID)
-      setselStartTime(item.StartDateTime)
-      setselEndTime(item.EndDateTime)
-      setselReason(item.Reasdon)
-      setselDuration(item.DurationTotalMinutes)
-      setselComments(item.Comments)
-
+      handleShow();
+      setselID(item.id);
+      setselpkID(item.pkdowntimeeventid);
+      setselLineID(item.LineID);
+      setselMachineID(item.Machine);
+      setselComponentID(item.ComponentID);
+      setselStartTime(item.StartDateTime);
+      setselEndTime(item.EndDateTime);
+      setselReason(item.Reason);
+      setselDuration(item.DurationTotalMinutes);
+      setselComments(item.Comments);
   }
 
    
@@ -123,41 +121,6 @@ const columns = [
             
         };
 
-  
-
-     
-
-        const doEditRecord = async event =>
-        {
-           event.preventDefault();
-            var newid = document.getElementById("idEdit").value
-            var newlineid = document.getElementById("lineidEdit").value
-            var newpkid = document.getElementById("pkidEdit").value
-            var newmachineid = document.getElementById("machineidEdit").value
-            var newcomponentid = document.getElementById("componentidEdit").value
-            var newstarttime = document.getElementById("startTimeEdit").value
-            var newendtime = document.getElementById("endTimeEdit").value
-            var newreason = document.getElementById("reasonEdit").value
-            var newduration = document.getElementById("durationEdit").value
-            var newshift = document.getElementById("shiftEdit").value
-            var obj = {uniqueID : newid, pkDowntimeEventID : newpkid, startDate : newstarttime, endDate : newendtime, durationTotalMinutes : newduration, LineID : newlineid, machine : newmachineid, componentID : newcomponentid, comments : newreason, secondarypk : newshift}
-            
-             var js = JSON.stringify(obj);  
-            
-              try
-                  {    
-                      const response = await fetch('http://localhost:5000/editedRecords/add',
-                          {method:'POST',body:js, headers:{'Content-Type': 'application/json'}});
-                      var res = JSON.parse(await response.text());      
-                  }
-                  catch(e)
-                  {
-                      alert(e.toString());
-                      return;
-                  }   
-          
-        };
-
 
         const closeAndAccept = () => {
             updateStatus();
@@ -169,7 +132,7 @@ const columns = [
           {
             ID: selID,
             status: status
-          })
+          },config)
             .then((response) => {
               console.log(response.data)
               DisplayRecords();
