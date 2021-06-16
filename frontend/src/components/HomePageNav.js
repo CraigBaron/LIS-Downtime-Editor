@@ -10,6 +10,9 @@ import { render } from '@testing-library/react';
 import {Modal} from 'react-bootstrap';
 import './styles.css';
 import { Collapse } from '@material-ui/core';
+import NotificationsIcon from '@material-ui/icons/Notifications';
+import Badge from '@material-ui/core/Badge';
+
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -48,6 +51,9 @@ export default function ButtonAppBar() {
     window.location.href = '/HomePage';
   }
 
+
+  
+
   return (
     <div className={classes.root}>
       <AppBar  position="static">
@@ -55,7 +61,15 @@ export default function ButtonAppBar() {
           <Typography variant="h6" className={classes.title}>
             LIS-Downtime-Editor
           </Typography>
+          { localStorage.getItem("privledge") == 3 ?
+          <Button  color="inherit" >      
+          <Badge badgeContent={4} color="secondary">
+            <NotificationsIcon/>
+        </Badge>
+        </Button>  
+        : null}
           { localStorage.getItem("privledge") == 3 ? <Button color="inherit" onClick={doRootPage}>Config</Button> : null}
+        
           <Button  color="inherit" onClick={doMachinePage}>Machine Records</Button>
           <Button  color="inherit" onClick={doEditPage}>Edited Records</Button>
           <Button  color="inherit" onClick={handleShow}>Help</Button>
