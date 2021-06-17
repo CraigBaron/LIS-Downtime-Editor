@@ -25,23 +25,12 @@ import Collapse from '@material-ui/core/Collapse';
 import CloseIcon from '@material-ui/icons/Close';
 import Snackbar from '@material-ui/core/Snackbar';
 import { buildPath } from './config';
+import {spacing} from '@material-ui/system'
 
 
-function Copyright() {
-  return (
-    <Typography variant="body2" color="textSecondary" align="center">
-      {'Copyright © '}
-      <Link color="inherit">
-        Coka-Cola
-      </Link>{' '}
-      {new Date().getFullYear()}
-      {'.'}
-    </Typography>
-  );
-}
 const useStyles = makeStyles((theme) => ({
   paper: {
-    marginTop: theme.spacing(8),
+    marginTop: theme.spacing(0),
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
@@ -235,6 +224,9 @@ export default function SignIn() {
       </Snackbar>
       
       <div>
+        <Grid container justify="center">
+          
+        <Box border={1} m={10} p={5} borderColor="grey.500" boxShadow={10} borderRadius="borderRadius">
         <Container component="main" maxWidth="xs">
           <CssBaseline />
           <div className={classes.paper}>
@@ -336,10 +328,9 @@ export default function SignIn() {
               </Grid>
             </form>
           </div>
-          <Box mt={8}>
-            <Copyright />
-          </Box>
         </Container>
+        </Box>
+        </Grid>
       </div>
       
 
