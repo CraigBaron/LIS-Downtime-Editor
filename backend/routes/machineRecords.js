@@ -7,7 +7,7 @@ const verifyAuthToken = require("../middleware/authenticate");
 //set templinenumber to case of table you want 
 
 router.post('/', verifyAuthToken, async (req, res) =>
-{
+{  
     const { lineNumber} = req.body
     var request = new sql.Request(); 
    switch (lineNumber) {

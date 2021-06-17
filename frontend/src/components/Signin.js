@@ -69,15 +69,12 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-
 export default function SignIn() {
 
 
 
   const classes = useStyles();
-  const [values, setValues] = React.useState({
-    showPassword: false,
-  });
+  const [values, setValues] = React.useState({ showPassword: false, });
 
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
@@ -90,7 +87,11 @@ export default function SignIn() {
   const [show, setShow] = useState(false);
   const [resetEmail, setResetEmail] = useState("email");
 
-
+  const[resetError, setResetError] = useState(false);
+  const handleResetErrorClose = () => {
+    setResetError(false);
+  }
+  const[resetErrorMsg, setResetErrorMsg] = useState("")
   const [snack, setSnack] = useState(false);
 
 
@@ -118,9 +119,7 @@ export default function SignIn() {
       setPassword(e.target.value)
    
     }
-
     handlePasswordChange(e);
-
   };
   const handleClickShowPassword = () => {
     setValues({ ...values, showPassword: !values.showPassword });
@@ -184,8 +183,6 @@ export default function SignIn() {
           {
             setAOEmail(false);
             setAddon(true);
-            localStorage.setItem('resetEmail', resetEmail);
-
           }
       }, (error) => {
         console.log(error.request)
@@ -198,14 +195,18 @@ export default function SignIn() {
     await axios.post(buildPath('users/resetPassword'), {
       email : resetEmail,
       password : newPassword,
+      confirmPassword : newConfirmPassword,
       code : resetCode
     })
       .then((response) => {
         if(response.data.status === "Success")
         {
-          localStorage.removeItem('resetEmail');
           handleClose();
           setSnack(true)
+        }
+        else{
+          setResetErrorMsg(response.data.status)
+          setResetError(true);
         }
       }, (error) => {
         console.log(error.request)
@@ -351,7 +352,6 @@ export default function SignIn() {
               <Collapse in={AOEmail}>
               <TextField
               required
-              id="outlined-required"
               label="Email"
               defaultValue=""
               variant="outlined"
@@ -363,14 +363,12 @@ export default function SignIn() {
             </div>
             <div>
             <Collapse in={addon}>
-            <Alert variant="outlined" severity="success">An email with a reset code has been sent to the adress you provided.</Alert>
+            <Alert variant="outlined" severity="success">An email with a reset code has been sent to the adress you provided. This code will expire in 10 minutes.</Alert>
             <br></br>
             <div>
             <TextField
               required
-              id="outlined-required"
               label="Reset Code"
-              defaultValue=""
               variant="outlined"
               fullWidth
               onChange={handleResetCodeChange}
@@ -380,11 +378,10 @@ export default function SignIn() {
             <div>
              <TextField
               required
-              id="outlined-required"
               label="New Password"
-              defaultValue=""
               variant="outlined"
               fullWidth
+              type="password"
               onChange={handleNewPasswordChange}
             />
             </div>
@@ -392,13 +389,16 @@ export default function SignIn() {
             <div>
               <TextField
               required
-              id="outlined-required"
               label="Confirm New Password"
-              defaultValue=""
               variant="outlined"
+              type="password"
               fullWidth
               onChange={handleNewConfirmPasswordChange}
             />
+            <Collapse in={resetError}>
+              <br/>
+              <Alert onClose={handleResetErrorClose} variant="outlined" severity="error">{resetErrorMsg}</Alert>
+            </Collapse>
             </div>
             <br></br>
             <Button color="primary" onClick={ResetPassword} variant="contained" fullWidth>Submit</Button>

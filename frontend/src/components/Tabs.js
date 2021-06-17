@@ -111,7 +111,7 @@ export default function CenteredTabs() {
                   privledge : privilege
                 }
                 );
-                console.log(res.data)
+                console.log(res.data.errors[0].message)
           }catch(err){
           console.log(err);
           
@@ -134,7 +134,7 @@ export default function CenteredTabs() {
     </Paper>
     <TabPanel value={value} index={0}>
       <Grid container justify="center" >
-        <Box border m={5} p={3} borderColor="primary.main" borderRadius="borderRadius" boxShadow={15} width={1/2}>
+        <Box border m={5} p={3} borderColor="primary.main" borderRadius="borderRadius" boxShadow={15} width={2/3}>
           <h5> Register New Account</h5>
           <TextField
             variant="outlined"
@@ -173,8 +173,8 @@ export default function CenteredTabs() {
             required
             fullWidth
             size="small"
-            label="Password"               
-            autoComplete="email"
+            label="Password"   
+            type="password"            
             onChange={handlePasswordChange}
           />      
           <TextField
@@ -183,12 +183,12 @@ export default function CenteredTabs() {
             required
             fullWidth
             size="small"
-            label="Confirm Password"          
-            autoComplete="email"
+            label="Confirm Password"  
+            type="password"        
             onChange={handleConfirmPasswordChange}
           />
           <FormControl fullWidth className={classes.formControl}>
-            <InputLabel >Privilage *</InputLabel>
+            <InputLabel >Role *</InputLabel>
             <Select
               labelId="demo-simple-select-label"
               id="demo-simple-select"

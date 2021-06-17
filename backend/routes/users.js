@@ -15,7 +15,6 @@ const userValidator = require("../models/users").userValidator;
 router.post('/login', async (req, res) => {
 
   const {email, password}  = req.body;
-  
   try{
       var request = new sql.Request();
         request.query("SELECT * FROM Employees WHERE Email = '" + email + "'", async function (err, recordset) {
@@ -47,7 +46,7 @@ router.post('/signUp', async (req,res) => {
     const post = {email, password, confirmPassword, firstName, lastName, privledge} = req.body;
     const validationResult = userValidator.validate(post, userSchema);
     if(validationResult !== true){
-      return res.status(400).json({message : "Validation failed", errors: validationResult});
+      return res.json({message : "Validation failed", errors: validationResult});
     }
     
     var request = new sql.Request();
@@ -163,7 +162,11 @@ router.post('/forgot', (req, res) => {
 
 router.post('/resetpassword', async (req,res) => {
 
-      const {code, email, password} = req.body;
+      const {code, email, password, confirmPassword} = req.body;
+      if(password != confirmPassword)
+      {
+        res.json({status: "Error : Passwords do not match."})
+      }
       let ct = new Date()
       ct.setHours(ct.getHours()-4);
       ct = ct.toISOString().slice(0, 19).replace('T', ' ');
@@ -173,7 +176,6 @@ router.post('/resetpassword', async (req,res) => {
         console.log(err);
         return;
       }
-      
       if(recordset.recordsets[0].length > 0)
       {
             try{
@@ -192,7 +194,7 @@ router.post('/resetpassword', async (req,res) => {
       }
       else
       {
-        return res.json({status : "Fail"});
+        return res.json({status : "Error : Code expired or incorrect code."});
       }
       
      

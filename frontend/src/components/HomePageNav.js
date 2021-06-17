@@ -12,8 +12,12 @@ import './styles.css';
 import { Collapse } from '@material-ui/core';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import Badge from '@material-ui/core/Badge';
-
-
+import BellPopOver from './BellPopOver';
+import axios from 'axios';
+import {buildPath, config} from './config';
+import Menu from '@material-ui/core/Menu';
+import MenuItem from '@material-ui/core/MenuItem';
+import AccountBoxIcon from '@material-ui/icons/AccountBox';
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
@@ -26,12 +30,16 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+
 export default function ButtonAppBar() {
 
   const classes = useStyles();
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
+  const handleShow = () => {
+    setShow(true)
+    handleMenuClose()
+  }
 
   const doRootPage = () =>
   {
@@ -51,29 +59,61 @@ export default function ButtonAppBar() {
     window.location.href = '/HomePage';
   }
 
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const [anchorProfileMenu, setAnchorProfileMenu] = React.useState(null);
 
-  
+  const handleClick2 = (event) => {
+    setAnchorProfileMenu(event.currentTarget);
+  };
+
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleMenuClose = () => {
+    setAnchorEl(null);
+    setAnchorProfileMenu(null);
+  };
 
   return (
     <div className={classes.root}>
-      <AppBar  position="static">
+      <AppBar position="static">
         <Toolbar>
+        <IconButton edge="start" color="inherit" onClick={handleClick}>
+      <MenuIcon />
+    </IconButton>
+        <Menu
+          id="simple-menu"
+          anchorEl={anchorEl}
+          keepMounted
+          open={Boolean(anchorEl)}
+          onClose={handleMenuClose}
+        >
+          { localStorage.getItem("privledge") == 3 ? <MenuItem onClick={handleMenuClose}>Settings</MenuItem>: null}
+
+          <MenuItem onClick={doMachinePage}>Machine Records</MenuItem>
+          <MenuItem onClick={doEditPage}>Edited Records</MenuItem>
+          <MenuItem onClick={handleShow}>Help</MenuItem>
+        </Menu>
           <Typography variant="h6" className={classes.title}>
             LIS-Downtime-Editor
           </Typography>
-          { localStorage.getItem("privledge") == 3 ?
-          <Button  color="inherit" >      
-          <Badge badgeContent={4} color="secondary">
-            <NotificationsIcon/>
-        </Badge>
-        </Button>  
-        : null}
-          { localStorage.getItem("privledge") == 3 ? <Button color="inherit" onClick={doRootPage}>Config</Button> : null}
+       
+          <BellPopOver/>
+
+          <IconButton edge="start" color="inherit" onClick={handleClick2}>
+            <AccountBoxIcon />
+          </IconButton>
+          <Menu
+          anchorEl={anchorProfileMenu}
+          keepMounted
+          open={Boolean(anchorProfileMenu)}
+          onClose={handleMenuClose}
+        >
+          <MenuItem onClick={doLogout}>Logout</MenuItem>
+          <MenuItem onClick={handleMenuClose}>Account</MenuItem>
+        </Menu>
         
-          <Button  color="inherit" onClick={doMachinePage}>Machine Records</Button>
-          <Button  color="inherit" onClick={doEditPage}>Edited Records</Button>
-          <Button  color="inherit" onClick={handleShow}>Help</Button>
-          <Button  color="inherit" onClick={doLogout}>Log Out</Button>
         </Toolbar>
       </AppBar>
 

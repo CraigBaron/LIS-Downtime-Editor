@@ -12,3 +12,4 @@ function ProtectedRoute({isAuth: isAuth, component: Component, ...rest}){
     }}/>
 }
 export default ProtectedRoute;
+

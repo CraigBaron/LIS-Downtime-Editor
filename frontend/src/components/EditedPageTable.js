@@ -96,7 +96,6 @@ const columns = [
             let temp
             await axios.get('http://localhost:5000/editedRecords', config)
             .then((response) => {
-              console.log(response.data[0].length);
               for(var i=0;i<response.data[0].length;i++)
                     {
                       temp = {

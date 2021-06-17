@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { DataGrid, GridToolbar } from '@material-ui/data-grid';
-import {Button, Container, InputAdornment} from '@material-ui/core'
+import {Button, Container, Grid, InputAdornment} from '@material-ui/core'
 import {useState} from 'react'
 import {Modal} from 'react-bootstrap'
 import TextField from '@material-ui/core/TextField';
@@ -35,6 +35,54 @@ const useStyles = makeStyles((theme) => ({
   },
   selectEmpty: {
     marginTop: theme.spacing(2),
+  },
+
+  grid: {
+    border: 0,
+    color:
+      theme.palette.type === 'light'
+        ? 'rgba(0,0,0,.85)'
+        : 'rgba(255,255,255,0.85)',
+    fontFamily: [
+      '-apple-system',
+      'BlinkMacSystemFont',
+      '"Segoe UI"',
+      'Roboto',
+      '"Helvetica Neue"',
+      'Arial',
+      'sans-serif',
+      '"Apple Color Emoji"',
+      '"Segoe UI Emoji"',
+      '"Segoe UI Symbol"',
+    ].join(','),
+    WebkitFontSmoothing: 'auto',
+    letterSpacing: 'normal',
+    '& .MuiDataGrid-columnsContainer': {
+      backgroundColor: theme.palette.type === 'light' ? '#fafafa' : '#1d1d1d',
+    },
+    '& .MuiDataGrid-iconSeparator': {
+      display: 'none',
+    },
+    '& .MuiDataGrid-columnHeader, .MuiDataGrid-cell': {
+      borderRight: `1px solid ${
+        theme.palette.type === 'light' ? '#f0f0f0' : '#303030'
+      }`,
+    },
+    '& .MuiDataGrid-columnsContainer, .MuiDataGrid-cell': {
+      borderBottom: `1px solid ${
+        theme.palette.type === 'light' ? '#f0f0f0' : '#303030'
+      }`,
+    },
+    '& .MuiDataGrid-cell': {
+      color:
+        theme.palette.type === 'light'
+          ? 'rgba(0,0,0,.85)'
+          : 'rgba(255,255,255,0.65)',
+    },
+    '& .MuiPaginationItem-root': {
+      borderRadius: 0,
+    },
+    
   },
 }));
 
@@ -107,6 +155,10 @@ function DataTable() {
 
   const[feedback, setfeedback] = useState();
 
+  const [pageSize, setPageSize] = React.useState(5);
+  const handlePageSizeChange = (params) => {
+    setPageSize(params.pageSize);
+  };
   const EditRecord = (item) =>
   {
       handleShow();
@@ -156,6 +208,7 @@ function DataTable() {
       .then((response) => {
         setSnackOpen(true);
          setfeedback(response.data.status);
+
       }, (error) => {
         console.log(error.request)
       })  
@@ -949,36 +1002,36 @@ function DataTable() {
   return (
     <div>
       <Snackbar open={snackOpen} autoHideDuration={6000} onClose={handleSnackClose}>
-        <Alert variant="filled" onClose={handleSnackClose} severity="info" anchorOrigin={{vertical: 'top', horizontal : 'left'}}>
+        <Alert variant="filled" onClose={handleSnackClose} severity="info" >
           {feedback}
         </Alert>
       </Snackbar>
-    <br/>
-    <br/>
-    <Col>
-    <Card variant="outlined">
-    <Col>
-    <br/>
-      <Row>
-        <Col>
+      <br/><br/>
+
+      <div>
+      <Grid container justify="center">
+      <Box border={1} borderRadius="borderRadius" borderColor="grey.500" width="90%" p={5} boxShadow={6} >
+        <Grid container spacing={2}>
+          <Grid item xs={3}>
           <Typograghy>
-          <Box color="white" textAlign="center" fontSize="200%" fontWeight="fontWeightRegular" height="80%" maxWidth="85%" bgcolor="primary.main" boxShadow={4} borderRadius="borderRadius">
+          <Box color="white" textAlign="center" fontSize="h5.fontSize" fontWeight="fontWeightRegular" height="100%" width="80%" bgcolor="primary.main" boxShadow={4} borderRadius="borderRadius">
             LIS-Downtime Data
           </Box>
           </Typograghy>
-        </Col>
-        <Col>
+          </Grid>
+          <Grid item xs={6}>
+
+          </Grid>
+          <Grid item xs={3} alignItems="right">
           <Box>
           <FormControl fullWidth variant="outlined" >
-          <InputLabel id="demo-simple-select-outlined-label">Select Table</InputLabel>
+          <InputLabel>Select Table</InputLabel>
             <Select
-              labelId="demo-simple-select-outlined-label"
-              id="demo-simple-select-outlined"
               value={tableValue}
               label="Select Table"
               onChange={handleTableChange}
               IconComponent = {TableChartIcon}
-              displayEmpty
+              displayEmpty={false}
             >
               <MenuItem value={11}>System 1 Line 1</MenuItem>
               <MenuItem value={12}>System 1 Line 2</MenuItem>
@@ -993,33 +1046,32 @@ function DataTable() {
             </Select>
           </FormControl>
           </Box>
-          </Col>
-        </Row>
-        <br/>
-      <Row>
-        <Col>
-          <Box width="auto" display="flex" justifyContent="center">
-            <DataGrid 
-            components={             
-              {Toolbar: GridToolbar,
-               NoRowsOverlay: CustomNoRowsOverlay}              
-            } 
-            rows={rows} 
-            columns={columns} 
-            autoHeight 
-            pageSize={20} 
-            onRowClick = {item => {EditRecord(item.row)}} 
-            cancelOnEscape = {true}
-            />
-          </Box>
-        </Col>
-      </Row>
-      <br/>
-      </Col>
-      </Card>
-      </Col>
-    
-
+          </Grid>
+          
+          <Grid item xs={12}>
+            <Box justifyContent="center" border={1} borderRadius="borderRadius" borderColor="grey.500" >
+              <DataGrid 
+              components={             
+                {Toolbar: GridToolbar,
+                NoRowsOverlay: CustomNoRowsOverlay}              
+              } 
+              rows={rows} 
+              columns={columns} 
+              autoHeight 
+              onRowClick = {item => {EditRecord(item.row)}} 
+              cancelOnEscape = {true}
+              className={classes.grid}
+              pageSize={pageSize}
+              onPageSizeChange={handlePageSizeChange}
+              rowsPerPageOptions={[5, 10, 20, 50]}
+              />
+            </Box>
+          </Grid>
+        </Grid>
+        </Box>
+        </Grid>
+      </div>
+         
     <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
           <Modal.Title>Edit Record</Modal.Title>
