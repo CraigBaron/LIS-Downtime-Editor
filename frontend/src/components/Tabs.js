@@ -80,11 +80,19 @@ export default function CenteredTabs() {
   const handleErrorChange = (e) => {setError(e.target.value)};
   const handleDisplayErrorChange = (e) => {setDisplayError(e.target.value)};
 
+  const [selEmail, setselEmail] = useState();
+  const [selFirstName, setselFirstName] = useState();
+  const [selLastName, setselLastName] = useState();
+  const [selPriviledge, setselPriviledge] = useState();
+
   const EditRecord = (item) =>
   {
 
       handleShow();
-      
+      setselEmail(item.Email);
+      setselFirstName(item.firstName);
+      setselLastName(item.lastName);
+      setselPriviledge(item.privilege);
   }
 
   var getEmployees
@@ -207,6 +215,7 @@ export default function CenteredTabs() {
               id="demo-simple-select"
               value={privilege}
               onChange={handleChange}
+              
             >
               <MenuItem value={1}>Employee</MenuItem>
               <MenuItem value={2}>Manager</MenuItem>
@@ -239,7 +248,7 @@ export default function CenteredTabs() {
             // disabled
               id="Email"
               label="Email"
-              defaultValue={email}
+              defaultValue={selEmail}
               variant="outlined"
               fullWidth
              // InputProps={{readOnly: true,}}
@@ -252,7 +261,7 @@ export default function CenteredTabs() {
            //  disabled
               id="First Name"
               label="First Name"
-              defaultValue={firstName}
+              defaultValue={selFirstName}
               variant="outlined"
               fullWidth
               //InputProps={{readOnly: true,}}
@@ -265,7 +274,7 @@ export default function CenteredTabs() {
              //disabled
               id="Last Name"
               label="Last Name"
-              defaultValue={lastName}
+              defaultValue={selLastName}
               variant="outlined"
               fullWidth
             //  InputProps={{readOnly: true,}}
@@ -273,19 +282,22 @@ export default function CenteredTabs() {
               />
               </div>
               <br/>
-              <div>
-             <TextField
-            // disabled
-              id="Privilege"
-              label="Privilege"
-              defaultValue={privilege}
-              variant="outlined"
-              fullWidth
-              //InputProps={{readOnly: true,}}
-             // onChange={handleEmailChange}
-              />
-              </div>
-              <br/>
+              <FormControl fullWidth className={classes.formControl}>
+            <InputLabel >Role *</InputLabel>
+            <Select
+           
+              labelId="demo-simple-select-label"
+              id="demo-simple-select"
+              value={privilege}
+              onChange={handleChange}
+              defaultValue={selPriviledge}
+            >
+              <MenuItem value={1}>Employee</MenuItem>
+              <MenuItem value={2}>Manager</MenuItem>
+            </Select>
+          </FormControl>
+          <br/>
+          <br/>
               <div>
               <Button color="primary" variant= "contained" fullWidth>
                 Delete Account
