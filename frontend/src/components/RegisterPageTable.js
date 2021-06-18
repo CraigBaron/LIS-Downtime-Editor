@@ -237,4 +237,3 @@ window.onload = getEmployees = async () => {
   );
 }
 export default RegisterTable;
-

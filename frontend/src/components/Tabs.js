@@ -3,7 +3,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
-
+import {Modal} from 'react-bootstrap'
 import { DataGrid } from '@material-ui/data-grid';
 import Divider from '@material-ui/core/Divider';
 import Grid from '@material-ui/core/Grid';
@@ -44,12 +44,18 @@ export default function CenteredTabs() {
   const classes = useStyles();
   const [value, setValue] = React.useState(0);
 
+ 
+    const [show, setShow] = useState(false);
+    const [rows, setRows] = useState([]);
+    const handleClose = () => setShow(false);
+    const handleShow = () => setShow(true);
+
   const handleTabChange = (event, newValue) => {
     setValue(newValue);
   };
 
   const [privilege, setPrivilege] = useState('');
-  const [rows, setRows] = useState([]);
+  
 
   const handleChange = (event) => {
     setPrivilege(event.target.value);
@@ -73,6 +79,13 @@ export default function CenteredTabs() {
 
   const handleErrorChange = (e) => {setError(e.target.value)};
   const handleDisplayErrorChange = (e) => {setDisplayError(e.target.value)};
+
+  const EditRecord = (item) =>
+  {
+
+      handleShow();
+      
+  }
 
   var getEmployees
   window.onload = getEmployees = async () => {
@@ -209,12 +222,90 @@ export default function CenteredTabs() {
       <Grid container justify="center" >
         <Box border m={5} p={3} borderColor="primary.main" borderRadius="borderRadius" boxShadow={15} width={1/2}>
           <h5>Registered Accounts</h5>
-          <DataGrid autoHeight rows={rows} columns={columns} rowsPerPageOptions={[5, 10, 20]}/>
+          <DataGrid autoHeight rows={rows} columns={columns} onRowClick = {item => {EditRecord(item.row)}} rowsPerPageOptions={[5, 10, 20]}/>
         </Box>
       </Grid>
     </TabPanel>
+    
+    
+    <Modal show={show} onHide={handleClose}>
+  <Modal.Header closeButton>
+    <Modal.Title>Account Edit</Modal.Title>
+  </Modal.Header>
+  <Modal.Body>
+ 
+  <div>
+             <TextField
+            // disabled
+              id="Email"
+              label="Email"
+              defaultValue={email}
+              variant="outlined"
+              fullWidth
+             // InputProps={{readOnly: true,}}
+             // onChange={handleEmailChange}
+              />
+              </div>
+              <br/>
+              <div>
+             <TextField
+           //  disabled
+              id="First Name"
+              label="First Name"
+              defaultValue={firstName}
+              variant="outlined"
+              fullWidth
+              //InputProps={{readOnly: true,}}
+              //onChange={handleEmailChange}
+              />
+              </div>
+              <br/>
+              <div>
+             <TextField
+             //disabled
+              id="Last Name"
+              label="Last Name"
+              defaultValue={lastName}
+              variant="outlined"
+              fullWidth
+            //  InputProps={{readOnly: true,}}
+              //onChange={handleEmailChange}
+              />
+              </div>
+              <br/>
+              <div>
+             <TextField
+            // disabled
+              id="Privilege"
+              label="Privilege"
+              defaultValue={privilege}
+              variant="outlined"
+              fullWidth
+              //InputProps={{readOnly: true,}}
+             // onChange={handleEmailChange}
+              />
+              </div>
+              <br/>
+              <div>
+              <Button color="primary" variant= "contained" fullWidth>
+                Delete Account
+              </Button>
+              </div>
+ 
+   </Modal.Body>
+   <Modal.Footer>
+    <Button variant="secondary" onClick={handleClose}>
+      Cancel
+    </Button>
+    <Button color="primary" onClick={handleClose}>
+      Submit Edit
+    </Button>
+  </Modal.Footer>
+</Modal>
 
     </div>
+
+    
   );
 }
 
