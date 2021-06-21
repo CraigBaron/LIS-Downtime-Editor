@@ -4,7 +4,7 @@ import Badge from '@material-ui/core/Badge';
 import Button from '@material-ui/core/Button';
 import Popover from '@material-ui/core/Popover';
 import Box from '@material-ui/core/Box';
-import { Link, useLocation } from 'react-router-dom';
+import {Link} from 'react-router-dom';
 import axios from 'axios';
 import {buildPath, config} from './config';
 
@@ -36,7 +36,7 @@ import {buildPath, config} from './config';
     
     return(
         <div>
-        { localStorage.getItem("privledge") == 3 ?
+        { localStorage.getItem("privledge") === 3 ?
           <Button color="inherit" onClick={handleClick} id={id}>      
           <Badge badgeContent={numRecords} color="secondary">
             <NotificationsIcon/>

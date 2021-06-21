@@ -6,15 +6,9 @@ import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
-import { render } from '@testing-library/react';
 import {Modal} from 'react-bootstrap';
 import './styles.css';
-import { Collapse } from '@material-ui/core';
-import NotificationsIcon from '@material-ui/icons/Notifications';
-import Badge from '@material-ui/core/Badge';
 import BellPopOver from './BellPopOver';
-import axios from 'axios';
-import {buildPath, config} from './config';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import AccountBoxIcon from '@material-ui/icons/AccountBox';
@@ -89,7 +83,7 @@ export default function ButtonAppBar() {
           open={Boolean(anchorEl)}
           onClose={handleMenuClose}
         >
-          { localStorage.getItem("privledge") == 3 ? <MenuItem onClick={doRootPage}>Settings</MenuItem>: null}
+          { localStorage.getItem("privledge") === 3 ? <MenuItem onClick={doRootPage}>Settings</MenuItem>: null}
 
           <MenuItem onClick={doMachinePage}>Machine Records</MenuItem>
           <MenuItem onClick={doEditPage}>Edited Records</MenuItem>
