@@ -4,7 +4,7 @@ import { Route, Redirect } from 'react-router-dom';
 function AdminRoute({isAuth, privledge, component: Component, ...rest}){
     return <Route {...rest} render={(props)=>{
         
-        if(isAuth && privledge === 3){
+        if(isAuth && privledge == 3){
         return <Component />
         }
         else{
