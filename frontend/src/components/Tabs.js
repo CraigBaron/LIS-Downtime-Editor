@@ -21,6 +21,7 @@ import { buildPath } from "./config";
 import {useState} from 'react'
 import Alert from '@material-ui/lab/Alert';
 import {Box} from "@material-ui/core"
+import {config} from './config';
 
 const useStyles = makeStyles({
   root: {
@@ -39,6 +40,7 @@ const columns = [
 ];
 
 const temp = [];
+var level='';
 
 export default function CenteredTabs() {
   const classes = useStyles();
@@ -59,6 +61,7 @@ export default function CenteredTabs() {
 
   const handleChange = (event) => {
     setPrivilege(event.target.value);
+    setselPriviledge(event.target.value);
   }
 
   const [email, setEmail] = useState(null);
@@ -85,15 +88,46 @@ export default function CenteredTabs() {
   const [selLastName, setselLastName] = useState();
   const [selPriviledge, setselPriviledge] = useState();
 
+ 
+
+  const closeAndAccept = () => {
+   
+    updateStatusFirstName();
+    updateStatusLastName();
+    updateStatusPrivledge();
+    getEmployees();
+    handleClose();
+   
+}
+
+const closeAndAcceptDelete = () => {
+   
+ Delete();
+  getEmployees();
+  handleClose();
+ 
+}
+
+
   const EditRecord = (item) =>
   {
+    if(selPriviledge==1){
+      level='Employee'
+    }
+    else{
+      level='Manager'
+    }
 
       handleShow();
       setselEmail(item.Email);
       setselFirstName(item.firstName);
       setselLastName(item.lastName);
-      setselPriviledge(item.privilege);
+      setselPriviledge(item.privilage);
+
+     
+
   }
+
 
   var getEmployees
   window.onload = getEmployees = async () => {
@@ -117,6 +151,68 @@ export default function CenteredTabs() {
       console.log(err);
       setDisplayError(true)
     }
+    }
+
+    const updateStatusFirstName = async () => {
+      await axios.post(buildPath('users/editFirstName'), 
+      {
+      
+        email:selEmail,
+        firstName:firstName
+       
+      },config)
+        .then((response) => {
+          console.log(response.data)
+          
+        }, (error) => {
+          console.log(error.request)
+        });
+    }
+    const updateStatusLastName = async () => {
+      await axios.post(buildPath('users/editLastName'), 
+      {
+      
+        email:selEmail,
+        lastName:lastName
+       
+      },config)
+        .then((response) => {
+          console.log(response.data)
+          
+        }, (error) => {
+          console.log(error.request)
+        });
+    }
+    const updateStatusPrivledge = async () => {
+      await axios.post(buildPath('users/editPrivledge'), 
+      {
+      
+        email:selEmail,
+        privledge:privilege
+       
+      },config)
+        .then((response) => {
+          console.log(response.data)
+        
+        }, (error) => {
+          console.log(error.request)
+        });
+    }
+
+    const Delete = async () => {
+      await axios.post(buildPath('users/delete'), 
+      {
+      
+        email:selEmail
+       
+       
+      },config)
+        .then((response) => {
+          console.log(response.data)
+        
+        }, (error) => {
+          console.log(error.request)
+        });
     }
     
     const signUp = async () => {
@@ -215,7 +311,7 @@ export default function CenteredTabs() {
               id="demo-simple-select"
               value={privilege}
               onChange={handleChange}
-              
+             
             >
               <MenuItem value={1}>Employee</MenuItem>
               <MenuItem value={2}>Manager</MenuItem>
@@ -242,66 +338,63 @@ export default function CenteredTabs() {
     <Modal.Title>Account Edit</Modal.Title>
   </Modal.Header>
   <Modal.Body>
- 
-  <div>
+      <div>
              <TextField
-            // disabled
+             disabled
               id="Email"
               label="Email"
               defaultValue={selEmail}
               variant="outlined"
               fullWidth
-             // InputProps={{readOnly: true,}}
-             // onChange={handleEmailChange}
               />
               </div>
               <br/>
               <div>
              <TextField
-           //  disabled
               id="First Name"
               label="First Name"
               defaultValue={selFirstName}
               variant="outlined"
               fullWidth
-              //InputProps={{readOnly: true,}}
-              //onChange={handleEmailChange}
+              onChange={handleFirstNameChange}
               />
               </div>
               <br/>
               <div>
              <TextField
-             //disabled
               id="Last Name"
               label="Last Name"
               defaultValue={selLastName}
               variant="outlined"
               fullWidth
-            //  InputProps={{readOnly: true,}}
-              //onChange={handleEmailChange}
+              onChange={handleLastNameChange}
               />
               </div>
               <br/>
+            
+              { selPriviledge !=3 ?
               <FormControl fullWidth className={classes.formControl}>
-            <InputLabel >Role *</InputLabel>
+            <InputLabel >Role</InputLabel>
             <Select
-           
               labelId="demo-simple-select-label"
               id="demo-simple-select"
-              value={privilege}
+              value={selPriviledge}
               onChange={handleChange}
-              defaultValue={selPriviledge}
             >
               <MenuItem value={1}>Employee</MenuItem>
               <MenuItem value={2}>Manager</MenuItem>
             </Select>
-          </FormControl>
+          </FormControl>: null
+        }
           <br/>
           <br/>
               <div>
-              <Button color="primary" variant= "contained" fullWidth>
+              { selPriviledge !=3 ?
+              <Button color="primary" variant= "contained" fullWidth onClick={closeAndAcceptDelete}>
                 Delete Account
               </Button>
+              : null
+            }
               </div>
  
    </Modal.Body>
@@ -309,15 +402,12 @@ export default function CenteredTabs() {
     <Button variant="secondary" onClick={handleClose}>
       Cancel
     </Button>
-    <Button color="primary" onClick={handleClose}>
+    <Button color="primary" onClick={closeAndAccept}>
       Submit Edit
     </Button>
   </Modal.Footer>
 </Modal>
-
     </div>
-
-    
   );
 }
 

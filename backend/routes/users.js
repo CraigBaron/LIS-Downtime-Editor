@@ -202,6 +202,66 @@ router.post('/resetpassword', async (req,res) => {
 
 })
 
+//edits first name
+router.post('/editFirstName',async (req, res) => {
+  const { email,  firstName} = req.body;
+  
+  try {
+    var request = new sql.Request();
+    request.query("UPDATE Employees SET FirstName = '" + firstName + "' WHERE Email = '"+email+"'",  function (err, recordset) {
+      if (err){
+          console.log(err);
+          return;
+      } 
+      res.json({status : "Successful"})
+  })
 
+  } catch (error) {
+    return res.json({status : "Fail"})
+  }
+
+})
+
+
+//edits last name
+router.post('/editLastName',async (req, res) => {
+  const { email,  lastName} = req.body;
+  
+  try {
+    var request = new sql.Request();
+    request.query("UPDATE Employees SET LastName = '" + lastName + "' WHERE Email = '"+email+"'",  function (err, recordset) {
+      if (err){
+          console.log(err);
+          return;
+      } 
+      res.json({status : "Successful"})
+  })
+
+  } catch (error) {
+    return res.json({status : "Fail"})
+  }
+      
+  
+})
+
+//edits priviledge
+router.post('/editPrivledge',async (req, res) => {
+  const { email,  privledge} = req.body;
+  
+  try {
+    var request = new sql.Request();
+    request.query("UPDATE Employees SET Privledge = '" + privledge + "' WHERE Email = '"+email+"'",  function (err, recordset) {
+      if (err){
+          console.log(err);
+          return;
+      } 
+      res.json({status : "Successful"})
+  })
+
+  } catch (error) {
+    return res.json({status : "Fail"})
+  }
+  
+})
 
 module.exports = router
