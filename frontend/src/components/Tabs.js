@@ -72,6 +72,9 @@ export default function CenteredTabs() {
   const handlePasswordChange = (e) => {setPassword(e.target.value)};
   const handleConfirmPasswordChange = (e) => {setConfirmPassword(e.target.value)};
 
+ // const handleFirstNameChangeNull = (e) => {selFirstName};
+  //const handleLastNameChangeNull = (e) => {setLastName(e.target.value)};
+
   const[error, setError] = useState("");
   const[displayError, setDisplayError] = useState(false)
 
@@ -86,12 +89,22 @@ export default function CenteredTabs() {
  
 
   const closeAndAccept = () => {
+
    
-    updateStatusFirstName();
-    updateStatusLastName();
-    updateStatusPrivledge();
+   
+    if(firstName!=null){
+      updateStatusFirstName();
+    }
+    if(lastName!=null){
+      updateStatusLastName();
+    }
+    if(privilege!=0){
+      updateStatusPrivledge();
+    }
+    
     getEmployees();
     handleClose();
+
    
 }
 
