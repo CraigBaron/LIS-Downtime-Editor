@@ -6,6 +6,8 @@ require('dotenv').config()
 const{ v1: uuidv1 } = require('uuid');
 
 const createToken = require("../createToken");
+const createRefreshToken = require("../createToken");
+
 const SendCode = require("../emailNotifications").SendCode;
 
 const userSchema = require("../models/users").userSchema;
@@ -31,7 +33,8 @@ router.post('/login', async (req, res) => {
                     const lastName = recordset.recordsets[0][0].LastName;
                     const user = {email : email, firstName : firstName, lastName : lastName, privledge : privledge}
                     const acessToken = createToken(user);
-                    res.json({acessToken: acessToken, user : user})
+                    const refreshToken = createRefreshToken(user);
+                    res.json({acessToken: acessToken, refreshToken: refreshToken,  user : user})
               }else{
                 res.send('Not ALlowed')
               }
@@ -196,8 +199,6 @@ router.post('/resetpassword', async (req,res) => {
       {
         return res.json({status : "Error : Code expired or incorrect code."});
       }
-      
-     
   })
 
 })
@@ -243,6 +244,11 @@ router.post('/editLastName',async (req, res) => {
       
   
 })
+router.post('/token', async (req,res) => {
+
+  const refreshToken = req.body.token;
+})
+
 
 //edits priviledge
 router.post('/editPrivledge',async (req, res) => {

@@ -36,7 +36,7 @@ import {buildPath, config} from './config';
     
     return(
         <div>
-        { localStorage.getItem("privledge") === 3 ?
+        { localStorage.getItem("privledge") == 3 ?
           <Button color="inherit" onClick={handleClick} id={id}>      
           <Badge badgeContent={numRecords} color="secondary">
             <NotificationsIcon/>
