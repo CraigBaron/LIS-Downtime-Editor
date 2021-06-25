@@ -9,6 +9,7 @@ const useStyles = makeStyles((theme) => ({
 appBar: {
     top: 'auto',
     bottom: 0,
+    height: "50px"
   },
 }));
 
@@ -20,10 +21,10 @@ export default function BottomAppBar() {
       
     return (
 <div>
-<AppBar  position="fixed" color="primary" className={classes.appBar}>
+<AppBar position="fixed" color="primary" className={classes.appBar}>
 <Toolbar align='center'  >
-    <Typography align='center' component="h1" variant="h5">
-    Logged in as: {naming +" "+  namingL}
+    <Typography align='center'>
+    <h6>User: {naming +" "+  namingL}</h6>
     </Typography>
 </Toolbar>
 </AppBar>

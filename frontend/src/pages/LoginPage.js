@@ -4,10 +4,10 @@ import SignIn from '../components/Signin';
 
 const LoginPage = () =>
 {
-    /* window.onload = () => {
+    window.onload = () => {
         if(localStorage.getItem('acessToken'))
             window.location.href = '/HomePage'
-    } */
+    } 
     return(
       <div>
         <SignIn />

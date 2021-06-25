@@ -84,15 +84,15 @@ const useStyles = makeStyles((theme) => ({
 
 const columns = [
   { field: 'id', headerName: 'UniqueID', width: 130 },
-  { field: 'pkDowntimeEventID', headerName: 'pkDowntimeEventID', width: 130 },
+  { field: 'pkDowntimeEventID', headerName: 'pkDowntimeEventID', width: 200 },
   { field: 'LineID', headerName: 'LineID', width: 130 },
   { field: 'Machine', headerName: 'MachineID', width: 200 },
   { field: 'ComponentID', headerName: 'ComponentID', width: 200 },
-  { field: 'StartDateTime', headerName: 'StartTime', width: 250 },
-  { field: 'EndDateTime', headerName: 'EndTime', width: 250 },
+  { field: 'StartDateTime', headerName: 'StartDateTime', width: 250 },
+  { field: 'EndDateTime', headerName: 'EndDateTime', width: 250 },
   { field: 'Comments', headerName: 'Comments', width: 130 },
   { field: 'DurationTotalMinutes', headerName: 'Duration', width: 130 },
-  { field: 'Secondarypk', headerName: 'Secondarypk', width: 130 },
+  { field: 'Secondarypk', headerName: 'Secondarypk', width: 150 },
 ];
 
 function DataTable() {
@@ -171,7 +171,6 @@ function DataTable() {
       setselDuration(item.DurationTotalMinutes);
       setselSecondarypk(item.Secondarypk);
   }
-
   const displayRecords = async (lineNumber) => {
     await axios.post(buildPath('machineRecords/'), {
       lineNumber : lineNumber,
@@ -192,7 +191,6 @@ function DataTable() {
       
   }
 
-  
   const doEditRecord = async () =>
   {
      handleClose();
@@ -1019,7 +1017,7 @@ function DataTable() {
         <Grid container spacing={2}>
           <Grid item xs={3}>
           <Typograghy>
-          <Box color="white" textAlign="center" fontSize="h5.fontSize" fontWeight="fontWeightRegular" height="100%" width="80%" bgcolor="primary.main" boxShadow={4} borderRadius="borderRadius">
+          <Box color="white" p={1} textAlign="center" fontSize="h6.fontSize" fontWeight="fontWeightRegular" maxWidth="250px" bgcolor="primary.main" boxShadow={4} borderRadius="borderRadius">
             LIS-Downtime Data
           </Box>
           </Typograghy>
