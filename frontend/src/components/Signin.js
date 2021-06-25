@@ -63,6 +63,7 @@ export default function SignIn() {
 
   const classes = useStyles();
   const [values, setValues] = React.useState({ showPassword: false, });
+  
 
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
@@ -264,10 +265,10 @@ export default function SignIn() {
                 name="password"
                 label="Password"
                 type={values.showPassword ? 'text' : 'password'}
-                value={values.password}
+                value={values.password||''}
                 id="password"
                 onChange={ handleChange('password')}
-                autoComplete="current-password"
+              autoComplete="current-password"
                 InputProps={{
                   startAdornment: (
                     <InputAdornment position="start">
