@@ -14,3 +14,4 @@ export function buildPath(route) {
     }
 }
 
+export const refreshToken = localStorage.getItem('refreshToken');

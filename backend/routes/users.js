@@ -6,7 +6,8 @@ require('dotenv').config()
 const{ v1: uuidv1 } = require('uuid');
 
 const createToken = require("../createToken");
-const createRefreshToken = require("../createToken");
+const createRefreshToken = require("../createRFToken");
+const verifyAuthToken = require("../middleware/authenticate");
 
 const SendCode = require("../emailNotifications").SendCode;
 
@@ -203,13 +204,11 @@ router.post('/resetpassword', async (req,res) => {
 
 })
 
-//edits first name
-router.post('/editFirstName',async (req, res) => {
-  const { email,  firstName} = req.body;
-  
-  try {
+//edits user
+router.post('/editUser',async (req, res) => {
+  const {firstName, lastName, role, ID} = req.body;
     var request = new sql.Request();
-    request.query("UPDATE Employees SET FirstName = '" + firstName + "' WHERE Email = '"+email+"'",  function (err, recordset) {
+    request.query("UPDATE Employees SET FirstName = '" + firstName + "', LastName = '" + lastName + "', Privledge = '" + role + "' WHERE ID = '"+ ID +"'",  function (err, recordset) {
       if (err){
           console.log(err);
           return;
@@ -217,57 +216,22 @@ router.post('/editFirstName',async (req, res) => {
       res.json({status : "Successful"})
   })
 
-  } catch (error) {
-    return res.json({status : "Fail"})
-  }
-
 })
-
-
-//edits last name
-router.post('/editLastName',async (req, res) => {
-  const { email,  lastName} = req.body;
-  
-  try {
+//logout user / delete refresh token
+router.post('/logout', verifyAuthToken, async (req, res) => {
+    const {refreshToken} = req.body;
+    const email = req.user.email;
     var request = new sql.Request();
-    request.query("UPDATE Employees SET LastName = '" + lastName + "' WHERE Email = '"+email+"'",  function (err, recordset) {
-      if (err){
-          console.log(err);
-          return;
-      } 
-      res.json({status : "Successful"})
-  })
+    request.query("UPDATE Employees SET RefreshToken = '" + null + "' WHERE Email = '"+ email +"'",  function (err, recordset) {
+        if (err){
+            console.log(err);
+            return;
+        } 
+        res.json({status : "Successful"})
+    }) 
 
-  } catch (error) {
-    return res.json({status : "Fail"})
-  }
-      
-  
-})
-router.post('/token', async (req,res) => {
-
-  const refreshToken = req.body.token;
 })
 
 
-//edits priviledge
-router.post('/editPrivledge',async (req, res) => {
-  const { email,  privledge} = req.body;
-  
-  try {
-    var request = new sql.Request();
-    request.query("UPDATE Employees SET Privledge = '" + privledge + "' WHERE Email = '"+email+"'",  function (err, recordset) {
-      if (err){
-          console.log(err);
-          return;
-      } 
-      res.json({status : "Successful"})
-  })
-
-  } catch (error) {
-    return res.json({status : "Fail"})
-  }
-  
-})
 
 module.exports = router

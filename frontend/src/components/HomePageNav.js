@@ -12,6 +12,9 @@ import BellPopOver from './BellPopOver';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import AccountBoxIcon from '@material-ui/icons/AccountBox';
+import {config, buildPath, refreshToken} from './config';
+import axios from 'axios';
+
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
@@ -39,8 +42,17 @@ export default function ButtonAppBar() {
   {
     window.location.href = '/RootPage'
   }
-  const doLogout = async event =>
+  const doLogout = async () =>
   {
+    await axios.post(buildPath('users/logout'), {
+      refreshToken : refreshToken
+    },config)
+      .then((response) => {
+        
+      }, (error) => {
+        console.log(error.request)
+      })
+      
     localStorage.clear();
     window.location.href = '/LoginPage';
   }

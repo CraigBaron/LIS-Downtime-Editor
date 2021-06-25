@@ -17,7 +17,6 @@ import { buildPath } from "./config";
 import {useState} from 'react'
 import {Box} from "@material-ui/core"
 import {config} from './config';
-
 const useStyles = makeStyles({
   root: {
     flexGrow: 1,
@@ -30,8 +29,7 @@ const columns = [
   { field: 'Email', headerName: 'Email', width: 200 },
   { field: 'firstName', headerName: 'First name', width: 180 },
   { field: 'lastName', headerName: 'Last name', width: 180 },
-  { field: 'privilage', headerName: 'Privilage level', width: 180 },
-  
+  { field: 'role', headerName: 'Role', width: 180 },
 ];
 
 const temp = [];
@@ -41,39 +39,34 @@ export default function CenteredTabs() {
   const classes = useStyles();
   const [value, setValue] = React.useState(0);
 
- 
-    const [show, setShow] = useState(false);
-    const [rows, setRows] = useState([]);
-    const handleClose = () => setShow(false);
-    const handleShow = () => setShow(true);
-
+  //hooks for rows and show for modal
+  const [show, setShow] = useState(false);
+  const [rows, setRows] = useState([]);
+  //functions to handle the state of modal
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+  //function to handle tab changes
   const handleTabChange = (event, newValue) => {
     setValue(newValue);
   };
 
-  const [privilege, setPrivilege] = useState('');
-  
-
-  const handleChange = (event) => {
-    setPrivilege(event.target.value);
-    setselPriviledge(event.target.value);
+  //function to handle role change on signup form dropdown
+  const handleRoleChange = (event) => {
+    setRole(event.target.value);
   }
-
+  //hooks for signup form
   const [email, setEmail] = useState(null);
   const [firstName, setFirstName] = useState(null);
   const [lastName, setLastName] = useState(null);
   const [password, setPassword] = useState(null);
   const [confirmPassword, setConfirmPassword] = useState(null);
-
-
+  const [role, setRole] = useState('');
+  //functions to handle state changes of signup form
   const handleEmailChange = (e) => {setEmail(e.target.value)};
   const handleFirstNameChange = (e) => {setFirstName(e.target.value)};
   const handleLastNameChange = (e) => {setLastName(e.target.value)};
   const handlePasswordChange = (e) => {setPassword(e.target.value)};
   const handleConfirmPasswordChange = (e) => {setConfirmPassword(e.target.value)};
-
- // const handleFirstNameChangeNull = (e) => {selFirstName};
-  //const handleLastNameChangeNull = (e) => {setLastName(e.target.value)};
 
   const[error, setError] = useState("");
   const[displayError, setDisplayError] = useState(false)
@@ -81,64 +74,37 @@ export default function CenteredTabs() {
   const handleErrorChange = (e) => {setError(e.target.value)};
   const handleDisplayErrorChange = (e) => {setDisplayError(e.target.value)};
 
-  const [selEmail, setselEmail] = useState();
-  const [selFirstName, setselFirstName] = useState();
-  const [selLastName, setselLastName] = useState();
-  const [selPriviledge, setselPriviledge] = useState();
-
- 
-
-  const closeAndAccept = () => {
-
-   
-   
-    if(firstName!=null){
-      updateStatusFirstName();
-    }
-    if(lastName!=null){
-      updateStatusLastName();
-    }
-    if(privilege!=0){
-      updateStatusPrivledge();
-    }
-    
-    getEmployees();
-    handleClose();
-
-   
-}
-
-const closeAndAcceptDelete = () => {
-   
- Delete();
-  getEmployees();
-  handleClose();
- 
-}
-
-
+  //hooks for users modal
+  const [selEmail, setSelEmail] = useState("");
+  const [selFirstName, setSelFirstName] = useState("");
+  const [selLastName, setSelLastName] = useState("");
+  const [selRole, setSelRole] = useState(0);
+  const [selID, setSelID] = useState(0);
+  //functions to handle state changes of users modal form
+  const handleSelFirstNameChange = (e) => {setSelFirstName(e.target.value)};
+  const handleSelLastNameChange = (e) => {setSelLastName(e.target.value)};
+  const handleSelRoleChange = (e) => {setSelRole(e.target.value)};
+  const handleSelIDChange = (e) => {setSelID(e.target.value)};
+  
+  //function to set the selection hooks to the active user clicked
   const EditRecord = (item) =>
   {
-    if(selPriviledge==1){
+    if(selRole==1){
       level='Employee'
     }
     else{
       level='Manager'
     }
-
       handleShow();
-      setselEmail(item.Email);
-      setselFirstName(item.firstName);
-      setselLastName(item.lastName);
-      setselPriviledge(item.privilage);
-
-     
-
+      setSelEmail(item.Email);
+      setSelFirstName(item.firstName);
+      setSelLastName(item.lastName);
+      setSelRole(item.role);
+      setSelID(item.id);
   }
 
 
-  var getEmployees
-  window.onload = getEmployees = async () => {
+  const getEmployees = async () => {
     try{ 
           const res = await axios.get(buildPath("users/"));
           temp.length = 0;
@@ -149,74 +115,48 @@ const closeAndAcceptDelete = () => {
               "Email" : res.data[0][i].Email,
               "firstName": res.data[0][i].FirstName,
               "lastName" : res.data[0][i].LastName,
-              "privilage" : res.data[0][i].Privledge
+              "role" : res.data[0][i].Privledge
             }
             temp.push(user);          
           }
           setRows(temp);
-
         }catch(err){
       console.log(err);
-      setDisplayError(true)
     }
     }
 
-    const updateStatusFirstName = async () => {
-      await axios.post(buildPath('users/editFirstName'), 
+    const updateUser = async () => {
+      await axios.post(buildPath('users/editUser'), 
       {
-      
-        email:selEmail,
-        firstName:firstName
-       
-      },config)
-        .then((response) => {
-          console.log(response.data)
-          
-        }, (error) => {
-          console.log(error.request)
-        });
-    }
-    const updateStatusLastName = async () => {
-      await axios.post(buildPath('users/editLastName'), 
-      {
-      
-        email:selEmail,
-        lastName:lastName
-       
-      },config)
-        .then((response) => {
-          console.log(response.data)
-          
-        }, (error) => {
-          console.log(error.request)
-        });
-    }
-    const updateStatusPrivledge = async () => {
-      await axios.post(buildPath('users/editPrivledge'), 
-      {
-      
-        email:selEmail,
-        privledge:privilege
-       
-      },config)
-        .then((response) => {
-          console.log(response.data)
-        
-        }, (error) => {
-          console.log(error.request)
-        });
-    }
+        firstName: selFirstName,
+        lastName: selLastName,
+        role:  selRole,
+        ID: selID
 
+      },config)
+        .then((response) => {
+          if(response.data.status === "Successful")
+          {
+            getEmployees()
+            handleClose()
+          }
+        }, (err) => {
+          console.log(err)
+        });
+
+    }
+   
     const Delete = async () => {
       await axios.post(buildPath('users/delete'), 
-      {
-      
-        email:selEmail
-       
-       
+      {     
+        email:selEmail         
       },config)
         .then((response) => {
-          console.log(response.data)
+          if(response.data.status === "Successful")
+          {
+            getEmployees()
+            handleClose()
+          }
         
         }, (error) => {
           console.log(error.request)
@@ -233,13 +173,12 @@ const closeAndAcceptDelete = () => {
                   confirmPassword : confirmPassword,
                   firstName : firstName,
                   lastName : lastName,
-                  privledge : privilege
+                  privledge : role
                 }
                 );
-                console.log(res.data.errors[0].message)
+                console.log(res.data)
           }catch(err){
           console.log(err);
-          
         }
       }
 
@@ -254,12 +193,12 @@ const closeAndAcceptDelete = () => {
         centered
       >
         <Tab label="Register New Account"/>
-        <Tab label="Manage Accounts" />
+        <Tab label="Manage Accounts" onClick={getEmployees}/>
       </Tabs>
     </Paper>
     <TabPanel value={value} index={0}>
       <Grid container justify="center" >
-        <Box border m={5} p={3} borderColor="primary.main" borderRadius="borderRadius" boxShadow={15} width={2/3}>
+        <Box border m={5} p={3} borderColor="primary.main" borderRadius="borderRadius" boxShadow={15} width="80%" maxWidth="500px">
           <h5> Register New Account</h5>
           <TextField
             variant="outlined"
@@ -315,11 +254,9 @@ const closeAndAcceptDelete = () => {
           <FormControl fullWidth className={classes.formControl}>
             <InputLabel >Role *</InputLabel>
             <Select
-              labelId="demo-simple-select-label"
-              id="demo-simple-select"
-              value={privilege}
-              onChange={handleChange}
-             
+              value={role}
+              onChange={handleRoleChange}
+  
             >
               <MenuItem value={1}>Employee</MenuItem>
               <MenuItem value={2}>Manager</MenuItem>
@@ -333,7 +270,7 @@ const closeAndAcceptDelete = () => {
 
     <TabPanel value={value} index={1}>
       <Grid container justify="center" >
-        <Box border m={5} p={3} borderColor="primary.main" borderRadius="borderRadius" boxShadow={15} width={1/2}>
+        <Box border m={5} p={3} borderColor="primary.main" borderRadius="borderRadius" boxShadow={15} width="80%" maxWidth="800px">
           <h5>Registered Accounts</h5>
           <DataGrid autoHeight rows={rows} columns={columns} onRowClick = {item => {EditRecord(item.row)}} rowsPerPageOptions={[5, 10, 20]}/>
         </Box>
@@ -348,10 +285,9 @@ const closeAndAcceptDelete = () => {
   <Modal.Body>
       <div>
              <TextField
-             disabled
-              id="Email"
+              disabled
               label="Email"
-              defaultValue={selEmail}
+              value={selEmail}
               variant="outlined"
               fullWidth
               />
@@ -359,12 +295,11 @@ const closeAndAcceptDelete = () => {
               <br/>
               <div>
              <TextField
-              id="First Name"
               label="First Name"
-              defaultValue={selFirstName}
+              value={selFirstName}
               variant="outlined"
               fullWidth
-              onChange={handleFirstNameChange}
+              onChange={handleSelFirstNameChange}
               />
               </div>
               <br/>
@@ -375,19 +310,18 @@ const closeAndAcceptDelete = () => {
               defaultValue={selLastName}
               variant="outlined"
               fullWidth
-              onChange={handleLastNameChange}
+              onChange={handleSelLastNameChange}
               />
               </div>
               <br/>
             
-              { selPriviledge !=3 ?
-              <FormControl fullWidth className={classes.formControl}>
+              { selRole !=3 ?
+              <FormControl variant="outlined" fullWidth>
             <InputLabel >Role</InputLabel>
             <Select
-              labelId="demo-simple-select-label"
-              id="demo-simple-select"
-              value={selPriviledge}
-              onChange={handleChange}
+              label="Role"
+              value={selRole}
+              onChange={handleSelRoleChange}
             >
               <MenuItem value={1}>Employee</MenuItem>
               <MenuItem value={2}>Manager</MenuItem>
@@ -397,8 +331,9 @@ const closeAndAcceptDelete = () => {
           <br/>
           <br/>
               <div>
-              { selPriviledge !=3 ?
-              <Button color="primary" variant= "contained" fullWidth onClick={closeAndAcceptDelete}>
+              { selRole !=3 ?
+              
+              <Button color="secondary" variant= "contained" onClick={Delete} >
                 Delete Account
               </Button>
               : null
@@ -407,10 +342,10 @@ const closeAndAcceptDelete = () => {
  
    </Modal.Body>
    <Modal.Footer>
-    <Button variant="secondary" onClick={handleClose}>
+    <Button variant="contained" onClick={handleClose}>
       Cancel
     </Button>
-    <Button color="primary" onClick={closeAndAccept}>
+    <Button color="primary" variant="contained" onClick={updateUser}>
       Submit Edit
     </Button>
   </Modal.Footer>

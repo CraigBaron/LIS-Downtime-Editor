@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { DataGrid, GridToolbar } from '@material-ui/data-grid';
-import {Button, Grid} from '@material-ui/core'
+import {Button, Grid, Menu} from '@material-ui/core'
 import {useState} from 'react'
 import {Modal} from 'react-bootstrap'
 import TextField from '@material-ui/core/TextField';
@@ -16,7 +16,7 @@ import Typograghy from '@material-ui/core/Typography'
 import axios from 'axios';
 import Alert from '@material-ui/lab/Alert';
 import Snackbar from '@material-ui/core/Snackbar';
-import {buildPath, config} from './config'
+import {buildPath, refreshToken} from './config'
 import CustomNoRowsOverlay from './CustomNoRowsOverlay'
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -95,11 +95,13 @@ const columns = [
   { field: 'Secondarypk', headerName: 'Secondarypk', width: 130 },
 ];
 
-const rows = [];
-
-
-
 function DataTable() {
+  //handles current access token
+  const [token, setToken] = useState(localStorage.getItem('acessToken'))
+  const handleNewToken = () => setToken(localStorage.getItem('acessToken'))
+  const config = {
+    headers : {'Authorization' : `Bearer ${token}`
+    }}
   //reasons dropdown
   const [Reasons, setReason] = React.useState();
   const handleChange = (event) => {
@@ -171,12 +173,19 @@ function DataTable() {
   }
 
   const displayRecords = async (lineNumber) => {
-    
     await axios.post(buildPath('machineRecords/'), {
-      lineNumber : lineNumber
+      lineNumber : lineNumber,
+      refreshToken : refreshToken
     },config)
       .then((response) => {
+        if(response.data.acessToken){
+          localStorage.setItem('acessToken', response.data.acessToken)  
+          handleNewToken();
+          displayRecords();
+        }
+        else{
         setrows(response.data.recordsets[0])
+        }
       }, (error) => {
         console.log(error.request)
       })
@@ -1023,11 +1032,13 @@ function DataTable() {
           <FormControl fullWidth variant="outlined" >
           <InputLabel>Select Table</InputLabel>
             <Select
+              displayEmpty
+              defaultChecked="value"
               value={tableValue}
               label="Select Table"
               onChange={handleTableChange}
               IconComponent = {TableChartIcon}
-              displayEmpty={false}
+              
             >
               <MenuItem value={11}>System 1 Line 1</MenuItem>
               <MenuItem value={12}>System 1 Line 2</MenuItem>

@@ -144,6 +144,7 @@ export default function SignIn() {
       
         if (response.data.acessToken) {
           localStorage.setItem('acessToken', response.data.acessToken);
+          localStorage.setItem('refreshToken', response.data.refreshToken);
           localStorage.setItem('email', response.data.user.email);
           localStorage.setItem('privledge', response.data.user.privledge);
           localStorage.setItem('firstName', response.data.user.firstName);

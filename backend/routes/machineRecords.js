@@ -11,9 +11,10 @@ router.post('/', verifyAuthToken, async (req, res) =>
     const { lineNumber} = req.body
     var request = new sql.Request(); 
    switch (lineNumber) {
-
+    
        //system 1 line 1
         case 11:
+
             // query to the database and get the records
             request.query(`SELECT UniqueID, pkDowntimeEventID, StartDateTime, EndDateTime, DurationTotalMinutes, LineID, Machine, ComponentID, Comments, Secondarypk FROM [DowntimeEvents_Line1 System 1]`, function (err, recordset) {
                 if (err) console.log(err)
@@ -24,7 +25,7 @@ router.post('/', verifyAuthToken, async (req, res) =>
                     temp.recordsets[0][i].id = temp.recordsets[0][i].UniqueID;
                     delete temp.recordsets[0][i].UniqueID;
                 }
-                res.json(temp)      
+                res.json(temp)  
             });  
             break;
 
