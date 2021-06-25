@@ -263,7 +263,7 @@ export default function SignIn() {
                 name="password"
                 label="Password"
                 type={values.showPassword ? 'text' : 'password'}
-                value={values.password || false}
+                value={values.password}
                 id="password"
                 onChange={ handleChange('password')}
                 autoComplete="current-password"
