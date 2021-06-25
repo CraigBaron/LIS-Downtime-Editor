@@ -27,12 +27,12 @@ const useStyles = makeStyles({
 const columns = [
   { field: 'id', headerName: 'ID', width: 70 },
   { field: 'Email', headerName: 'Email', width: 200 },
-  { field: 'firstName', headerName: 'First name', width: 180 },
-  { field: 'lastName', headerName: 'Last name', width: 180 },
-  { field: 'role', headerName: 'Role', width: 180 },
+  { field: 'FirstName', headerName: 'First name', width: 180 },
+  { field: 'LastName', headerName: 'Last name', width: 180 },
+  { field: 'Privledge', headerName: 'Role', width: 180 },
 ];
 
-const temp = [];
+
 var level='';
 
 export default function CenteredTabs() {
@@ -97,29 +97,19 @@ export default function CenteredTabs() {
     }
       handleShow();
       setSelEmail(item.Email);
-      setSelFirstName(item.firstName);
-      setSelLastName(item.lastName);
-      setSelRole(item.role);
+      setSelFirstName(item.FirstName);
+      setSelLastName(item.LastName);
+      setSelRole(item.Privledge);
       setSelID(item.id);
   }
 
 
   const getEmployees = async () => {
     try{ 
+         
           const res = await axios.get(buildPath("users/"));
-          temp.length = 0;
-          for(let i = 0; i < res.data[0].length; i++)
-          {
-            let user  = {
-              "id" : res.data[0][i].ID,
-              "Email" : res.data[0][i].Email,
-              "firstName": res.data[0][i].FirstName,
-              "lastName" : res.data[0][i].LastName,
-              "role" : res.data[0][i].Privledge
-            }
-            temp.push(user);          
-          }
-          setRows(temp);
+         
+          setRows(res.data)
         }catch(err){
       console.log(err);
     }

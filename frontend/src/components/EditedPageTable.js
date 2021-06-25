@@ -132,7 +132,6 @@ const columns = [
             status: status
           },config)
             .then((response) => {
-              console.log(response.data)
               DisplayRecords();
             }, (error) => {
               console.log(error.request)

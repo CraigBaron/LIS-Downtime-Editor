@@ -106,13 +106,20 @@ router.get('/', (req,res) => {
 
   try{
     var request = new sql.Request();
-    request.query("SELECT * FROM Employees", function (err, recordset) {
+    request.query("SELECT Email, FirstName, LastName, Privledge, ID FROM Employees", function (err, recordset) {
 
       if (err){
         console.log(err);
         return;
       } 
-      return res.json(recordset.recordsets)
+      //return res.json(recordset.recordsets)
+      var temp = recordset.recordset
+
+      for(var i = 0; i < temp.length; i++){
+        temp[i].id = temp[i].ID;
+        delete temp[i].ID;
+    }
+    res.json(temp);  
     })
   }catch(err) {
       res.status(500).json({message : err.message})
