@@ -104,4 +104,18 @@ router.get('/numPending' ,verifyAuthToken, async (req, res) => {
     }
 })
 
+router.get('/pending' ,verifyAuthToken, async (req, res) => {
+    try{
+        var request = new sql.Request();
+        request.query("SELECT * FROM EditedRecords WHERE Status = 'Pending'", function (err, recordset) {
+            if (err){
+                 console.log(err);
+                 return;
+            }
+            res.json(recordset.recordsets);
+        });
+    }catch (err){
+        res.status(500).json({message: err.message})
+    }
+})
 module.exports = router

@@ -7,6 +7,7 @@ import Box from '@material-ui/core/Box';
 import {Link} from 'react-router-dom';
 import axios from 'axios';
 import {buildPath, config} from './config';
+import PendingPage from '../pages/PendingPage';
 
  export default function BellPopOver(props) {
     const [numRecords, setNumRecords] = React.useState(0);
@@ -60,9 +61,9 @@ import {buildPath, config} from './config';
       >
           <Box padding={2} width={300} height={100}>
             <p>There are currently <b>{numRecords}</b> edited records with the pending approval status<span> </span>
-            <Link href="#" >
+            <a href = "/PendingPage" >
                 Click here
-            </Link>
+            </a>
             <span> </span> to review these records.
             </p>
           </Box>

@@ -60,6 +60,10 @@ export default function ButtonAppBar() {
   {
     window.location.href = '/EditedPage';
   }
+  const doPendingPage = async event =>
+  {
+    window.location.href = '/PendingPage';
+  }
   const doMachinePage = async event =>
   {
     window.location.href = '/HomePage';
@@ -99,6 +103,7 @@ export default function ButtonAppBar() {
 
           <MenuItem onClick={doMachinePage}>Machine Records</MenuItem>
           <MenuItem onClick={doEditPage}>Edited Records</MenuItem>
+          { localStorage.getItem("privledge") == 3 ? <MenuItem onClick={doPendingPage}>Pending Records</MenuItem>: null}
           <MenuItem onClick={handleShow}>Help</MenuItem>
         </Menu>
           <Typography variant="h6" className={classes.title}>
