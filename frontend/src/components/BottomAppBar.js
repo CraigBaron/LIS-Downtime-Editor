@@ -4,7 +4,7 @@ import AppBar from '@material-ui/core/AppBar';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
-
+import CC from '../CC.jpg'
 
 
 const useStyles = makeStyles((theme) => ({
@@ -13,6 +13,15 @@ appBar: {
     bottom: 0,
     height: "50px"
   },
+ logo: {
+   width:'100px',
+   height: '30px',
+   
+ },
+
+ title: {
+  flexGrow: 1,
+},
  
 }));
 
@@ -28,6 +37,9 @@ export default function BottomAppBar() {
 <Toolbar align='center'  >
     <Typography align='center'>
     <h6>User: {naming +" "+  namingL}</h6>
+    </Typography>
+    <Typography align="right" top="0" className={classes.title} > 
+    <img src={CC}  alt="work"  className={classes.logo}/>
     </Typography>
 </Toolbar>
 </AppBar>
