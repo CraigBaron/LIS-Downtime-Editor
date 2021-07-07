@@ -5,19 +5,39 @@ const sql = require('mssql');
 const verifyAuthToken = require("../middleware/authenticate");
 const SendEmail = require("../emailNotifications").FindRecipients;
 //get all records
-router.get('/' ,verifyAuthToken, async (req, res) => {
-    try{
+router.post('/' , /*verifyAuthToken,*/  async (req, res) => {
+    
+        let {line} = req.body
+        
+        if(line === 0){
+            var request = new sql.Request();
+            request.query("SELECT * FROM EditedRecords", function (err, recordset) {
+                if (err){
+                     console.log(err);
+                     return;
+                }
+                let records = recordset.recordset
+                for(let i=0;i<records.length;i++){
+                    records[i].id = records[i].UniqueID
+                }
+                res.json(records);
+            });
+        }
+        else{
         var request = new sql.Request();
-        request.query("SELECT * FROM EditedRecords", function (err, recordset) {
+        request.query("SELECT * FROM EditedRecords WHERE LineID = '" + line + "'", function (err, recordset) {
             if (err){
                  console.log(err);
                  return;
             }
-            res.json(recordset.recordsets);
+            let records = recordset.recordset
+            for(let i=0;i<records.length;i++){
+                records[i].id = records[i].UniqueID
+            }
+            res.json(records);
         });
-    }catch (err){
-        res.status(500).json({message: err.message})
     }
+  
 })
 
 //add new record

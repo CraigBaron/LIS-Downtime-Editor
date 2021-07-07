@@ -11,9 +11,10 @@ import './styles.css';
 import BellPopOver from './BellPopOver';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
-import AccountBoxIcon from '@material-ui/icons/AccountBox';
+import MeetingRoomIcon from '@material-ui/icons/MeetingRoom';
 import {config, buildPath, refreshToken} from './config';
 import axios from 'axios';
+import { Divider } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -70,11 +71,6 @@ export default function ButtonAppBar() {
   }
 
   const [anchorEl, setAnchorEl] = React.useState(null);
-  const [anchorProfileMenu, setAnchorProfileMenu] = React.useState(null);
-
-  const handleClick2 = (event) => {
-    setAnchorProfileMenu(event.currentTarget);
-  };
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -82,7 +78,6 @@ export default function ButtonAppBar() {
 
   const handleMenuClose = () => {
     setAnchorEl(null);
-    setAnchorProfileMenu(null);
   };
 
   return (
@@ -99,31 +94,26 @@ export default function ButtonAppBar() {
           open={Boolean(anchorEl)}
           onClose={handleMenuClose}
         >
-          { localStorage.getItem("privledge") == 3 ? <MenuItem onClick={doRootPage}>Settings</MenuItem>: null}
+          { localStorage.getItem("privledge") == 3 ? <div><MenuItem onClick={doRootPage}>Settings</MenuItem> <Divider></Divider></div>: null}
 
           <MenuItem onClick={doMachinePage}>Machine Records</MenuItem>
+          <Divider></Divider>
           <MenuItem onClick={doEditPage}>Edited Records</MenuItem>
-          { localStorage.getItem("privledge") == 3 ? <MenuItem onClick={doPendingPage}>Pending Records</MenuItem>: null}
+          <Divider></Divider>
           <MenuItem onClick={handleShow}>Help</MenuItem>
+          
         </Menu>
+        
           <Typography variant="h6" className={classes.title}>
             LIS-Downtime-Editor
           </Typography>
        
           <BellPopOver/>
 
-          <IconButton edge="start" color="inherit" onClick={handleClick2}>
-            <AccountBoxIcon />
+          <IconButton edge="start" color="inherit" onClick={doLogout}>
+            <MeetingRoomIcon/>
           </IconButton>
-          <Menu
-          anchorEl={anchorProfileMenu}
-          keepMounted
-          open={Boolean(anchorProfileMenu)}
-          onClose={handleMenuClose}
-        >
-          <MenuItem onClick={doLogout}>Logout</MenuItem>
-          <MenuItem onClick={handleMenuClose}>Account</MenuItem>
-        </Menu>
+          
         
         </Toolbar>
       </AppBar>

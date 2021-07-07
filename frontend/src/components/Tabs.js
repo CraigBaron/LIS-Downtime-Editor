@@ -17,12 +17,15 @@ import { buildPath } from "./config";
 import {useState} from 'react'
 import {Box} from "@material-ui/core"
 import {config} from './config';
+import WarningIcon from '@material-ui/icons/Warning';
+import Snackbar from '@material-ui/core/Snackbar';
+import Alert from '@material-ui/lab/Alert';
+
 const useStyles = makeStyles({
   root: {
     flexGrow: 1,
   },
 });
-
 
 const columns = [
   { field: 'id', headerName: 'ID', width: 70 },
@@ -86,6 +89,19 @@ export default function CenteredTabs() {
   const handleSelRoleChange = (e) => {setSelRole(e.target.value)};
   const handleSelIDChange = (e) => {setSelID(e.target.value)};
   
+  const [snackOpen, setSnackOpen] = useState(false);
+
+  const handleSnackClick = () => {
+    setSnackOpen(true);
+  };
+
+  const handleSnackClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+    setSnackOpen(false);
+  };
+
   //function to set the selection hooks to the active user clicked
   const EditRecord = (item) =>
   {
@@ -174,6 +190,13 @@ export default function CenteredTabs() {
 
   return (
   <div>
+    
+    <Snackbar open={snackOpen} autoHideDuration={6000} onClose={handleSnackClose}>
+        <Alert onClose={handleSnackClose} severity="success">
+          This is a success message!
+        </Alert>
+    </Snackbar>
+
     <Paper className={classes.root}>
       <Tabs
         value={value}
@@ -325,6 +348,7 @@ export default function CenteredTabs() {
               
               <Button color="secondary" variant= "contained" onClick={Delete} >
                 Delete Account
+                <WarningIcon />
               </Button>
               : null
             }

@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { DataGrid, GridToolbar } from '@material-ui/data-grid';
-import {Button, Grid, Menu} from '@material-ui/core'
+import {Button, Grid} from '@material-ui/core'
 import {useState} from 'react'
 import {Modal} from 'react-bootstrap'
 import TextField from '@material-ui/core/TextField';
@@ -18,6 +18,8 @@ import Alert from '@material-ui/lab/Alert';
 import Snackbar from '@material-ui/core/Snackbar';
 import {buildPath, refreshToken} from './config'
 import CustomNoRowsOverlay from './CustomNoRowsOverlay'
+import Divider from '@material-ui/core/Divider'
+
 const useStyles = makeStyles((theme) => ({
   root: {
     '& .MuiTextField-root': {
@@ -137,7 +139,7 @@ function DataTable() {
   }
   const [selSecondarypk, setselSecondarypk] = useState();
   //Handles values of dropdown for selecting tables
-  const [tableValue, setTableValue] = useState();
+  const [tableValue, setTableValue] = useState(-1);
   const handleTableChange = (event) => {
     setTableValue(event.target.value);
     displayRecords(event.target.value);
@@ -1038,16 +1040,21 @@ function DataTable() {
               IconComponent = {TableChartIcon}
               
             >
-              <MenuItem value={11}>System 1 Line 1</MenuItem>
-              <MenuItem value={12}>System 1 Line 2</MenuItem>
-              <MenuItem value={13}>System 1 Line 3</MenuItem>
-              <MenuItem value={14}>System 1 Line 4</MenuItem>
-              <MenuItem value={18}>System 1 Line 8</MenuItem>
-              <MenuItem value={24}>System 2 Line 4</MenuItem>
-              <MenuItem value={25}>System 2 Line 5</MenuItem>
-              <MenuItem value={26}>System 2 Line 6</MenuItem>
-              <MenuItem value={27}>System 2 Line 7</MenuItem>
-              <MenuItem value={29}>System 2 Line 9</MenuItem>
+              <MenuItem value={-1} disabled>Select Table...</MenuItem>
+              <Divider></Divider>
+              <MenuItem value={-2} disabled>System 1</MenuItem>
+              <MenuItem value={11}>Line 1</MenuItem>
+              <MenuItem value={12}>Line 2</MenuItem>
+              <MenuItem value={13}>Line 3</MenuItem>
+              <MenuItem value={14}>Line 4</MenuItem>
+              <MenuItem value={18}>Line 8</MenuItem>
+              <Divider></Divider>
+              <MenuItem value={-3} disabled>System 2</MenuItem>
+              <MenuItem value={24}>Line 4</MenuItem>
+              <MenuItem value={25}>Line 5</MenuItem>
+              <MenuItem value={26}>Line 6</MenuItem>
+              <MenuItem value={27}>Line 7</MenuItem>
+              <MenuItem value={29}>Line 9</MenuItem>
             </Select>
           </FormControl>
           </Box>
@@ -1174,7 +1181,18 @@ function DataTable() {
                 disabled       
                 />
           </Box>  
-          <br/> 
+          <br/>
+          <Box>
+            <TextField
+                id="comments"
+                label="Comments"
+                defaultValue={selComments}
+                variant="outlined" 
+                fullWidth     
+                disabled       
+                />
+          </Box>  
+          <br/>  
           <Box>
             <TextField
                 id="durationEdit"

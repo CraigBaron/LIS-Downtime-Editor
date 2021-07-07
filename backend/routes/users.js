@@ -50,14 +50,14 @@ router.post('/signUp', async (req,res) => {
     const post = {email, password, confirmPassword, firstName, lastName, privledge} = req.body;
     const validationResult = userValidator.validate(post, userSchema);
     if(validationResult !== true){
-      return res.json({message : "Validation failed", errors: validationResult});
+      return res.json({status : "Validation failed", errors: validationResult});
     }
     
     var request = new sql.Request();
     request.query("SELECT * FROM Employees WHERE Email = '" + email + "'", async function(err, recordset){
       try{
         if(recordset.recordsets[0].length > 0){
-          return res.json({error : 'There Already exists an account with this email'});
+          return res.json({status : 'There Already exists an account with this email'});
         }
       }catch(err){
         return res.status(500).send()

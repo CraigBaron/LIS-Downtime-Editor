@@ -14,6 +14,7 @@ import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 import { Box } from '@material-ui/core';
 import { sizing } from '@material-ui/system';
+import Divider from '@material-ui/core/Divider'
 
 const useStyles = makeStyles((theme) => ({
   gridContainer: {
@@ -114,20 +115,33 @@ var i;
           <CardContent>
           <Box color="white" textAlign="center" fontSize="h5.fontSize" fontWeight="fontWeightRegular" height="100%" width="100%" bgcolor="primary.main" boxShadow={4} borderRadius="borderRadius">
             Pending Request
+            
           </Box>
             <Typography variant="h5" component="h2">
             <br />
-              <Box minHeight={35} boxShadow={3} borderRadius="borderRadius"> <strong>ID:</strong> {rows[rowID].id}</Box>
-              <Box minHeight={35} boxShadow={3} borderRadius="borderRadius"> <strong>Line ID:</strong> {rows[rowID].LineID}</Box>
-              <Box minHeight={35} boxShadow={3} borderRadius="borderRadius"><strong>Machine:</strong> {rows[rowID].Machine}</Box>
-              <Box minHeight={35} boxShadow={3} borderRadius="borderRadius"><strong>Component ID:</strong> {rows[rowID].ComponentID}</Box>
-              <Box minHeight={35} boxShadow={3} borderRadius="borderRadius"><strong>Start Time:</strong> {rows[rowID].StartDateTime}</Box>
-              <Box minHeight={35} boxShadow={3} borderRadius="borderRadius"><strong>End Time:</strong> {rows[rowID].EndDateTime}</Box>
-              <Box minHeight={35} boxShadow={3} borderRadius="borderRadius"><strong>Comments:</strong> {rows[rowID].Comments}</Box>
-              <Box minHeight={35} boxShadow={3} borderRadius="borderRadius"><strong>Total Minutes:</strong> {rows[rowID].DurationTotalMinutes}</Box>
-              <Box minHeight={35} boxShadow={3} borderRadius="borderRadius"><strong>Secondarypk:</strong> {rows[rowID].Secondarypk}</Box>
-              <Box minHeight={35} boxShadow={3} borderRadius="borderRadius"><strong>Reason:</strong> {rows[rowID].Reason}</Box>
-              <Box minHeight={35} boxShadow={3} borderRadius="borderRadius"><strong>Status:</strong> {rows[rowID].Status}</Box> 
+              <Divider />
+              <strong>ID:</strong> {rows[rowID].id}
+              <Divider />
+              <strong>Line ID:</strong> {rows[rowID].LineID}
+              <Divider />
+              <strong>Machine:</strong> {rows[rowID].Machine}
+              <Divider />
+              <strong>Component ID:</strong> {rows[rowID].ComponentID}
+              <Divider />
+              <strong>Start Time:</strong> {rows[rowID].StartDateTime}
+              <Divider />
+              <strong>End Time:</strong> {rows[rowID].EndDateTime}
+              <Divider />
+              <strong>Comments:</strong> {rows[rowID].Comments}
+              <Divider />
+              <strong>Total Minutes:</strong> {rows[rowID].DurationTotalMinutes}
+              <Divider />
+              <strong>Secondarypk:</strong> {rows[rowID].Secondarypk}
+              <Divider />
+              <strong>Reason:</strong> {rows[rowID].Reason}
+              <Divider />
+              <strong>Status:</strong> {rows[rowID].Status}
+              <Divider />
             </Typography>
           </CardContent>
           <CardActions>
