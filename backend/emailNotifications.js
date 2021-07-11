@@ -7,19 +7,19 @@ const emailAddr = [];
 
 const FindRecipients = async() => {
     emailAddr.length = 0;
-    var privledge = 3;
-    try{
+    const superUser = 3;
+    const manager = 2;
+    
     var request = new sql.Request();
-    request.query("SELECT Email FROM Employees WHERE Privledge = '"+ privledge +"'", async function(err, recordset){
+    request.query("SELECT Email FROM Employees WHERE Privledge = '"+ superUser + "' OR Privledge = '"+manager+"'", async function(err, recordset){
         for(var i=0;i<recordset.recordsets[0].length;i++)
         {
             emailAddr.push(recordset.recordsets[0][i].Email);
         }
+        console.log(emailAddr)
         SendNotification();
         })   
-    }catch(err){
-        
-    }     
+      
 }
 
 const SendNotification = async() => {
