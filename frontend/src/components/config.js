@@ -1,8 +1,4 @@
-
-export const config = {
-    headers : {'Authorization' : `Bearer ${localStorage.getItem('acessToken')}`
-    }
-}
+import axios from 'axios'
 
 const app_name = "listest"
 
@@ -14,4 +10,15 @@ export function buildPath(route) {
     }
 }
 
-export const refreshToken = localStorage.getItem('refreshToken');
+export function config () {
+    const token = {headers : {'Authorization' : `Bearer ${localStorage.getItem('accessToken')}`}}
+    return token;
+}
+
+export function refreshToken(){
+    const refreshToken = localStorage.getItem('refreshToken')
+    return refreshToken;
+} 
+
+
+

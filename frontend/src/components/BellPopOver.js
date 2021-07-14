@@ -10,17 +10,18 @@ import {buildPath, config} from './config';
 import PendingPage from '../pages/PendingPage';
 
  export default function BellPopOver(props) {
+   
     const [numRecords, setNumRecords] = React.useState(0);
-    useEffect(() => {
-
-        axios.get(buildPath('editedRecords/numPending')
-        ,config)
+    useEffect(async () => {
+        await axios.get(buildPath('editedRecords/numPending')
+        ,config())
             .then((response) => {
-                setNumRecords(response.data)
+               
+                setNumRecords(response.data.numRecords)
             }, (error) => {
               console.log(error.request)
             })
-    },[])
+    })
     
     const [anchorEl, setAnchorEl] = React.useState(null);
 
@@ -37,7 +38,7 @@ import PendingPage from '../pages/PendingPage';
     
     return(
         <div>
-        { localStorage.getItem("privledge") == 3 ?
+        { localStorage.getItem("privledge") === "3" || localStorage.getItem("privledge") == "2" ?
           <Button color="inherit" onClick={handleClick} id={id}>      
           <Badge badgeContent={numRecords} color="secondary">
             <NotificationsIcon/>

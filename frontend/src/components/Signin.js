@@ -25,6 +25,7 @@ import Collapse from '@material-ui/core/Collapse';
 import CloseIcon from '@material-ui/icons/Close';
 import Snackbar from '@material-ui/core/Snackbar';
 import { buildPath } from './config';
+import { setTwilioEmailAuth } from '@sendgrid/mail';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -144,7 +145,7 @@ export default function SignIn() {
       .then((response) => {
       
         if (response.data.acessToken) {
-          localStorage.setItem('acessToken', response.data.acessToken);
+          localStorage.setItem('accessToken', response.data.acessToken);
           localStorage.setItem('refreshToken', response.data.refreshToken);
           localStorage.setItem('email', response.data.user.email);
           localStorage.setItem('privledge', response.data.user.privledge);

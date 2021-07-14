@@ -16,7 +16,7 @@ import Typograghy from '@material-ui/core/Typography'
 import axios from 'axios';
 import Alert from '@material-ui/lab/Alert';
 import Snackbar from '@material-ui/core/Snackbar';
-import {buildPath, refreshToken} from './config'
+import {buildPath, refreshToken, config} from './config'
 import CustomNoRowsOverlay from './CustomNoRowsOverlay'
 import Divider from '@material-ui/core/Divider'
 
@@ -98,12 +98,7 @@ const columns = [
 ];
 
 function DataTable() {
-  //handles current access token
-  const [token, setToken] = useState(localStorage.getItem('acessToken'))
-  const handleNewToken = () => setToken(localStorage.getItem('acessToken'))
-  const config = {
-    headers : {'Authorization' : `Bearer ${token}`
-    }}
+ 
   //reasons dropdown
   const [Reasons, setReason] = React.useState();
   const handleChange = (event) => {
@@ -177,16 +172,13 @@ function DataTable() {
     await axios.post(buildPath('machineRecords/'), {
       lineNumber : lineNumber,
       refreshToken : refreshToken
-    },config)
+    }, config())
       .then((response) => {
-        if(response.data.acessToken){
-          localStorage.setItem('acessToken', response.data.acessToken)  
-          handleNewToken();
-          displayRecords();
+         if(response.data.accessToken){
+          localStorage.setItem('accessToken', response.data.accessToken)  
         }
-        else{
-        setrows(response.data.recordsets[0])
-        }
+        setrows(response.data.temp.recordsets[0]) 
+        
       }, (error) => {
         console.log(error.request)
       })
@@ -208,9 +200,13 @@ function DataTable() {
       Comments: selComments,
       DurationTotalMinutes: selDuration,
       Secondarypk: selSecondarypk,
-      Reason: Reasons
-    },config)
+      Reason: Reasons,
+      refreshToken : refreshToken()
+    },config())
       .then((response) => {
+        if(response.data.accessToken){
+          localStorage.setItem('accessToken', response.data.accessToken)  
+        }
         setSnackOpen(true);
          setfeedback(response.data.status);
 

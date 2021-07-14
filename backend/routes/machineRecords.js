@@ -25,7 +25,7 @@ router.post('/', verifyAuthToken, async (req, res) =>
                     temp.recordsets[0][i].id = temp.recordsets[0][i].UniqueID;
                     delete temp.recordsets[0][i].UniqueID;
                 }
-                res.json(temp)  
+                res.json({temp : temp, accessToken: req.accessToken})  
             });  
             break;
 
@@ -40,7 +40,7 @@ router.post('/', verifyAuthToken, async (req, res) =>
                     temp.recordsets[0][i].id = temp.recordsets[0][i].UniqueID;
                     delete temp.recordsets[0][i].UniqueID;
                 }
-                res.json(temp)         
+                res.json({temp : temp, accessToken: req.accessToken})  
             }); 
             break;
 
@@ -55,7 +55,7 @@ router.post('/', verifyAuthToken, async (req, res) =>
                     temp.recordsets[0][i].id = temp.recordsets[0][i].UniqueID;
                     delete temp.recordsets[0][i].UniqueID;
                 }
-                res.json(temp)        
+                res.json({temp : temp, accessToken: req.accessToken})  
             }); 
             break;
 
@@ -70,7 +70,7 @@ router.post('/', verifyAuthToken, async (req, res) =>
                     temp.recordsets[0][i].id = temp.recordsets[0][i].UniqueID;
                     delete temp.recordsets[0][i].UniqueID;
                 }
-                res.json(temp)        
+                res.json({temp : temp, accessToken: req.accessToken})  
             }); 
             break;
 
@@ -86,7 +86,7 @@ router.post('/', verifyAuthToken, async (req, res) =>
                     temp.recordsets[0][i].id = temp.recordsets[0][i].UniqueID;
                     delete temp.recordsets[0][i].UniqueID;
                 }
-                res.json(temp)
+                res.json({temp : temp, accessToken: req.accessToken})  
             }); 
             break;   
 
@@ -102,7 +102,7 @@ router.post('/', verifyAuthToken, async (req, res) =>
                     temp.recordsets[0][i].id = temp.recordsets[0][i].UniqueID;
                     delete temp.recordsets[0][i].UniqueID;
                 }
-                res.json(temp)      
+                res.json({temp : temp, accessToken: req.accessToken})  
             }); 
             break;   
 
@@ -118,7 +118,7 @@ router.post('/', verifyAuthToken, async (req, res) =>
                     temp.recordsets[0][i].id = temp.recordsets[0][i].UniqueID;
                     delete temp.recordsets[0][i].UniqueID;
                 }
-                res.json(temp)         
+                res.json({temp : temp, accessToken: req.accessToken})  
             }); 
             break;   
 
@@ -134,7 +134,7 @@ router.post('/', verifyAuthToken, async (req, res) =>
                     temp.recordsets[0][i].id = temp.recordsets[0][i].UniqueID;
                     delete temp.recordsets[0][i].UniqueID;
                 }
-                res.json(temp)       
+                res.json({temp : temp, accessToken: req.accessToken})  
             }); 
             break;  
 
@@ -150,7 +150,7 @@ router.post('/', verifyAuthToken, async (req, res) =>
                     temp.recordsets[0][i].id = temp.recordsets[0][i].UniqueID;
                     delete temp.recordsets[0][i].UniqueID;
                 }
-                res.json(temp)        
+                res.json({temp : temp, accessToken: req.accessToken})  
             }); 
             break; 
 
@@ -166,16 +166,12 @@ router.post('/', verifyAuthToken, async (req, res) =>
                     temp.recordsets[0][i].id = temp.recordsets[0][i].UniqueID;
                     delete temp.recordsets[0][i].UniqueID;
                 }
-                res.json(temp)         
+                res.json({temp : temp, accessToken: req.accessToken})  
             }); 
             break; 
         
         default:
-            request.query("SELECT UniqueID, pkDowntimeEventID, StartDateTime, EndDateTime, DurationTotalMinutes, LineID, Machine, ComponentID, Comments, Secondarypk FROM [DowntimeEvents_Line1 System 1]", function (err, recordset) {
-                if (err) console.log(err)
-
-                res.json(recordset)     
-            }); 
+            res.json({status : "Fail"});
 }
 });
 

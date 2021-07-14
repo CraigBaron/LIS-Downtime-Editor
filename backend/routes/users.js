@@ -83,13 +83,13 @@ router.post('/signUp', async (req,res) => {
 })
 
 router.post('/delete', (req,res) => {
-  const { email } = req.body;
+  const { refreshToken, email } = req.body;
   
   try{
       var request = new sql.Request();
   
-      request.query("DELETE FROM Employees WHERE Email = '"+ email +"'", function (err, recordset) {
-          if (err){
+      request.query("DELETE FROM Employees WHERE Email = '"+ email +"'", function (err, recordset){
+            if (err){
               console.log(err);
               return;
           } 
@@ -127,92 +127,91 @@ router.get('/', (req,res) => {
 })
 
 router.post('/forgot', (req, res) => {
-  const {email} = req.body;
-  try{
-          var request = new sql.Request();
-          request.query("SELECT * FROM Employees WHERE Email = '" + email + "'", async function (err, recordset) {
-              if(err) {
+    const {email} = req.body;
+        var request = new sql.Request();
+        request.query("SELECT * FROM Employees WHERE Email = '" + email + "'", async function (err, recordset) {
+            if(err) {
                 console.log(err);
                 return;
-              }
-              if(recordset.recordsets[0].length > 0){
-                makeCode();
-              }
-              else{
-                return res.json({status : "Fail"})
-              }
-          })
-        }catch(err){
-          res.status(500).send()
-        }
-      const makeCode = () => {
-          let dt = new Date()
-          dt.setMinutes(dt.getMinutes()+10);
-          dt.setHours(dt.getHours()-4);
-          dt = dt.toISOString().slice(0, 19).replace('T', ' ');
-          
-          const user = {
-            email : email,
-            code : uuidv1(),
-            expires : dt
-          }
-          
-          var request = new sql.Request();
-          
-          request.query("INSERT INTO ResetPW(Email, Code, Expires) VALUES('" + user.email + "','" + user.code + "','" + user.expires + "')", async function (err, recordset) {
-            if(err) {
-              console.log(err);
-              return;
             }
-
-          SendCode(user);
-          return res.json({status : "Success"})
-          })
+            if(recordset.recordsets[0].length > 0){
+                makeCode();
+            }
+            else{
+                return res.json({status : "Fail"})
+            }
+        })
+       
+  const makeCode = () => {
+      let dt = new Date()
+      dt.setMinutes(dt.getMinutes()+10);
+      dt.setHours(dt.getHours()-4);
+      dt = dt.toISOString().slice(0, 19).replace('T', ' ');
+      
+      const user = {
+        email : email,
+        code : uuidv1(),
+        expires : dt
+      }
+      
+      var request = new sql.Request();
+      
+      request.query("INSERT INTO ResetPW(Email, Code, Expires) VALUES('" + user.email + "','" + user.code + "','" + user.expires + "')", async function (err, recordset) {
+        if(err) {
+          console.log(err);
+          return;
         }
+
+      SendCode(user);
+      return res.json({status : "Success"})
+      })
+    }
 })
 
 router.post('/resetpassword', async (req,res) => {
-
-      const {code, email, password, confirmPassword} = req.body;
-      if(password != confirmPassword)
-      {
-        res.json({status: "Error : Passwords do not match."})
-      }
-      let ct = new Date()
-      ct.setHours(ct.getHours()-4);
-      ct = ct.toISOString().slice(0, 19).replace('T', ' ');
-      var request = new sql.Request();
-      request.query("SELECT * FROM ResetPW WHERE Code = '" + code + "' AND Email = '" + email + "' AND Expires > '" + ct +"'", async function (err, recordset) {
-      if(err) {
-        console.log(err);
-        return;
-      }
-      if(recordset.recordsets[0].length > 0)
-      {
+    const {code, email, password, confirmPassword} = req.body;
+    if(password != confirmPassword)
+    {
+        return res.json({status: "Error : Passwords do not match."})
+    }
+    let ct = new Date()
+    ct.setHours(ct.getHours()-4);
+    ct = ct.toISOString().slice(0, 19).replace('T', ' ');
+    try{
+    var request = new sql.Request();
+    request.query("SELECT * FROM ResetPW WHERE Code = '" + code + "' AND Email = '" + email + "' AND Expires > '" + ct +"'", async function (err, recordset) {
+        if(err) {
+          console.log(err);
+          return;
+        }
+        if(recordset.recordsets[0].length > 0)
+        {
             try{
-              const salt = await bcrypt.genSalt()
-              const hashedPassword = await bcrypt.hash(password, salt)
-              
-              var request = new sql.Request();
-              request.query("UPDATE Employees SET Password = '" + hashedPassword + "' WHERE Email = '" + email + "'", function (err, recordset) {
-              if (err) console.log(err)
+                const salt = await bcrypt.genSalt()
+                const hashedPassword = await bcrypt.hash(password, salt)
+                
+                var request = new sql.Request();
+                request.query("UPDATE Employees SET Password = '" + hashedPassword + "' WHERE Email = '" + email + "'", function (err, recordset) {
+                if (err) console.log(err)
 
-              return res.json({status : "Success"})
-          });
-          }catch (err){
-              return res.status(500).send();
-          }
-      }
-      else
-      {
-        return res.json({status : "Error : Code expired or incorrect code."});
-      }
-  })
-
+                return res.json({status : "Success"})
+            });
+            }catch (err){
+                return res.status(500).send();
+            }
+        }
+        else
+        {
+          return res.json({status : "Error : Code expired or incorrect code."});
+        }
+   })
+  }catch (err){
+    return res.status(500).send();
+  }
 })
 
 //edits user
-router.post('/editUser',async (req, res) => {
+router.post('/editUser', verifyAuthToken, async (req, res) => {
   const {firstName, lastName, role, ID} = req.body;
     var request = new sql.Request();
     request.query("UPDATE Employees SET FirstName = '" + firstName + "', LastName = '" + lastName + "', Privledge = '" + role + "' WHERE ID = '"+ ID +"'",  function (err, recordset) {
@@ -224,19 +223,26 @@ router.post('/editUser',async (req, res) => {
   })
 
 })
+
 //logout user / delete refresh token
 router.post('/logout', verifyAuthToken, async (req, res) => {
     const {refreshToken} = req.body;
-    const email = req.user.email;
     var request = new sql.Request();
-    request.query("UPDATE Employees SET RefreshToken = '" + null + "' WHERE Email = '"+ email +"'",  function (err, recordset) {
+    request.query("Delete FROM Tokens WHERE RefreshToken = '" + refreshToken + "'",  function (err, recordset) {
         if (err){
             console.log(err);
             return;
         } 
+        console.log("Deleting RefreshToken...")
         res.json({status : "Successful"})
     }) 
 
+})
+
+router.post('/pageRequest', verifyAuthToken, async (req, res) => {
+  
+  res.json({isAuth : "Successful", accessToken: req.accessToken} )
+  
 })
 
 

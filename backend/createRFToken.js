@@ -7,12 +7,12 @@ const sql = require('mssql')
     const refreshToken = jwt.sign(user, process.env.REFRESH_TOKEN_SECRET)
 
     var request = new sql.Request();
-    request.query("UPDATE Employees SET RefreshToken = '" + refreshToken + "' WHERE Email = '"+ user.email +"'",  function (err, recordset) {
+    request.query("INSERT INTO Tokens(RefreshToken) VALUES('" + refreshToken + "')",  function (err, recordset) {
       if (err){
           console.log(err);
           return;
       } 
-      console.log("Storing new Token...")
+      console.log("Storing new Refresh Token...")
     })
     
     return refreshToken;

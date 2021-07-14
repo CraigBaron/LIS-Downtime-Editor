@@ -5,7 +5,7 @@ const sql = require('mssql');
 const verifyAuthToken = require("../middleware/authenticate");
 const SendEmail = require("../emailNotifications").FindRecipients;
 //get all records
-router.post('/' , /*verifyAuthToken,*/  async (req, res) => {
+router.post('/' ,verifyAuthToken, async (req, res) => {
     
         let {line} = req.body
         
@@ -20,7 +20,7 @@ router.post('/' , /*verifyAuthToken,*/  async (req, res) => {
                 for(let i=0;i<records.length;i++){
                     records[i].id = records[i].UniqueID
                 }
-                res.json(records);
+                res.json({records : records, accessToken: req.accessToken});
             });
         }
         else{
@@ -34,7 +34,7 @@ router.post('/' , /*verifyAuthToken,*/  async (req, res) => {
             for(let i=0;i<records.length;i++){
                 records[i].id = records[i].UniqueID
             }
-            res.json(records);
+            res.json({records : records, accessToken: req.accessToken});
         });
     }
   
@@ -47,13 +47,11 @@ router.post('/add',verifyAuthToken, async (req, res) => {
 
     var request = new sql.Request();
     request.query("SELECT * FROM EditedRecords WHERE UniqueID = '" + id + "'", async function(err, recordset){
-      try{
+      
         if(recordset.recordsets[0].length > 0){
-          return res.json({status : 'Error : There already exists an edited records with this UniqueID'});
+          return res.json({status : 'Error : There already exists an edited records with this UniqueID', accessToken: req.accessToken});
         }
-      }catch(err){
-        return res.status(500).send()
-      }
+     
       create();
     })
 
@@ -67,7 +65,7 @@ const create = () => {
                     console.log(err);
                     return;
                 }
-                res.json({status : "Successful! The edited record has been submitted"});
+                res.json({status : "Successful! The edited record has been submitted", accessToken: req.accessToken});
                 SendEmail();
             });
         }catch (err){
@@ -89,7 +87,7 @@ router.post('/edit', verifyAuthToken, async (req, res) => {
                     return;
                 } 
 
-                res.json({status : "Successful"})
+                res.json({status : "Successful", accessToken: req.accessToken})
             })
         }
         else
@@ -99,7 +97,7 @@ router.post('/edit', verifyAuthToken, async (req, res) => {
                     console.log(err);
                     return;
                 } 
-                res.json({status : "Successful"})
+                res.json({status : "Successful", accessToken: req.accessToken})
             })
         }
     }
@@ -110,22 +108,20 @@ router.post('/edit', verifyAuthToken, async (req, res) => {
 })
 
 router.get('/numPending' ,verifyAuthToken, async (req, res) => {
-    try{
+    
         var request = new sql.Request();
         request.query("SELECT * FROM EditedRecords WHERE Status = 'Pending'", function (err, recordset) {
             if (err){
                  console.log(err);
                  return;
             }
-            res.json(recordset.recordsets[0].length);
+            res.json({numRecords: recordset.recordsets[0].length, accessToken: req.accessToken});
         });
-    }catch (err){
-        res.status(500).json({message: err.message})
-    }
+   
 })
 
 router.get('/pending' ,verifyAuthToken, async (req, res) => {
-    try{
+    
         var request = new sql.Request();
         request.query("SELECT * FROM EditedRecords WHERE Status = 'Pending'", function (err, recordset) {
             if (err){
@@ -134,8 +130,6 @@ router.get('/pending' ,verifyAuthToken, async (req, res) => {
             }
             res.json(recordset.recordsets);
         });
-    }catch (err){
-        res.status(500).json({message: err.message})
-    }
+    
 })
 module.exports = router

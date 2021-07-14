@@ -17,11 +17,11 @@ function App()
                 <Route path="/" exact>
                     <LoginPage />
                 </Route>
-                <ProtectedRoute path="/HomePage" component={HomePage} isAuth={localStorage.getItem('acessToken')}/>
-                <ProtectedRoute path="/EditedPage" component={EditedPage} isAuth={localStorage.getItem('acessToken')}/>
-                <ProtectedRoute path="/PendingPage" component={PendingPage} isAuth={localStorage.getItem('acessToken')}/>
-                <AdminRoute path="/RootPage" component={RootPage} isAuth={localStorage.getItem('acessToken')} privledge={localStorage.getItem('privledge')}/>
-                <Redirect to="/" />
+                <ProtectedRoute path="/HomePage" component={HomePage} exact={true} />
+                <ProtectedRoute path="/EditedPage" component={EditedPage} exact={true}/>
+                <ProtectedRoute path="/PendingPage" component={PendingPage} exact={true}/>
+                <ProtectedRoute path="/RootPage" component={RootPage} exact={true}/> 
+                <Redirect to="/"/>
             </Switch>
         </Router>
     );

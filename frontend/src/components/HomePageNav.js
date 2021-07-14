@@ -47,9 +47,9 @@ export default function ButtonAppBar() {
   {
     await axios.post(buildPath('users/logout'), {
       refreshToken : refreshToken
-    },config)
+    },config())
       .then((response) => {
-        
+       
       }, (error) => {
         console.log(error.request)
       })
@@ -60,10 +60,6 @@ export default function ButtonAppBar() {
   const doEditPage = async event =>
   {
     window.location.href = '/EditedPage';
-  }
-  const doPendingPage = async event =>
-  {
-    window.location.href = '/PendingPage';
   }
   const doMachinePage = async event =>
   {

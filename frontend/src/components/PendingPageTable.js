@@ -45,17 +45,15 @@ var i;
   
   function PendingPageTable() {
 
-        const classes = useStyles();
-        const [rows, setrows] = useState([]);
-      
-        const record = [];
-        
-        var DisplayRecords;
-      window.onload = DisplayRecords = async () => 
-          {
-              
+      const classes = useStyles();
+      const [rows, setrows] = useState([]);
+    
+      const record = [];
+      var bob = 5;
+      React.useEffect (async() => 
+          {      
               let temp
-              await axios.get('http://localhost:5000/editedRecords/pending', config)
+              await axios.get(buildPath('editedRecords/pending'), config())
               .then((response) => {
                 for(var i=0;i<response.data[0].length;i++)
                       {
@@ -78,17 +76,19 @@ var i;
               }, (error) => {
                 console.log(error);
               });
-          };
+          });
 
         const updateApprove = async (id) => {
               await axios.post(buildPath('editedRecords/edit'), 
               {
                 ID: id,
                 status: "Approve"
-              },config)
+              },config())
                 .then((response) => {
-                  console.log(response.data)
-                  DisplayRecords();
+                  if(response.data.accessToken){
+                    localStorage.setItem('accessToken', response.data.accessToken)  
+                  }
+                 
                 }, (error) => {
                   console.log(error.request)
                 });
@@ -99,10 +99,12 @@ var i;
               {
                 ID: id,
                 status: "Reject"
-              },config)
+              },config())
                 .then((response) => {
-                  console.log(response.data)
-                  DisplayRecords();
+                  if(response.data.accessToken){
+                    localStorage.setItem('accessToken', response.data.accessToken)  
+                  }
+                 // DisplayRecords();
                 }, (error) => {
                   console.log(error.request)
                 });

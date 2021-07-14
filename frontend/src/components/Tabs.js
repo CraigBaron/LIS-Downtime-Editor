@@ -124,7 +124,9 @@ export default function CenteredTabs() {
     try{ 
          
           const res = await axios.get(buildPath("users/"));
-         
+          if(res.data.accessToken){
+            localStorage.setItem('accessToken', res.data.accessToken)  
+          }
           setRows(res.data)
         }catch(err){
       console.log(err);
@@ -138,9 +140,11 @@ export default function CenteredTabs() {
         lastName: selLastName,
         role:  selRole,
         ID: selID
-
-      },config)
+      },config())
         .then((response) => {
+          if(response.data.accessToken){
+            localStorage.setItem('accessToken', response.data.accessToken)  
+          }
           if(response.data.status === "Successful")
           {
             getEmployees()
@@ -156,8 +160,11 @@ export default function CenteredTabs() {
       await axios.post(buildPath('users/delete'), 
       {     
         email:selEmail         
-      },config)
+      },config())
         .then((response) => {
+          if(response.data.accessToken){
+            localStorage.setItem('accessToken', response.data.accessToken)  
+          }
           if(response.data.status === "Successful")
           {
             getEmployees()
@@ -171,23 +178,23 @@ export default function CenteredTabs() {
     
     const signUp = async () => {
 
-          try{
-                const res = await axios.post(buildPath("users/signUp"),
-                {
-                  email : email,
-                  password : password,
-                  confirmPassword : confirmPassword,
-                  firstName : firstName,
-                  lastName : lastName,
-                  privledge : role
-                }
-                );
-                console.log(res.data)
-          }catch(err){
-          console.log(err);
-        }
-      }
-
+        await axios.post(buildPath("users/signUp"),
+        {
+          email : email,
+          password : password,
+          confirmPassword : confirmPassword,
+          firstName : firstName,
+          lastName : lastName,
+          privledge : role
+        },config())
+        .then((response) => {
+        if(response.data.accessToken){
+          localStorage.setItem('accessToken', response.data.accessToken)  
+        }     
+      }, (error) => {
+        console.log(error.request)
+      });
+    }
   return (
   <div>
     

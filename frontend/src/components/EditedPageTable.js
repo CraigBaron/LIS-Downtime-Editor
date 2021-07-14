@@ -179,20 +179,21 @@ function EditedTable() {
             if(line < 0){
               setrows([])
               return;
-            }
-              
-            await axios.post('http://localhost:5000/editedRecords/',
+            }            
+            await axios.post(buildPath('editedRecords/'),
             {
               line: line
-            },config)
+            },config())
             .then((response) => {
-                    setrows(response.data)
+              if(response.data.accessToken){
+                localStorage.setItem('accecssToken', response.data.accessToken)  
+              }
+              setrows(response.data.records)
             }, (error) => {
               console.log(error);
             });
             
         };
-
 
         const closeAndAccept = () => {
             updateStatus();
@@ -204,8 +205,11 @@ function EditedTable() {
           {
             ID: selID,
             status: status
-          },config)
+          },config())
             .then((response) => {
+              if(response.data.accessToken){
+                localStorage.setItem('accessToken', response.data.accessToken)  
+              }
               DisplayRecords(tableValue);
               if(response.data.status === "Successful")
               {

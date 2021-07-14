@@ -6,7 +6,7 @@ import BottomAppBar from '../components/BottomAppBar';
 
 
 
-const HomePage = () =>
+const HomePage = (props) =>
 {
     return(
       <div>

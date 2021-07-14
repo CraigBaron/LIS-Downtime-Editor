@@ -16,7 +16,8 @@ function authenticateToken(req, res, next) {
         if(err){
             if(refreshToken == null) return res.sendStatus(401)
             var request = new sql.Request();
-            request.query("SELECT RefreshToken FROM Employees WHERE RefreshToken = '" + refreshToken + "'", async function (err, recordset) {
+            //querry db for the refresh token provided
+            request.query("SELECT RefreshToken FROM Tokens WHERE RefreshToken = '" + refreshToken + "'", async function (err, recordset) {
                 if(err) {
                   console.log(err);
                   return;
@@ -29,8 +30,9 @@ function authenticateToken(req, res, next) {
                    jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET, (err, info) => {
                     if (err) return res.sendStatus(403);
                     const user = {email : info.email, firstName : info.firstName, lastName : info.lastName, privledge : info.privledge}
-                    const acessToken = createToken(user)
-                    res.json({acessToken: acessToken}) 
+                    const accessToken = createToken(user)
+                    req.accessToken = accessToken
+                    next();
                 }) 
             })
         } 
