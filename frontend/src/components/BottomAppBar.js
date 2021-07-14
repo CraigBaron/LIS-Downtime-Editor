@@ -35,8 +35,8 @@ export default function BottomAppBar() {
 <div>
 <AppBar position="fixed" color="primary" className={classes.appBar}>
 <Toolbar align='center'  >
-    <Typography align='center'>
-    <h6>User: {naming +" "+  namingL}</h6>
+    <Typography fontSize="h6.fontSize" align='center'>
+    User: {naming +" "+  namingL}
     </Typography>
     <Typography align="right" top="0" className={classes.title} > 
     <img src={CC}  alt="work"  className={classes.logo}/>

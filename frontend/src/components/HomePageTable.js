@@ -1018,16 +1018,16 @@ function DataTable() {
       <Box border={1} borderRadius="borderRadius" borderColor="grey.500" width="90%" p={5} boxShadow={6} >
         <Grid container spacing={2}>
           <Grid item xs={3}>
-          <Typograghy>
+         
           <Box color="white" p={1} textAlign="center" fontSize="h6.fontSize" fontWeight="fontWeightRegular" maxWidth="250px" bgcolor="primary.main" boxShadow={4} borderRadius="borderRadius">
             LIS-Downtime Data
           </Box>
-          </Typograghy>
+         
           </Grid>
           <Grid item xs={6}>
 
           </Grid>
-          <Grid item xs={3} alignItems="right">
+          <Grid item xs={3} >
           <Box>
           <FormControl fullWidth variant="outlined" >
           <InputLabel>Select Table</InputLabel>
@@ -1059,7 +1059,7 @@ function DataTable() {
           </FormControl>
           </Box>
           </Grid>
-          
+        
           <Grid item xs={12}>
             <Box justifyContent="center" border={1} borderRadius="borderRadius" borderColor="grey.500" >
               <DataGrid 
@@ -1237,7 +1237,7 @@ function DataTable() {
           </Col>
           <br/>   
         <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>
+          <Button  onClick={handleClose}>
             Cancel
           </Button>
           <Button  color="primary" onClick={doEditRecord}>

@@ -211,7 +211,7 @@ export default function CenteredTabs() {
     </Paper>
     <TabPanel value={value} index={0}>
       <Grid container justify="center" >
-        <Box border m={5} p={3} borderColor="primary.main" borderRadius="borderRadius" boxShadow={15} width="80%" maxWidth="500px">
+        <Box  m={5} p={3} borderColor="primary.main" borderRadius="borderRadius" boxShadow={15} width="80%" maxWidth="500px">
           <h5> Register New Account</h5>
           <TextField
             variant="outlined"
@@ -283,7 +283,7 @@ export default function CenteredTabs() {
 
     <TabPanel value={value} index={1}>
       <Grid container justify="center" >
-        <Box border m={5} p={3} borderColor="primary.main" borderRadius="borderRadius" boxShadow={15} width="80%" maxWidth="800px">
+        <Box  m={5} p={3} borderColor="primary.main" borderRadius="borderRadius" boxShadow={15} width="80%" maxWidth="800px">
           <h5>Registered Accounts</h5>
           <DataGrid autoHeight rows={rows} columns={columns} onRowClick = {item => {EditRecord(item.row)}} rowsPerPageOptions={[5, 10, 20]}/>
         </Box>
@@ -381,3 +381,5 @@ function TabPanel(props)
     </div>
   )
 }
+
+//Styled(MuiBox)
