@@ -115,7 +115,6 @@ var i;
           <CardContent>
           <Box color="white" textAlign="center" fontSize="h5.fontSize" fontWeight="fontWeightRegular" height="100%" width="100%" bgcolor="primary.main" boxShadow={4} borderRadius="borderRadius">
             Pending Request
-            
           </Box>
             <Typography variant="h5" component="h2">
             <br />
