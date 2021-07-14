@@ -50,14 +50,14 @@ router.post('/signUp', async (req,res) => {
     const post = {email, password, confirmPassword, firstName, lastName, privledge} = req.body;
     const validationResult = userValidator.validate(post, userSchema);
     if(validationResult !== true){
-      return res.json({status : "Validation failed", errors: validationResult});
+      return res.json({status : `Error : ${validationResult[0].message}`});
     }
     
     var request = new sql.Request();
     request.query("SELECT * FROM Employees WHERE Email = '" + email + "'", async function(err, recordset){
       try{
         if(recordset.recordsets[0].length > 0){
-          return res.json({status : 'There Already exists an account with this email'});
+          return res.json({status : 'Error : There already exists an account with this email'});
         }
       }catch(err){
         return res.status(500).send()
@@ -74,7 +74,7 @@ router.post('/signUp', async (req,res) => {
             request.query("INSERT INTO Employees (Email, Password, FirstName, LastName, Privledge ) VALUES ('" + email + "','" +  hashedPassword + "','" + firstName + "','" + lastName + "','" + privledge + "')", function (err, recordset) {
             if (err) console.log(err)
 
-            return res.json({status : "Successful"});
+            return res.json({status : "Successful : A new account has been created"});
         });
         }catch (err){
             return res.status(500).send();
@@ -93,7 +93,7 @@ router.post('/delete', (req,res) => {
               console.log(err);
               return;
           } 
-          res.json({status : "Successful"})
+          return res.json({status : "Successful : The user has been deleted"})
           
   })
   }catch(err) {
@@ -119,10 +119,10 @@ router.get('/', (req,res) => {
         temp[i].id = temp[i].ID;
         delete temp[i].ID;
     }
-    res.json(temp);  
+    return res.json(temp);  
     })
   }catch(err) {
-      res.status(500).json({message : err.message})
+      return res.status(500).json({message : err.message})
   }
 })
 
@@ -219,7 +219,7 @@ router.post('/editUser', verifyAuthToken, async (req, res) => {
           console.log(err);
           return;
       } 
-      res.json({status : "Successful"})
+      return res.json({status : "Successful : the account has been edited"})
   })
 
 })
@@ -234,14 +234,14 @@ router.post('/logout', verifyAuthToken, async (req, res) => {
             return;
         } 
         console.log("Deleting RefreshToken...")
-        res.json({status : "Successful"})
+        return res.json({status : "Successful"})
     }) 
 
 })
 
 router.post('/pageRequest', verifyAuthToken, async (req, res) => {
   
-  res.json({isAuth : "Successful", accessToken: req.accessToken} )
+  return res.json({isAuth : "Successful", accessToken: req.accessToken} )
   
 })
 

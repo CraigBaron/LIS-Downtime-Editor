@@ -168,7 +168,7 @@ export default function SignIn() {
       .then((response) => {
           if(response.data.status === "Fail")
           {
-
+              return;
           }
           else
           {
@@ -219,7 +219,7 @@ export default function SignIn() {
           </Toolbar>
         </AppBar>
       </div>
-      <Snackbar open={snack} anchorOrigin={{vertical: 'top', horizontal : 'left'}} autoHideDuration={4000} onClose={snackClose}>
+      <Snackbar open={snack} autoHideDuration={4000} onClose={snackClose}>
         <Alert variant="filled" severity="success">
           Your Password has been changed!
         </Alert>

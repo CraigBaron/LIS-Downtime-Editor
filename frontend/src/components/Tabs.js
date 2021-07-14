@@ -89,6 +89,7 @@ export default function CenteredTabs() {
   const handleSelRoleChange = (e) => {setSelRole(e.target.value)};
   const handleSelIDChange = (e) => {setSelID(e.target.value)};
   
+  const [snackMsg, setSnackMsg] = useState("");
   const [snackOpen, setSnackOpen] = useState(false);
 
   const handleSnackClick = () => {
@@ -145,10 +146,12 @@ export default function CenteredTabs() {
           if(response.data.accessToken){
             localStorage.setItem('accessToken', response.data.accessToken)  
           }
-          if(response.data.status === "Successful")
+          if(response.data.status)
           {
             getEmployees()
             handleClose()
+            setSnackMsg(response.data.status)
+            handleSnackClick()
           }
         }, (err) => {
           console.log(err)
@@ -165,10 +168,12 @@ export default function CenteredTabs() {
           if(response.data.accessToken){
             localStorage.setItem('accessToken', response.data.accessToken)  
           }
-          if(response.data.status === "Successful")
+          if(response.data.status)
           {
             getEmployees()
             handleClose()
+            setSnackMsg(response.data.status)
+            handleSnackClick()
           }
         
         }, (error) => {
@@ -190,7 +195,9 @@ export default function CenteredTabs() {
         .then((response) => {
         if(response.data.accessToken){
           localStorage.setItem('accessToken', response.data.accessToken)  
-        }     
+        }    
+        setSnackMsg(response.data.status);
+        handleSnackClick(); 
       }, (error) => {
         console.log(error.request)
       });
@@ -199,8 +206,8 @@ export default function CenteredTabs() {
   <div>
     
     <Snackbar open={snackOpen} autoHideDuration={6000} onClose={handleSnackClose}>
-        <Alert onClose={handleSnackClose} severity="success">
-          This is a success message!
+        <Alert onClose={handleSnackClose} severity="info" variant="filled">
+          {snackMsg}
         </Alert>
     </Snackbar>
 
@@ -290,7 +297,7 @@ export default function CenteredTabs() {
 
     <TabPanel value={value} index={1}>
       <Grid container justify="center" >
-        <Box  m={5} p={3} borderColor="primary.main" borderRadius="borderRadius" boxShadow={15} width="80%" maxWidth="800px">
+        <Box  m={5} p={3} borderColor="primary.main" borderRadius="borderRadius" boxShadow={15} width="80%" maxWidth="900px">
           <h5>Registered Accounts</h5>
           <DataGrid autoHeight rows={rows} columns={columns} onRowClick = {item => {EditRecord(item.row)}} rowsPerPageOptions={[5, 10, 20]}/>
         </Box>
@@ -363,10 +370,10 @@ export default function CenteredTabs() {
  
    </Modal.Body>
    <Modal.Footer>
-    <Button variant="contained" onClick={handleClose}>
+    <Button onClick={handleClose}>
       Cancel
     </Button>
-    <Button color="primary" variant="contained" onClick={updateUser}>
+    <Button color="primary"  onClick={updateUser}>
       Submit Edit
     </Button>
   </Modal.Footer>
