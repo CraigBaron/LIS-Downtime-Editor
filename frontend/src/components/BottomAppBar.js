@@ -5,13 +5,15 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import CC from '../CC.jpg'
+import {useState} from 'react'
 
 
 const useStyles = makeStyles((theme) => ({
 appBar: {
     top: 'auto',
     bottom: 0,
-    height: "50px"
+    height: "50px",
+    zIndex: 3
   },
  logo: {
    width:'100px',
@@ -30,10 +32,11 @@ export default function BottomAppBar() {
       var naming= localStorage.getItem("firstName");
       var namingL= localStorage.getItem("lastName");
       const classes = useStyles();
+  const [show, setShow] = useState(false);
       
     return (
 <div>
-<AppBar position="fixed" color="primary" className={classes.appBar}>
+<AppBar position="fixed" color="primary" className={classes.appBar} >
 <Toolbar align='center'  >
     <Typography fontSize="h6.fontSize" align='center'>
     User: {naming +" "+  namingL}
