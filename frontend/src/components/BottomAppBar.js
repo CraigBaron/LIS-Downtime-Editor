@@ -5,7 +5,7 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import CC from '../CC.jpg'
-import {useState} from 'react'
+
 
 
 const useStyles = makeStyles((theme) => ({
@@ -32,7 +32,7 @@ export default function BottomAppBar() {
       var naming= localStorage.getItem("firstName");
       var namingL= localStorage.getItem("lastName");
       const classes = useStyles();
-  const [show, setShow] = useState(false);
+
       
     return (
 <div>
