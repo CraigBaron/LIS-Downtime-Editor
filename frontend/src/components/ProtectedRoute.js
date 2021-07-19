@@ -23,6 +23,8 @@ class ProtectedRoute extends React.Component {
             isLoading: true,
             isLoggedIn: false
         };
+    }
+    componentDidMount(){
             axios.post(buildPath('users/pageRequest'),
             {
               refreshToken : refreshToken()
@@ -34,14 +36,13 @@ class ProtectedRoute extends React.Component {
               if(response.data.isAuth)
                     this.setState(() => ({ isLoading: false, isLoggedIn: true}));
             
-                else 
-                this.setState(() => ({ isLoading: false, isLoggedIn: false}));
-
             }, (error) => {
+              this.setState(() => ({ isLoading: false, isLoggedIn: false}));
               console.log(error);
             });
          
-        }
+    }
+
     render(){
 
         return this.state.isLoading ? null :
