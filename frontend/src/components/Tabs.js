@@ -57,11 +57,11 @@ export default function CenteredTabs() {
     setRole(event.target.value);
   }
   //hooks for signup form
-  const [email, setEmail] = useState(null);
-  const [firstName, setFirstName] = useState(null);
-  const [lastName, setLastName] = useState(null);
-  const [password, setPassword] = useState(null);
-  const [confirmPassword, setConfirmPassword] = useState(null);
+  const [email, setEmail] = useState('');
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
   const [role, setRole] = useState('');
   //functions to handle state changes of signup form
   const handleEmailChange = (e) => {setEmail(e.target.value)};
