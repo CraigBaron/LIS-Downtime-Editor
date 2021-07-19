@@ -1,9 +1,6 @@
 import * as React from 'react';
 import {Button} from '@material-ui/core'
-import {Modal} from 'react-bootstrap'
-import {Form, Row, Col} from 'react-bootstrap';
 import { makeStyles } from '@material-ui/core/styles';
-import TextField from '@material-ui/core/TextField';
 import { buildPath, config } from "./config";
 import Grid from "@material-ui/core/Grid";
 import {useState} from 'react';
@@ -13,7 +10,6 @@ import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 import { Box } from '@material-ui/core';
-import { sizing } from '@material-ui/system';
 import Divider from '@material-ui/core/Divider'
 
 const useStyles = makeStyles((theme) => ({
@@ -41,7 +37,6 @@ const useStyles1 = makeStyles({
 });
 
 var temp;
-var i;
   
   function PendingPageTable() {
 
@@ -49,7 +44,6 @@ var i;
       const [rows, setrows] = useState([]);
     
       const record = [];
-      var bob = 5;
       React.useEffect (() => 
           {      
              async function getData(){

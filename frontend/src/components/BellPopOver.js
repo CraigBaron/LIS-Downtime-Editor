@@ -4,15 +4,14 @@ import Badge from '@material-ui/core/Badge';
 import Button from '@material-ui/core/Button';
 import Popover from '@material-ui/core/Popover';
 import Box from '@material-ui/core/Box';
-import {Link} from 'react-router-dom';
 import axios from 'axios';
 import {buildPath, config} from './config';
-import PendingPage from '../pages/PendingPage';
 
  export default function BellPopOver(props) {
-   
+    console.log("outside")
     const [numRecords, setNumRecords] = React.useState(0);
     useEffect( () => {
+      console.log("MOUNTED!!")
       async function fetchData(){
         await axios.get(buildPath('editedRecords/numPending')
         ,config())
@@ -41,7 +40,7 @@ import PendingPage from '../pages/PendingPage';
     
     return(
         <div>
-        { localStorage.getItem("privledge") === "3" || localStorage.getItem("privledge") == "2" ?
+        { localStorage.getItem("privledge") === "3" || localStorage.getItem("privledge") === "2" ?
           <Button color="inherit" onClick={handleClick} id={id}>      
           <Badge badgeContent={numRecords} color="secondary">
             <NotificationsIcon/>

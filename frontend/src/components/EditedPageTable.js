@@ -5,16 +5,14 @@ import FormLabel from '@material-ui/core/FormLabel';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Radio from '@material-ui/core/Radio';
 import { DataGrid, GridToolbar } from '@material-ui/data-grid';
-import {Button, Menu} from '@material-ui/core'
+import {Button} from '@material-ui/core'
 import {useState} from 'react'
 import axios from 'axios';
-import SearchBar from "material-ui-search-bar";
 import {Box} from "@material-ui/core"
 import {Modal} from 'react-bootstrap'
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import { buildPath, config } from "./config";
-import Typograghy from '@material-ui/core/Typography'
 import {Grid} from '@material-ui/core'
 import MenuItem from '@material-ui/core/MenuItem';
 import InputLabel from '@material-ui/core/InputLabel';
@@ -88,10 +86,6 @@ const useStyles = makeStyles((theme) => ({
     
   },
 }));
-
-var temp;
-var i;
-
 
 const columns = [
     { field: 'id', headerName: 'UniqueID', width: 150 },
@@ -307,7 +301,7 @@ function EditedTable() {
         </Grid>
       </div>
 
-{localStorage.getItem("privledge") == "2" || localStorage.getItem("privledge") === "3" ? 
+{localStorage.getItem("privledge") === "2" || localStorage.getItem("privledge") === "3" ? 
   <Modal show={show} onHide={handleClose}>
   <Modal.Header closeButton>
     <Modal.Title>Record Confirmation</Modal.Title>
@@ -469,5 +463,3 @@ function EditedTable() {
     );
   }export default EditedTable;
 
-
-  //secondary

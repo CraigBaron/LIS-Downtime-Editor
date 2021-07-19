@@ -25,7 +25,6 @@ import Collapse from '@material-ui/core/Collapse';
 import CloseIcon from '@material-ui/icons/Close';
 import Snackbar from '@material-ui/core/Snackbar';
 import { buildPath } from './config';
-import { setTwilioEmailAuth } from '@sendgrid/mail';
 
 
 const useStyles = makeStyles((theme) => ({

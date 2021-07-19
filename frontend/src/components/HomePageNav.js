@@ -90,7 +90,7 @@ export default function ButtonAppBar() {
           open={Boolean(anchorEl)}
           onClose={handleMenuClose}
         >
-          { localStorage.getItem("privledge") == 3 ? <div><MenuItem onClick={doRootPage}>Settings</MenuItem> <Divider></Divider></div>: null}
+          { localStorage.getItem("privledge") === "3" ? <div><MenuItem onClick={doRootPage}>Settings</MenuItem> <Divider></Divider></div>: null}
 
           <MenuItem onClick={doMachinePage}>Machine Records</MenuItem>
           <Divider></Divider>

@@ -99,7 +99,7 @@ export default function CenteredTabs() {
   //function to set the selection hooks to the active user clicked
   const EditRecord = (item) =>
   {
-    if(selRole==1){
+    if(selRole === 1){
       level='Employee'
     }
     else{
