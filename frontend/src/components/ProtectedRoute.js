@@ -16,22 +16,20 @@ export default ProtectedRoute; */
 
 class ProtectedRoute extends React.Component {
 
-    constructor(props, context) {
+    constructor (props, context) {
         super(props, context);
 
         this.state = {
             isLoading: true,
             isLoggedIn: false
         };
-    
-        axios.post(buildPath('users/pageRequest'),
+            axios.post(buildPath('users/pageRequest'),
             {
               refreshToken : refreshToken()
             },config())
             .then((response) => {
               if(response.data.accessToken){
                 localStorage.setItem('accessToken', response.data.accessToken)  
-                
               }
               if(response.data.isAuth)
                     this.setState(() => ({ isLoading: false, isLoggedIn: true}));
@@ -42,7 +40,7 @@ class ProtectedRoute extends React.Component {
             }, (error) => {
               console.log(error);
             });
-        
+         
         }
     render(){
 

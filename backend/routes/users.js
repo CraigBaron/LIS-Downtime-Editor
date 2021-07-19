@@ -45,7 +45,7 @@ router.post('/login', async (req, res) => {
       }
 })
 
-router.post('/signUp', async (req,res) => {
+router.post('/signUp', verifyAuthToken, async (req,res) => {
    
     const post = {email, password, confirmPassword, firstName, lastName, privledge} = req.body;
     const validationResult = userValidator.validate(post, userSchema);
@@ -82,7 +82,7 @@ router.post('/signUp', async (req,res) => {
     }
 })
 
-router.post('/delete', (req,res) => {
+router.post('/delete', verifyAuthToken, async (req,res) => {
   const { refreshToken, email } = req.body;
   
   try{
@@ -102,7 +102,7 @@ router.post('/delete', (req,res) => {
 })
 
 
-router.get('/', (req,res) => {
+router.post('/', verifyAuthToken, async (req, res) => {
 
   try{
     var request = new sql.Request();
@@ -126,7 +126,7 @@ router.get('/', (req,res) => {
   }
 })
 
-router.post('/forgot', (req, res) => {
+router.post('/forgot', async (req, res) => {
     const {email} = req.body;
         var request = new sql.Request();
         request.query("SELECT * FROM Employees WHERE Email = '" + email + "'", async function (err, recordset) {

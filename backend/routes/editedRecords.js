@@ -55,7 +55,7 @@ router.post('/add',verifyAuthToken, async (req, res) => {
       create();
     })
 
-const create = () => {
+const create = async () => {
         let Status = "Pending";
         try{
             var request = new sql.Request();

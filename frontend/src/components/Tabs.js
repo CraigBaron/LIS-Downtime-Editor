@@ -13,10 +13,9 @@ import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import axios from 'axios';
-import { buildPath } from "./config";
+import { buildPath, refreshToken, config } from "./config";
 import {useState} from 'react'
 import {Box} from "@material-ui/core"
-import {config} from './config';
 import WarningIcon from '@material-ui/icons/Warning';
 import Snackbar from '@material-ui/core/Snackbar';
 import Alert from '@material-ui/lab/Alert';
@@ -71,12 +70,6 @@ export default function CenteredTabs() {
   const handlePasswordChange = (e) => {setPassword(e.target.value)};
   const handleConfirmPasswordChange = (e) => {setConfirmPassword(e.target.value)};
 
-  const[error, setError] = useState("");
-  const[displayError, setDisplayError] = useState(false)
-
-  const handleErrorChange = (e) => {setError(e.target.value)};
-  const handleDisplayErrorChange = (e) => {setDisplayError(e.target.value)};
-
   //hooks for users modal
   const [selEmail, setSelEmail] = useState("");
   const [selFirstName, setSelFirstName] = useState("");
@@ -122,16 +115,22 @@ export default function CenteredTabs() {
 
 
   const getEmployees = async () => {
-    try{ 
-         
-          const res = await axios.get(buildPath("users/"));
-          if(res.data.accessToken){
-            localStorage.setItem('accessToken', res.data.accessToken)  
-          }
-          setRows(res.data)
-        }catch(err){
-      console.log(err);
-    }
+    
+    await axios.post(buildPath("users/"),
+    {
+      refreshToken : refreshToken()
+    },config())
+      .then((response) => {
+
+        if(response.data.accessToken){
+          localStorage.setItem('accessToken', response.data.accessToken)  
+        }
+        setRows(response.data)
+      
+      }, (err) => {
+        console.log(err)
+      });
+     
     }
 
     const updateUser = async () => {
@@ -204,7 +203,6 @@ export default function CenteredTabs() {
     }
   return (
   <div>
-    
     <Snackbar open={snackOpen} autoHideDuration={6000} onClose={handleSnackClose}>
         <Alert onClose={handleSnackClose} severity="info" variant="filled">
           {snackMsg}
