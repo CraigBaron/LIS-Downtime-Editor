@@ -9,7 +9,6 @@ import {buildPath, config} from './config';
 
  export default function BellPopOver(props) {
     console.log("outside")
-    const [numRecords, setNumRecords] = React.useState(0);
     useEffect( () => {
       console.log("MOUNTED!!")
       async function fetchData(){
@@ -18,13 +17,15 @@ import {buildPath, config} from './config';
             .then((response) => {
                
                 setNumRecords(response.data.numRecords)
+                console.log(numRecords)
             }, (error) => {
               console.log(error.request)
             })
           }
         fetchData();
     })
-    
+    const [numRecords, setNumRecords] = React.useState(0);
+
     const [anchorEl, setAnchorEl] = React.useState(null);
 
     const handleClick = (event) => {
