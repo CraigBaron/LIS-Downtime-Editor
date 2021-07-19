@@ -12,7 +12,8 @@ import PendingPage from '../pages/PendingPage';
  export default function BellPopOver(props) {
    
     const [numRecords, setNumRecords] = React.useState(0);
-    useEffect(async () => {
+    useEffect( () => {
+      async function fetchData(){
         await axios.get(buildPath('editedRecords/numPending')
         ,config())
             .then((response) => {
@@ -21,6 +22,8 @@ import PendingPage from '../pages/PendingPage';
             }, (error) => {
               console.log(error.request)
             })
+          }
+        fetchData();
     })
     
     const [anchorEl, setAnchorEl] = React.useState(null);

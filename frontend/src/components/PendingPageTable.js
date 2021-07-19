@@ -50,8 +50,9 @@ var i;
     
       const record = [];
       var bob = 5;
-      React.useEffect (async() => 
+      React.useEffect (() => 
           {      
+             async function getData(){
               let temp
               await axios.get(buildPath('editedRecords/pending'), config())
               .then((response) => {
@@ -76,6 +77,8 @@ var i;
               }, (error) => {
                 console.log(error);
               });
+            }
+            getData();
           });
 
         const updateApprove = async (id) => {
