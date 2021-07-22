@@ -127,7 +127,7 @@ export default function ButtonAppBar() {
         <h4>Navigation </h4>
         <p>Use the navigation bar at the top of the page to direct yourself to the desired page.</p>
         <p>The dropdown menu at the left on the navigation bar presents the available pages that can be navigated to given the current user level.</p>
-        <p>For managers the bell icon on the right of the bar shows the number of records pending approval and links the pending page where records can be approved or rejected.</p>
+        <p>For managers the bell icon on the right of the bar shows the number of records pending approval and links the pending page where record changes can be approved or rejected.</p>
         <p>The door icon on the right of the bar is to logout of the application.</p>
         </Modal.Body>
         <Modal.Footer>
