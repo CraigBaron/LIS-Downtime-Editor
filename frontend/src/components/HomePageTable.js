@@ -12,6 +12,7 @@ import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import InputLabel from '@material-ui/core/InputLabel';
 import TableChartIcon from '@material-ui/icons/TableChart';
+import Typograghy from '@material-ui/core/Typography'
 import axios from 'axios';
 import Alert from '@material-ui/lab/Alert';
 import Snackbar from '@material-ui/core/Snackbar';
@@ -338,8 +339,8 @@ function DataTable() {
      label: 'Empty Bottle Inverter',
    },
    {
-     value: 'Empty box Conveyor',
-     label: 'Empty box Conveyor',
+     value: 'Empty Box Conveyor',
+     label: 'Empty Box Conveyor',
    },
    {
      value: 'Facilities',
@@ -402,21 +403,29 @@ function DataTable() {
      label: 'Labeler B',
    },
    {
-     value: 'Mezzanine Bottle conveyors',
-     label: 'Mezzanine Bottle conveyors',
+     value: 'Mezzanine Bottle Conveyors',
+     label: 'Mezzanine Bottle Conveyors',
    },
    {
      value: 'Multi - Pack conveyors',
      label: 'Multi - Pack conveyors',
    },
    {
+    value: 'Other/Explain',
+    label: 'Other/Explain',
+  },
+   {
      value: 'Overhead Case Conveyor',
      label: 'Overhead Case Conveyor',
    },
    {
-     value: 'Overhead Case Conveyor (KisterA-PZ1)',
-     label: 'Overhead Case Conveyor (KisterA-PZ1)',
+     value: 'Overhead Case Conveyor (Kister-Palletizer)',
+     label: 'Overhead Case Conveyor (Kister-Palletizer)',
    },
+   {
+    value: 'Overhead Case Conveyor (KisterA-PZ1)',
+    label: 'Overhead Case Conveyor (KisterA-PZ1)',
+  },
    {
      value: 'Overhead Case Conveyor (KisterA-PZ2)',
      label: 'Overhead Case Conveyor (KisterA-PZ2)',
@@ -680,8 +689,8 @@ function DataTable() {
        label: 'Cutting Knife',
      },
      {
-       value: 'Cutting/Wrapping/ShrinkTunnel',
-       label: 'Cutting/Wrapping/ShrinkTunnel',
+       value: 'Cutting/Wrapping/Shrink Tunnel',
+       label: 'Cutting/Wrapping/Shrink Tunnel',
      },
      {
        value: 'Damaged Gripper',
