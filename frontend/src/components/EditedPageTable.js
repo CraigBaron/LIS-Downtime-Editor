@@ -325,6 +325,18 @@ function EditedTable() {
               <div> 
               <TextField
               disabled
+              id="pkID"
+              label="pkDowntimeEventsID"
+              defaultValue={selpkID}
+              variant="outlined"
+              fullWidth
+              InputProps={{readOnly: true,}}
+              />
+              </div>
+              <br/>
+              <div> 
+              <TextField
+              disabled
               id="LineID"
               label="LineID"
               defaultValue={selLineID}

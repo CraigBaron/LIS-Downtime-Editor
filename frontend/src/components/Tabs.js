@@ -80,7 +80,6 @@ export default function CenteredTabs() {
   const handleSelFirstNameChange = (e) => {setSelFirstName(e.target.value)};
   const handleSelLastNameChange = (e) => {setSelLastName(e.target.value)};
   const handleSelRoleChange = (e) => {setSelRole(e.target.value)};
-  const handleSelIDChange = (e) => {setSelID(e.target.value)};
   
   const [snackMsg, setSnackMsg] = useState("");
   const [snackOpen, setSnackOpen] = useState(false);
@@ -340,7 +339,7 @@ export default function CenteredTabs() {
               </div>
               <br/>
             
-              { selRole !=3 ?
+              { selRole !==3 ?
               <FormControl variant="outlined" fullWidth>
             <InputLabel >Role</InputLabel>
             <Select
@@ -356,7 +355,7 @@ export default function CenteredTabs() {
           <br/>
           <br/>
               <div>
-              { selRole !=3 ?
+              { selRole !==3 ?
               
               <Button color="secondary" variant= "contained" onClick={Delete} >
                 Delete Account
