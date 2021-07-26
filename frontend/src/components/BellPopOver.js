@@ -15,7 +15,7 @@ import {buildPath, config} from './config';
             .then((response) => {
                
                 setNumRecords(response.data.numRecords)
-                console.log(numRecords)
+                console.log(response)
             }, (error) => {
               console.log(error.request)
             })
