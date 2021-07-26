@@ -1019,7 +1019,7 @@ function DataTable() {
 
       <div>
       <Grid container justify="center">
-      <Box border={1} borderRadius="borderRadius" borderColor="grey.500" width="90%" p={5} boxShadow={6} >
+      <Box border={1} borderRadius="borderRadius" borderColor="grey.500" width="95%" p={5} boxShadow={6} >
         <Grid container spacing={2}>
           <Grid item xs={3}>
          

@@ -245,6 +245,14 @@ router.post('/pageRequest', verifyAuthToken, async (req, res) => {
   
 })
 
-
+router.post('/adminPageRequest', verifyAuthToken, async (req, res) => {
+  if(req.user.privledge !== 3)
+  {
+      return res.status(500).send()
+  }
+  else{
+    return res.json({isAuth : "Successful", accessToken: req.accessToken} )
+  }
+})
 
 module.exports = router

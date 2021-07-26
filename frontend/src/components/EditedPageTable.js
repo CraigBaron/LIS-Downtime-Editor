@@ -89,6 +89,7 @@ const useStyles = makeStyles((theme) => ({
 
 const columns = [
     { field: 'id', headerName: 'UniqueID', width: 150 },
+    { field: 'pkDowntimeEventID', headerName: 'pkDowntimeEventID', width: 179},
     { field: 'LineID', headerName: 'LineID', width: 130 },
     { field: 'Machine', headerName: 'Machine', width: 200 },
     { field: 'ComponentID', headerName: 'ComponentID', width: 200 },
@@ -182,6 +183,7 @@ function EditedTable() {
               if(response.data.accessToken){
                 localStorage.setItem('accecssToken', response.data.accessToken)  
               }
+              console.log(response.data.records)
               setrows(response.data.records)
             }, (error) => {
               console.log(error);
@@ -231,7 +233,7 @@ function EditedTable() {
     <br/>
     <div>
       <Grid container justify="center">
-      <Box border={1} borderRadius="borderRadius" borderColor="grey.500" width="90%" p={5} boxShadow={6} >
+      <Box border={1} borderRadius="borderRadius" borderColor="grey.500" width="95%" p={5} boxShadow={6} >
         <Grid container spacing={2}>
           <Grid item xs={3}>
       

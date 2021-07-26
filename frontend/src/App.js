@@ -20,7 +20,7 @@ function App()
                 <ProtectedRoute path="/HomePage" component={HomePage} exact={true} />
                 <ProtectedRoute path="/EditedPage" component={EditedPage} exact={true}/>
                 <ProtectedRoute path="/PendingPage" component={PendingPage} exact={true}/>
-                <ProtectedRoute path="/RootPage" component={RootPage} exact={true}/> 
+                <AdminRoute path="/RootPage" component={RootPage} exact={true}/> 
                 <Redirect to="/"/>
             </Switch>
         </Router>

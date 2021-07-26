@@ -8,9 +8,7 @@ import axios from 'axios';
 import {buildPath, config} from './config';
 
  export default function BellPopOver(props) {
-    console.log("outside")
     useEffect( () => {
-      console.log("MOUNTED!!")
       async function fetchData(){
         await axios.get(buildPath('editedRecords/numPending')
         ,config())

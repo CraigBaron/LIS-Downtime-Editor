@@ -5,7 +5,7 @@ import SignIn from '../components/Signin';
 const LoginPage = () =>
 {
     window.onload = () => {
-        if(localStorage.getItem('acessToken'))
+        if(localStorage.getItem('accessToken'))
             window.location.href = '/HomePage'
     } 
     return(

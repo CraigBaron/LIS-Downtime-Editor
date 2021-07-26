@@ -4,7 +4,7 @@ const sql = require('mssql')
 
  function createRefreshToken(user){
 
-    const refreshToken = jwt.sign(user, process.env.REFRESH_TOKEN_SECRET)
+    const refreshToken = jwt.sign(user, process.env.REFRESH_TOKEN_SECRET, {expiresIn: '14d'} )
 
     var request = new sql.Request();
     request.query("INSERT INTO Tokens(RefreshToken) VALUES('" + refreshToken + "')",  function (err, recordset) {
