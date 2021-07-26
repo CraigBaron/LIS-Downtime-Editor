@@ -116,6 +116,7 @@ router.get('/numPending' ,verifyAuthToken, async (req, res) => {
                  return;
             }
             console.log(recordset.recordsets[0].length)
+            console.log("HI")
             res.json({numRecords: recordset.recordsets[0].length, accessToken: req.accessToken});
         });
    
