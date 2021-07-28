@@ -10,9 +10,11 @@ import {buildPath, config} from './config';
  export default function BellPopOver(props) {
     useEffect( () => {
       async function fetchData(){
+        console.log("calling function")
         await axios.get(buildPath('editedRecords/numPending')
         ,config())
             .then((response) => {
+              console.log("got a response")
                 setNumRecords(response.data.numRecords)
                 console.log(response)
             }, (error) => {
