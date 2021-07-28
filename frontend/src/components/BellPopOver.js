@@ -5,13 +5,16 @@ import Button from '@material-ui/core/Button';
 import Popover from '@material-ui/core/Popover';
 import Box from '@material-ui/core/Box';
 import axios from 'axios';
-import {buildPath, config} from './config';
+import {buildPath, config, refreshToken} from './config';
 
  export default function BellPopOver(props) {
     useEffect( () => {
       async function fetchData(){
         console.log("calling function")
-        await axios.get(buildPath('editedRecords/numPending')
+        await axios.post(buildPath('editedRecords/numPending'),
+        {
+          refreshToken : refreshToken()
+        }
         ,config())
             .then((response) => {
               console.log("got a response")
