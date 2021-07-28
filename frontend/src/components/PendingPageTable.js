@@ -1,7 +1,7 @@
 import * as React from 'react';
 import {Button} from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles';
-import { buildPath, config } from "./config";
+import { buildPath, config, refreshToken } from "./config";
 import Grid from "@material-ui/core/Grid";
 import {useState} from 'react';
 import axios from 'axios';
@@ -48,7 +48,11 @@ var temp;
           {      
              async function getData(){
               let temp
-              await axios.get(buildPath('editedRecords/pending'), config())
+              await axios.post(buildPath('editedRecords/pending'),
+              {
+                  refreshToken : refreshToken()
+              }
+              ,config())
               .then((response) => {
                 for(var i=0;i<response.data[0].length;i++)
                       {

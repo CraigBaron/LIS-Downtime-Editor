@@ -121,7 +121,7 @@ router.post('/numPending', verifyAuthToken, async (req, res) => {
    
 })
 
-router.get('/pending', verifyAuthToken, async (req, res) => {
+router.post('/pending', verifyAuthToken, async (req, res) => {
     
         var request = new sql.Request();
         request.query("SELECT * FROM EditedRecords WHERE Status = 'Pending'", function (err, recordset) {
