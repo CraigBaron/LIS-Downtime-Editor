@@ -13,7 +13,6 @@ import {buildPath, config} from './config';
         await axios.get(buildPath('editedRecords/numPending')
         ,config())
             .then((response) => {
-               
                 setNumRecords(response.data.numRecords)
                 console.log(response)
             }, (error) => {

@@ -34,7 +34,7 @@ router.post('/' ,verifyAuthToken, async (req, res) => {
             for(let i=0;i<records.length;i++){
                 records[i].id = records[i].UniqueID
             }
-            res.json({records : records, accessToken: req.accessToken});
+            return res.json({records : records, accessToken: req.accessToken});
         });
     }
   
@@ -69,7 +69,7 @@ const create = async () => {
                 SendEmail();
             });
         }catch (err){
-            res.status(500).json({message: err.message})
+            return res.status(500).json({message: err.message})
         }
     }
 })
@@ -87,7 +87,7 @@ router.post('/edit', verifyAuthToken, async (req, res) => {
                     return;
                 } 
 
-                res.json({status : "Successful", accessToken: req.accessToken})
+                return res.json({status : "Successful", accessToken: req.accessToken})
             })
         }
         else
@@ -97,7 +97,7 @@ router.post('/edit', verifyAuthToken, async (req, res) => {
                     console.log(err);
                     return;
                 } 
-                res.json({status : "Successful", accessToken: req.accessToken})
+                return res.json({status : "Successful", accessToken: req.accessToken})
             })
         }
     }
@@ -107,8 +107,8 @@ router.post('/edit', verifyAuthToken, async (req, res) => {
     }
 })
 
-router.get('/numPending' ,verifyAuthToken, async (req, res) => {
-    
+router.get('/numPending', verifyAuthToken, async (req, res) => {
+        console.log("made it to backend!")
         var request = new sql.Request();
         request.query("SELECT * FROM EditedRecords WHERE Status = 'Pending'", function (err, recordset) {
             if (err){
@@ -116,13 +116,12 @@ router.get('/numPending' ,verifyAuthToken, async (req, res) => {
                  return;
             }
             console.log(recordset.recordsets[0].length)
-            console.log("HI")
-            res.json({numRecords: recordset.recordsets[0].length, accessToken: req.accessToken});
+            return res.json({numRecords: recordset.recordsets[0].length, accessToken: req.accessToken});
         });
    
 })
 
-router.get('/pending' ,verifyAuthToken, async (req, res) => {
+router.get('/pending', verifyAuthToken, async (req, res) => {
     
         var request = new sql.Request();
         request.query("SELECT * FROM EditedRecords WHERE Status = 'Pending'", function (err, recordset) {
@@ -130,7 +129,7 @@ router.get('/pending' ,verifyAuthToken, async (req, res) => {
                  console.log(err);
                  return;
             }
-            res.json(recordset.recordsets);
+           return res.json(recordset.recordsets);
         });
     
 })
