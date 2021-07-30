@@ -27,7 +27,6 @@ In the main project folder run the following commands
 sudo npm install
 sudo npm install express --save
 sudo npm install body-parser
-sudo npm install mongodb
 sudo npm install cors
 
 Inside the LIS-Downtime-Editor run 
