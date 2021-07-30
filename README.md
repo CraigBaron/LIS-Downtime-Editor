@@ -37,18 +37,17 @@ sudo npm install
 
 Inside the LIS-Downtime-Editor folder download the env file
 and rename the file as .env
---------------------------------------------------------
-//For running frontend and backend on seperate ports    |
-                                                        |
-Inside the LIS-Downtime-Editor run command              |
-npm start                                               |
-                                                        |
-Inside the frontend folder run                          |
-npm start                                               |
----------------------------------------------------------
-//For running backend and having it serve the frontend  |
-                                                        |
-Inside the LIS-Downtime-Editor run command              |
-sudo npm run azure                                      |
-                                                        |
----------------------------------------------------------                                                        
+
+//For running frontend and backend on seperate ports    
+                                                        
+Inside the LIS-Downtime-Editor run command              
+npm start                                               
+                                                        
+Inside the frontend folder run                          
+npm start   
+
+//For running backend and having it serve the frontend  
+                                                        
+Inside the LIS-Downtime-Editor run command              
+sudo npm run azure                                      
+                                                        
