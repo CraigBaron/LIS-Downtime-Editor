@@ -9,7 +9,11 @@ In the folder clone the repository from the github
 
 Inside the LIS-Downtime-Editor run npm install
 
-Inside the fronend folder run npm install
+Inside the frontend folder run npm install
 
 Inside the LIS-Downtime-Editor folder download the env file
 and rename the file as .env
+
+Inside the LIS-Downtime-Editor run command nom run devStart
+
+Inside the frontend folder run npm start 
