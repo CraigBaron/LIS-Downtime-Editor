@@ -29,7 +29,7 @@ const SendNotification = async() => {
         from: 'lis.downtime.editor.test@gmail.com',
         subject: 'LIS-Downtime-Editor Submission',
         text: 'A record has been Edited and its status is pending approval.',
-        html : 'A record has been Edited and its status is pending approval. <a href="http://localhost:3000/PendingPage">Click here</a> to view these records.'
+        html : 'A record has been Edited and its status is pending approval. <a href="http://listest.eastus.cloudapp.azure.com/PendingPage">Click here</a> to view these records.'
     }
 
     sgMail.sendMultiple(msg, function(err, info) {
