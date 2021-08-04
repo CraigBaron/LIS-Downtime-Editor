@@ -264,7 +264,7 @@ function EditedTable() {
               <MenuItem value={1}>Line 1</MenuItem>
               <MenuItem value={2}>Line 2</MenuItem>
               <MenuItem value={3}>Line 3</MenuItem>
-              <MenuItem value={4}>Line 4</MenuItem>
+              <MenuItem value={6}>Line 6</MenuItem>
               <MenuItem value={8}>Line 8</MenuItem>
               <Divider></Divider>
               <MenuItem value={-3} disabled>System 2</MenuItem>

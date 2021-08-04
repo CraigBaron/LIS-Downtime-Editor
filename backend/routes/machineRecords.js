@@ -29,14 +29,15 @@ router.post('/', verifyAuthToken, async (req, res) =>
             });  
             break;
 
-        //system 1 line 2
+        //system 1 line 3
         case 12:
-            request.query("SELECT UniqueID, pkDowntimeEventID, StartDateTime, EndDateTime, DurationTotalMinutes, LineID, Machine, ComponentID, Comments, Secondarypk FROM [DowntimeEvents_Line2 System 1]", function (err, recordset) {
+            request.query("SELECT UniqueID, pkDowntimeEventID, StartDateTime, EndDateTime, DurationTotalMinutes, LineID, Machine, ComponentID, Comments, Secondarypk FROM [DowntimeEvents_Line3 System 1]", function (err, recordset) {
                 if (err) console.log(err)
 
                 var temp = recordset;
                   
                 for(var i = 0; i < temp.recordsets[0].length; i++){
+                    temp.recordsets[0][i].LineID = 2;
                     temp.recordsets[0][i].id = temp.recordsets[0][i].UniqueID;
                     delete temp.recordsets[0][i].UniqueID;
                 }
@@ -44,14 +45,15 @@ router.post('/', verifyAuthToken, async (req, res) =>
             }); 
             break;
 
-        //system 1 line 3
+        //system 1 line 2
         case 13:
-            request.query("SELECT UniqueID, pkDowntimeEventID, StartDateTime, EndDateTime, DurationTotalMinutes, LineID, Machine, ComponentID, Comments, Secondarypk FROM [DowntimeEvents_Line3 System 1]", function (err, recordset) {
+            request.query("SELECT UniqueID, pkDowntimeEventID, StartDateTime, EndDateTime, DurationTotalMinutes, LineID, Machine, ComponentID, Comments, Secondarypk FROM [DowntimeEvents_Line2 System 1]", function (err, recordset) {
                 if (err) console.log(err)
        
                 var temp = recordset;
                   
                 for(var i = 0; i < temp.recordsets[0].length; i++){
+                    temp.recordsets[0][i].LineID = 3;
                     temp.recordsets[0][i].id = temp.recordsets[0][i].UniqueID;
                     delete temp.recordsets[0][i].UniqueID;
                 }
@@ -67,6 +69,7 @@ router.post('/', verifyAuthToken, async (req, res) =>
                 var temp = recordset;
                   
                 for(var i = 0; i < temp.recordsets[0].length; i++){
+                    temp.recordsets[0][i].LineID = 6;
                     temp.recordsets[0][i].id = temp.recordsets[0][i].UniqueID;
                     delete temp.recordsets[0][i].UniqueID;
                 }

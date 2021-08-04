@@ -167,6 +167,7 @@ function DataTable() {
       setselComments(item.Comments);
       setselDuration(item.DurationTotalMinutes);
       setselSecondarypk(item.Secondarypk);
+      setMachines(item.Machine);
   }
   const displayRecords = async (lineNumber) => {
     await axios.post(buildPath('machineRecords/'), {
@@ -193,7 +194,7 @@ function DataTable() {
       id : selID,
       pkDowntimeEventID: selpkID,
       LineID: selLineID,
-      Machine: selMachineID,
+      Machine: Machines,
       ComponentID: selComponentID,
       StartDateTime: selStartTime,
       EndDateTime: selEndTime,
@@ -1050,7 +1051,7 @@ function DataTable() {
               <MenuItem value={11}>Line 1</MenuItem>
               <MenuItem value={12}>Line 2</MenuItem>
               <MenuItem value={13}>Line 3</MenuItem>
-              <MenuItem value={14}>Line 4</MenuItem>
+              <MenuItem value={14}>Line 6</MenuItem>
               <MenuItem value={18}>Line 8</MenuItem>
               <Divider></Divider>
               <MenuItem value={-3} disabled>System 2</MenuItem>
