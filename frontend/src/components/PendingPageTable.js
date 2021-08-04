@@ -47,6 +47,8 @@ var temp;
       React.useEffect (() => 
           {      
              async function getData(){
+              if(localStorage.getItem('privledge') < 2)
+                  return;
               let temp
               await axios.post(buildPath('editedRecords/pending'),
               {
