@@ -12,7 +12,6 @@ const sql = require('mssql')
           console.log(err);
           return;
       } 
-      console.log("Storing new Refresh Token...")
     })
     
     return refreshToken;

@@ -233,7 +233,6 @@ router.post('/logout', verifyAuthToken, async (req, res) => {
             console.log(err);
             return;
         } 
-        console.log("Deleting RefreshToken...")
         return res.json({status : "Successful"})
     }) 
 
